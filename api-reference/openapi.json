@@ -110,8 +110,8 @@
     },
     "/api/jobs/{jobId}/files/upload-url": {
       "post": {
-        "summary": "Submit file",
-        "description": "Returns a signed URL for submitting a file to the server.",
+        "summary": "Get upload signed URL",
+        "description": "Returns a signed URL for uploading a file to the server.",
         "security": [
           {
             "bearerAuth": []
@@ -187,8 +187,8 @@
     },
     "/api/jobs/{jobId}/files/download-url": {
       "post": {
-        "summary": "Get Results",
-        "description": "Returns a signed URL for downloading results from the server.",
+        "summary": "Get download signed URL",
+        "description": "Returns a signed URL for downloading a file from the server.",
         "security": [
           {
             "bearerAuth": []
@@ -264,8 +264,8 @@
     },
     "/api/jobs/{jobId}/files/finalized": {
       "post": {
-        "summary": "Check results for file",
-        "description": "Checks if a file is available (finalized).",
+        "summary": "Check file existence",
+        "description": "Checks if a file is available (finalized) in the results bucket.",
         "security": [
           {
             "bearerAuth": []
@@ -341,7 +341,7 @@
     },
     "/api/jobs/{jobId}/content": {
       "get": {
-        "summary": "Get usage overview",
+        "summary": "Get job content",
         "description": "Retrieves all content items for a given job.",
         "security": [
           {
@@ -407,7 +407,7 @@
     },
     "/api/admin/developer-token": {
       "post": {
-        "summary": "Create developer token",
+        "summary": "Map admin token to developer token",
         "description": "Creates a new developer token mapped to the provided admin token.",
         "security": [
           {
