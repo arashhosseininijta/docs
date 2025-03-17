@@ -5,7 +5,7 @@
     "description": "API for managing voice processing jobs, file uploads/downloads, and retrieving job content for the Voice Harbor service.",
     "version": "0.45.1"
   },
-  "servers": [
+  "Voice Harbor APIs": [
     {
       "url": "http://sandbox.voiceharbor.com"
     }
@@ -19,7 +19,7 @@
     "/api/jobs": {
       "post": {
         "summary": "Create a new job",
-        "description": "Creates a new job on the server after verifying the usage token.",
+        "description": "Creates a new job on the Voice Harbor API after verifying the usage token.",
         "security": [
           {
             "bearerAuth": []
@@ -111,7 +111,7 @@
     "/api/jobs/{jobId}/files/upload-url": {
       "post": {
         "summary": "Submit file",
-        "description": "Returns a signed URL for submitting a file to the server.",
+        "description": "Returns a signed URL for submitting your file and job to the Voice Harbor API.",
         "security": [
           {
             "bearerAuth": []
@@ -175,7 +175,7 @@
             }
           },
           "500": {
-            "description": "Internal server error",
+            "description": "Internal Voice Harbor API error",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Error" }
@@ -188,7 +188,7 @@
     "/api/jobs/{jobId}/files/download-url": {
       "post": {
         "summary": "Get Results",
-        "description": "Returns a signed URL for downloading results from the server.",
+        "description": "Returns a signed URL for downloading results from the Voice Harbor API.",
         "security": [
           {
             "bearerAuth": []
@@ -252,7 +252,7 @@
             }
           },
           "500": {
-            "description": "Internal server error",
+            "description": "Internal Voice Harbor API error",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Error" }
@@ -264,8 +264,8 @@
     },
     "/api/jobs/{jobId}/files/finalized": {
       "post": {
-        "summary": "Check results for file",
-        "description": "Checks if a file is available (finalized).",
+        "summary": "Check results for submitted File",
+        "description": "Checks if a file is finalized.",
         "security": [
           {
             "bearerAuth": []
@@ -329,7 +329,7 @@
             }
           },
           "500": {
-            "description": "Internal server error",
+            "description": "Internal Voice Harbor API error",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Error" }
@@ -442,7 +442,7 @@
             }
           },
           "500": {
-            "description": "Internal server error",
+            "description": "Internal Voice Harbor API error",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Error" }
@@ -489,7 +489,7 @@
             }
           },
           "500": {
-            "description": "Internal server error",
+            "description": "Internal Voice Harbor API error",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Error" }
