@@ -4,10 +4,13 @@ A Python client for interacting with the [Voice Harbor API](#). This client hand
 
 ## Features
 
-- **Job Management:** Create a new job on the Voice Harbor server.
-- **File Uploads:** Upload audio and YAML files concurrently using signed URLs.
-- **Result Downloading:** Poll for and download processed results.
-- **CLI Support:** Execute the client as a command-line tool with various options.
+- **Job Management:** Create new jobs and retrieve job details.
+- **File Parsing & Validation:** Automatically scans an input directory and filters files by supported formats (.wav, .mp3, ...).
+- **Secure File Uploads:** Uses signed URLs to securely upload files via HTTP PUT requests.
+- **Job Submission:** Generates a YAML job file with all job parameters and uploads it securely.
+- **Polling & Result Downloading:** Downloads both processed files and their corresponding JSON metadata concurrently.
+- **Logging & Error Handling:** Provides a CLI with customizable options for API URL, authorization token, input/output directories, timeout settings, agents, and more.
+- **Command-Line Interface (CLI):** Offers detailed logging of operations and robust error management for easier troubleshooting.
 
 ## Supported File Formats
 
