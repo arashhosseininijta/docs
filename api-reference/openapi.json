@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Voice Harbor API",
-    "description": "API for managing voice processing jobs, file uploads/downloads, and job content submission for the Voice Harbor service.",
+    "description": "API for managing voice processing jobs, file uploads/downloads, and retrieving job content for the Voice Harbor service.",
     "version": "0.45.1"
   },
   "servers": [
@@ -340,81 +340,6 @@
       }
     },
     "/api/jobs/{jobId}/content": {
-      "post": {
-        "summary": "Submit job content",
-        "description": "Submits a job content item, including file name and audio duration.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "jobId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID of the job"
-          }
-        ],
-        "requestBody": {
-          "description": "Job content details",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/JobContentSubmissionRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Job content submitted successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/JobContentSubmissionResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Missing or invalid parameters",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "401": {
-            "description": "Missing Authorization header",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "403": {
-            "description": "Invalid token",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          }
-        }
-      },
       "get": {
         "summary": "Get job content",
         "description": "Retrieves all content items for a given job.",
@@ -645,32 +570,6 @@
         },
         "required": [
           "fileName"
-        ]
-      },
-      "JobContentSubmissionRequest": {
-        "type": "object",
-        "properties": {
-          "fileName": {
-            "type": "string"
-          },
-          "audio_duration": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "fileName",
-          "audio_duration"
-        ]
-      },
-      "JobContentSubmissionResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "message"
         ]
       },
       "JobContent": {
