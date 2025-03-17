@@ -2,15 +2,12 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Voice Harbor API",
-    "description": "API for interacting with the Voice Harbor service. This API provides endpoints to create jobs, upload/download files, and manage developer tokens.",
-    "version": "0.45.1",
-    "license": {
-      "name": "MIT"
-    }
+    "description": "API for managing voice processing jobs, file uploads/downloads, and job content registration for the Voice Harbor service.",
+    "version": "0.45.1"
   },
   "servers": [
     {
-      "url": "http://example.com"
+      "url": "http://sandbox.voiceharbor.com"
     }
   ],
   "security": [
@@ -22,7 +19,7 @@
     "/api/jobs": {
       "post": {
         "summary": "Create a new job",
-        "description": "Creates a new job and returns a job_id.",
+        "description": "Creates a new job on the server after verifying the usage token.",
         "security": [
           {
             "bearerAuth": []
@@ -34,25 +31,39 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Job"
+                  "$ref": "#/components/schemas/JobCreationResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "401": {
+            "description": "Missing Authorization header",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
               }
             }
           }
         }
       },
       "get": {
-        "summary": "List jobs",
+        "summary": "Get all jobs",
         "description": "Retrieves a list of jobs associated with the authenticated token.",
         "security": [
           {
@@ -65,28 +76,42 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/JobsList"
+                  "$ref": "#/components/schemas/JobList"
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "401": {
+            "description": "Missing Authorization header",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
               }
             }
           }
         }
       }
     },
-    "/api/jobs/{job_id}/content": {
-      "get": {
-        "summary": "Get job content",
-        "description": "Retrieves all content items for the specified job.",
+    "/api/jobs/{jobId}/files/upload-url": {
+      "post": {
+        "summary": "Get upload signed URL",
+        "description": "Returns a signed URL for uploading a file to the server.",
         "security": [
           {
             "bearerAuth": []
@@ -94,13 +119,319 @@
         ],
         "parameters": [
           {
-            "name": "job_id",
+            "name": "jobId",
             "in": "path",
-            "description": "Unique identifier for the job",
             "required": true,
             "schema": {
               "type": "string"
+            },
+            "description": "ID of the job"
+          }
+        ],
+        "requestBody": {
+          "description": "File details for which to get the signed URL",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadSignedUrlRequest"
+              }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed URL generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedUrlResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing Authorization header",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{jobId}/files/download-url": {
+      "post": {
+        "summary": "Get download signed URL",
+        "description": "Returns a signed URL for downloading a file from the server.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the job"
+          }
+        ],
+        "requestBody": {
+          "description": "File details for which to get the download signed URL",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DownloadSignedUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed URL generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedUrlResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing Authorization header",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{jobId}/files/finalized": {
+      "post": {
+        "summary": "Check file existence",
+        "description": "Checks if a file is available (finalized) in the results bucket.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the job"
+          }
+        ],
+        "requestBody": {
+          "description": "File details for checking existence",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckFileExistsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File existence status returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileExistenceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing Authorization header",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{jobId}/content": {
+      "post": {
+        "summary": "Register job content",
+        "description": "Registers a job content item, including file name and audio duration.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the job"
+          }
+        ],
+        "requestBody": {
+          "description": "Job content details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobContentRegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Job content registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobContentRegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing Authorization header",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get job content",
+        "description": "Retrieves all content items for a given job.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the job"
           }
         ],
         "responses": {
@@ -109,183 +440,40 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/JobContentResponse"
+                  "$ref": "#/components/schemas/JobContentList"
                 }
               }
             }
           },
           "400": {
-            "description": "Unexpected error",
+            "description": "Missing jobId parameter",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/jobs/{job_id}/files/upload-url": {
-      "post": {
-        "summary": "Request signed URL for file upload",
-        "description": "Requests a signed URL that can be used to securely upload a file.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "job_id",
-            "in": "path",
-            "description": "Unique identifier for the job",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Details for the file upload",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UploadUrlRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Signed URL for file upload",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SignedUrl"
-                }
+                "schema": { "$ref": "#/components/schemas/Error" }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "401": {
+            "description": "Missing Authorization header",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/jobs/{job_id}/files/download-url": {
-      "post": {
-        "summary": "Request signed URL for file download",
-        "description": "Requests a signed URL that can be used to securely download a file.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "job_id",
-            "in": "path",
-            "description": "Unique identifier for the job",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Details for the file download",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DownloadUrlRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Signed URL for file download",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SignedUrl"
-                }
+                "schema": { "$ref": "#/components/schemas/Error" }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "403": {
+            "description": "Invalid token",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/jobs/{job_id}/files/finalized": {
-      "post": {
-        "summary": "Check if a file is finalized",
-        "description": "Polls the server to check whether a specific file is available/finalized.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "job_id",
-            "in": "path",
-            "description": "Unique identifier for the job",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Details to check file availability",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FileFinalizedRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "File finalized status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FinalizedResponse"
-                }
+                "schema": { "$ref": "#/components/schemas/Error" }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "500": {
+            "description": "Database error",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                "schema": { "$ref": "#/components/schemas/Error" }
               }
             }
           }
@@ -294,43 +482,45 @@
     },
     "/api/admin/developer-token": {
       "post": {
-        "summary": "Create a developer token",
-        "description": "Maps an admin token to a new developer token.",
+        "summary": "Map admin token to developer token",
+        "description": "Creates a new developer token mapped to the provided admin token.",
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "description": "Admin token provided in the header. No additional body parameters are required.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "description": "Empty body. The admin token must be provided in the Authorization header."
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Developer token created successfully",
+            "description": "Developer token generated successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeveloperToken"
+                  "$ref": "#/components/schemas/DeveloperTokenResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "401": {
+            "description": "Missing Authorization header",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid admin token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
               }
             }
           }
@@ -339,8 +529,8 @@
     },
     "/api/admin/developer-tokens": {
       "get": {
-        "summary": "List developer tokens",
-        "description": "Retrieves all developer tokens associated with the authenticated admin token.",
+        "summary": "Get all developer tokens",
+        "description": "Retrieves all developer tokens associated with the provided admin token.",
         "security": [
           {
             "bearerAuth": []
@@ -352,18 +542,32 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeveloperTokensResponse"
+                  "$ref": "#/components/schemas/DeveloperTokensList"
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "401": {
+            "description": "Missing Authorization header",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid admin token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
               }
             }
           }
@@ -373,34 +577,107 @@
   },
   "components": {
     "schemas": {
-      "Job": {
+      "JobCreationResponse": {
         "type": "object",
         "properties": {
           "job_id": {
-            "type": "string",
-            "description": "Unique identifier for the created job."
+            "type": "string"
           }
         },
         "required": [
           "job_id"
         ]
       },
-      "JobsList": {
+      "SignedUrlResponse": {
         "type": "object",
         "properties": {
-          "jobs": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Job"
-            }
+          "signedUrl": {
+            "type": "string"
           }
-        }
+        },
+        "required": [
+          "signedUrl"
+        ]
       },
-      "JobContentItem": {
+      "CheckFileExistsRequest": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fileName"
+        ]
+      },
+      "FileExistenceResponse": {
+        "type": "object",
+        "properties": {
+          "exists": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "exists"
+        ]
+      },
+      "UploadSignedUrlRequest": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          },
+          "fileType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fileName",
+          "fileType"
+        ]
+      },
+      "DownloadSignedUrlRequest": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fileName"
+        ]
+      },
+      "JobContentRegistrationRequest": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          },
+          "audio_duration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "fileName",
+          "audio_duration"
+        ]
+      },
+      "JobContentRegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "JobContent": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer"
           },
           "job_id": {
             "type": "string"
@@ -409,136 +686,109 @@
             "type": "string"
           },
           "audio_duration": {
-            "type": "number",
-            "description": "Duration of the audio file in seconds."
+            "type": "integer"
           },
           "created_at": {
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "id",
+          "job_id",
+          "file_name",
+          "audio_duration",
+          "created_at"
+        ]
       },
-      "JobContentResponse": {
+      "JobContentList": {
         "type": "object",
         "properties": {
           "jobContent": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/JobContentItem"
+              "$ref": "#/components/schemas/JobContent"
             }
           }
-        }
+        },
+        "required": [
+          "jobContent"
+        ]
       },
-      "UploadUrlRequest": {
+      "JobList": {
         "type": "object",
         "properties": {
-          "fileName": {
-            "type": "string",
-            "description": "Name of the file to upload."
-          },
-          "fileType": {
-            "type": "string",
-            "description": "MIME type of the file."
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "job_id": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "job_id",
+                "token",
+                "created_at"
+              ]
+            }
           }
         },
         "required": [
-          "fileName",
-          "fileType"
+          "jobs"
         ]
       },
-      "DownloadUrlRequest": {
-        "type": "object",
-        "properties": {
-          "fileName": {
-            "type": "string",
-            "description": "Name of the file to download."
-          }
-        },
-        "required": [
-          "fileName"
-        ]
-      },
-      "FileFinalizedRequest": {
-        "type": "object",
-        "properties": {
-          "fileName": {
-            "type": "string",
-            "description": "Name of the file to check."
-          }
-        },
-        "required": [
-          "fileName"
-        ]
-      },
-      "SignedUrl": {
-        "type": "object",
-        "properties": {
-          "signedUrl": {
-            "type": "string",
-            "description": "Signed URL for file upload or download."
-          }
-        },
-        "required": [
-          "signedUrl"
-        ]
-      },
-      "FinalizedResponse": {
-        "type": "object",
-        "properties": {
-          "exists": {
-            "type": "boolean",
-            "description": "Indicates whether the file is finalized and available."
-          }
-        },
-        "required": [
-          "exists"
-        ]
-      },
-      "DeveloperToken": {
+      "DeveloperTokenResponse": {
         "type": "object",
         "properties": {
           "developerToken": {
-            "type": "string",
-            "description": "The newly created developer token."
+            "type": "string"
           }
         },
         "required": [
           "developerToken"
         ]
       },
-      "DeveloperTokenInfo": {
-        "type": "object",
-        "properties": {
-          "developerToken": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "developerToken",
-          "createdAt"
-        ]
-      },
-      "DeveloperTokensResponse": {
+      "DeveloperTokensList": {
         "type": "object",
         "properties": {
           "developerTokens": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DeveloperTokenInfo"
+              "type": "object",
+              "properties": {
+                "usage_token": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "usage_token",
+                "created_at"
+              ]
             }
           }
-        }
+        },
+        "required": [
+          "developerTokens"
+        ]
       },
       "Error": {
         "type": "object",
         "properties": {
           "error": {
-            "type": "integer",
-            "format": "int32"
+            "type": "integer"
           },
           "message": {
             "type": "string"
