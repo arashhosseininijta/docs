@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Voice Harbor API Docs",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -44,11 +44,32 @@
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Job Management",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete"
+              "api-reference/jobs/create",
+              "api-reference/jobs/list"
+            ]
+          },
+          {
+            "group": "File Management",
+            "pages": [
+              "api-reference/files/upload-url",
+              "api-reference/files/download-url",
+              "api-reference/files/finalized"
+            ]
+          },
+          {
+            "group": "Job Content",
+            "pages": [
+              "api-reference/job-content/register",
+              "api-reference/job-content/list"
+            ]
+          },
+          {
+            "group": "Admin",
+            "pages": [
+              "api-reference/admin/developer-token",
+              "api-reference/admin/developer-tokens"
             ]
           }
         ]
