@@ -1,16 +1,16 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "Voice Harbor API",
+    "description": "API for interacting with the Voice Harbor service. This API provides endpoints to create jobs, upload/download files, and manage developer tokens.",
+    "version": "0.45.1",
     "license": {
       "name": "MIT"
-    },
-    "version": "1.0.0"
+    }
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "http://example.com"
     }
   ],
   "security": [
@@ -19,30 +19,22 @@
     }
   ],
   "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
+    "/api/jobs": {
+      "post": {
+        "summary": "Create a new job",
+        "description": "Creates a new job and returns a job_id.",
+        "security": [
           {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+            "bearerAuth": []
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Job created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
+                  "$ref": "#/components/schemas/Job"
                 }
               }
             }
@@ -59,32 +51,27 @@
           }
         }
       },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
+      "get": {
+        "summary": "List jobs",
+        "description": "Retrieves a list of jobs associated with the authenticated token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "List of jobs",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/JobsList"
                 }
               }
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -96,28 +83,282 @@
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/api/jobs/{job_id}/content": {
+      "get": {
+        "summary": "Get job content",
+        "description": "Retrieves all content items for the specified job.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
-            "name": "id",
+            "name": "job_id",
             "in": "path",
-            "description": "ID of plant to delete",
+            "description": "Unique identifier for the job",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
+          "200": {
+            "description": "Job content retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobContentResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}/files/upload-url": {
+      "post": {
+        "summary": "Request signed URL for file upload",
+        "description": "Requests a signed URL that can be used to securely upload a file.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "description": "Unique identifier for the job",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Details for the file upload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed URL for file upload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedUrl"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}/files/download-url": {
+      "post": {
+        "summary": "Request signed URL for file download",
+        "description": "Requests a signed URL that can be used to securely download a file.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "description": "Unique identifier for the job",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Details for the file download",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DownloadUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed URL for file download",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedUrl"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/{job_id}/files/finalized": {
+      "post": {
+        "summary": "Check if a file is finalized",
+        "description": "Polls the server to check whether a specific file is available/finalized.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "description": "Unique identifier for the job",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Details to check file availability",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FileFinalizedRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File finalized status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinalizedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/developer-token": {
+      "post": {
+        "summary": "Create a developer token",
+        "description": "Maps an admin token to a new developer token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Admin token provided in the header. No additional body parameters are required.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Empty body. The admin token must be provided in the Authorization header."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Developer token created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeveloperToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/developer-tokens": {
+      "get": {
+        "summary": "List developer tokens",
+        "description": "Retrieves all developer tokens associated with the authenticated admin token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of developer tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeveloperTokensResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -132,47 +373,167 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
+      "Job": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
+          "job_id": {
+            "type": "string",
+            "description": "Unique identifier for the created job."
+          }
+        },
+        "required": [
+          "job_id"
+        ]
+      },
+      "JobsList": {
+        "type": "object",
+        "properties": {
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Job"
+            }
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
+      "JobContentItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
           },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
+          "job_id": {
+            "type": "string"
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "audio_duration": {
+            "type": "number",
+            "description": "Duration of the audio file in seconds."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "JobContentResponse": {
+        "type": "object",
+        "properties": {
+          "jobContent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobContentItem"
             }
           }
+        }
+      },
+      "UploadUrlRequest": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "Name of the file to upload."
+          },
+          "fileType": {
+            "type": "string",
+            "description": "MIME type of the file."
+          }
+        },
+        "required": [
+          "fileName",
+          "fileType"
         ]
       },
-      "Error": {
+      "DownloadUrlRequest": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "Name of the file to download."
+          }
+        },
         "required": [
-          "error",
-          "message"
-        ],
+          "fileName"
+        ]
+      },
+      "FileFinalizedRequest": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "Name of the file to check."
+          }
+        },
+        "required": [
+          "fileName"
+        ]
+      },
+      "SignedUrl": {
+        "type": "object",
+        "properties": {
+          "signedUrl": {
+            "type": "string",
+            "description": "Signed URL for file upload or download."
+          }
+        },
+        "required": [
+          "signedUrl"
+        ]
+      },
+      "FinalizedResponse": {
+        "type": "object",
+        "properties": {
+          "exists": {
+            "type": "boolean",
+            "description": "Indicates whether the file is finalized and available."
+          }
+        },
+        "required": [
+          "exists"
+        ]
+      },
+      "DeveloperToken": {
+        "type": "object",
+        "properties": {
+          "developerToken": {
+            "type": "string",
+            "description": "The newly created developer token."
+          }
+        },
+        "required": [
+          "developerToken"
+        ]
+      },
+      "DeveloperTokenInfo": {
+        "type": "object",
+        "properties": {
+          "developerToken": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "developerToken",
+          "createdAt"
+        ]
+      },
+      "DeveloperTokensResponse": {
+        "type": "object",
+        "properties": {
+          "developerTokens": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeveloperTokenInfo"
+            }
+          }
+        }
+      },
+      "Error": {
         "type": "object",
         "properties": {
           "error": {
@@ -182,7 +543,11 @@
           "message": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "error",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
