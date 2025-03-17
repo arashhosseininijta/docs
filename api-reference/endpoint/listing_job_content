@@ -1,0 +1,4 @@
+---
+title: 'Get Job Content'
+openapi: 'GET /api/jobs/{job_id}/content'
+---
