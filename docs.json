@@ -61,7 +61,6 @@
           {
             "group": "Job Content",
             "pages": [
-              "api-reference/job-content/register",
               "api-reference/job-content/list"
             ]
           },
