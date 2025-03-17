@@ -407,7 +407,7 @@
     },
     "/api/admin/developer-token": {
       "post": {
-        "summary": "Create developer token",
+        "summary": "Create a developer token",
         "description": "Creates a new developer token mapped to the provided admin token.",
         "security": [
           {
