@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Voice Harbor API",
-    "description": "API for managing voice processing jobs, file uploads/downloads, and job content registration for the Voice Harbor service.",
+    "description": "API for managing voice processing jobs, file uploads/downloads, and job content submission for the Voice Harbor service.",
     "version": "0.45.1"
   },
   "servers": [
@@ -341,8 +341,8 @@
     },
     "/api/jobs/{jobId}/content": {
       "post": {
-        "summary": "Register job content",
-        "description": "Registers a job content item, including file name and audio duration.",
+        "summary": "Submit job content",
+        "description": "Submits a job content item, including file name and audio duration.",
         "security": [
           {
             "bearerAuth": []
@@ -365,18 +365,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/JobContentRegistrationRequest"
+                "$ref": "#/components/schemas/JobContentSubmissionRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Job content registered successfully",
+            "description": "Job content submitted successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/JobContentRegistrationResponse"
+                  "$ref": "#/components/schemas/JobContentSubmissionResponse"
                 }
               }
             }
@@ -647,7 +647,7 @@
           "fileName"
         ]
       },
-      "JobContentRegistrationRequest": {
+      "JobContentSubmissionRequest": {
         "type": "object",
         "properties": {
           "fileName": {
@@ -662,7 +662,7 @@
           "audio_duration"
         ]
       },
-      "JobContentRegistrationResponse": {
+      "JobContentSubmissionResponse": {
         "type": "object",
         "properties": {
           "message": {
