@@ -5,7 +5,7 @@
     "description": "API for managing voice processing jobs, file uploads/downloads, and retrieving job content for the Voice Harbor service.",
     "version": "0.45.1"
   },
-  "Voice Harbor APIs": [
+  "servers": [
     {
       "url": "http://sandbox.voiceharbor.com"
     }
