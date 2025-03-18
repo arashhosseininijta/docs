@@ -1,3 +1,4 @@
+
 ---
 title: 'Transcribe a pre-recorded audio file in Python and remove PHI'
 description: 'Learn how to transcribe a pre-recorded audio file using the Voice Harbor API in Python, while removing PHI.'
@@ -11,11 +12,9 @@ description: 'Learn how to transcribe a pre-recorded audio file using the Voice 
 
 Before you start, you'll need to install the required libraries for interacting with the Voice Harbor API.
 
-<CodeGroup>
-
+```bash
 pip install voiceharbor-sdk
-
-</CodeGroup>
+```
 
 ## Step 2: Set Up Your API Key
 
@@ -23,8 +22,7 @@ To authenticate with the Voice Harbor API, you'll need to set your API key. Obta
 
 To set up the developer token for authentication, use the following code:
 
-<CodeGroup>
-
+```python
 BASE_URL = "https://voiceharbor.api.com"
 admin_token = "your_admin_token_here"
 
@@ -33,15 +31,13 @@ usage_token = VoiceHarborClient.create_developer_token(BASE_URL, admin_token)
 
 # Received developer token stored below:
 print(f"Developer token stored: ./credentials/VoiceHarbor_Developer.credential.<date>.yaml")
-
-</CodeGroup>
+```
 
 ## Step 3: Set Up the Client and Create a Job
 
 Once you have the necessary setup, you can create a job on the server and interact with the API. Here's how to do it:
 
-<CodeGroup>
-
+```python
 BASE_URL = "https://voiceharbor.api.com"
 usage_token = "your_usage_token_here"
 
@@ -49,15 +45,13 @@ usage_token = "your_usage_token_here"
 # Create a new job immediately.
 job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
 print(f"Job created with ID: {job_id}")
-
-</CodeGroup>
+```
 
 ## Step 4: Initialize the Client and Submit Job Files
 
 Next, initialize the client and define the parameters for your job, including the files you want to submit for transcription.
 
-<CodeGroup>
-
+```python
 # Initialize the client with the new job_id and input directory.
 client = VoiceHarborClient(
     base_url=BASE_URL,
@@ -74,15 +68,13 @@ job_params = {
 
 # Upload input files.
 job_params = client.submit_files(job_params)
-
-</CodeGroup>
+```
 
 ## Step 5: Submit Job and Download Results
 
 Now, submit the job and wait for the transcription results. Here's how to complete the process:
 
-<CodeGroup>
-
+```python
 # Immediately submit the job file (YAML)
 job_file = client.submit_job(job_params)
 print(f"Job file submitted: {job_file}")
@@ -90,8 +82,7 @@ print(f"Job file submitted: {job_file}")
 # Wait for and download the processed results.
 downloaded_results = client.download_results(output_dir="./results")
 print("Downloaded results:", downloaded_results)
-
-</CodeGroup>
+```
 
 ## Troubleshooting
 
