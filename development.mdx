@@ -1,6 +1,6 @@
 ---
 title: 'Transcribe a pre-recorded audio file in Python and remove PHI'
-description: 'Preview changes locally to update your docs'
+description: 'Learn how to transcribe a pre-recorded audio file using the Voice Harbor API in Python, while removing PHI.'
 ---
 
 <Info>
@@ -62,7 +62,7 @@ Next, initialize the client and define the parameters for your job, including th
 client = VoiceHarborClient(
     base_url=BASE_URL,
     job_id=job_id,
-    token=AUTH_TOKEN,
+    token=usage_token,  # Ensure correct token is used here
     inputs_dir="./inputs"
 )
 
