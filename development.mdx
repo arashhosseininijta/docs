@@ -1,107 +1,112 @@
 ---
-title: 'Development'
+title: 'Transcribe a pre-recorded audio file in Python and remove PHI'
 description: 'Preview changes locally to update your docs'
 ---
 
 <Info>
-  **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding. <br />
-  Please upgrade to ```docs.json``` before proceeding and delete the legacy ```mint.json``` file.
+  **Prerequisite**: Ensure that you have Python 3.6+ installed and an active Voice Harbor account with API access.
 </Info>
 
-Follow these steps to install and run Mintlify on your operating system:
+## Step 1: Install Required Libraries
 
-**Step 1**: Install Mintlify:
-
-<CodeGroup>
-
-  ```bash npm
-  npm i -g mintlify
-  ```
-
-```bash yarn
-yarn global add mintlify
-```
-
-</CodeGroup>
-
-**Step 2**: Navigate to the docs directory (where the `docs.json` file is located) and execute the following command:
-
-```bash
-mintlify dev
-```
-
-A local preview of your documentation will be available at `http://localhost:3000`.
-
-### Custom Ports
-
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. To run Mintlify on port 3333, for instance, use this command:
-
-```bash
-mintlify dev --port 3333
-```
-
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
-
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
-
-## Mintlify Versions
-
-Please note that each CLI release is associated with a specific version of Mintlify. If your local website doesn't align with the production version, please update the CLI:
+Before you start, you'll need to install the required libraries for interacting with the Voice Harbor API.
 
 <CodeGroup>
 
-```bash npm
-npm i -g mintlify@latest
-```
-
-```bash yarn
-yarn global upgrade mintlify
-```
+pip install voiceharbor-sdk
 
 </CodeGroup>
 
-## Validating Links
+## Step 2: Set Up Your API Key
 
-The CLI can assist with validating reference links made in your documentation. To identify any broken links, use the following command:
+To authenticate with the Voice Harbor API, you'll need to set your API key. Obtain your API key from your Voice Harbor dashboard.
 
-```bash
-mintlify broken-links
-```
+To set up the developer token for authentication, use the following code:
 
-## Deployment
+<CodeGroup>
 
-<Tip>
-  Unlimited editors available under the [Pro
-  Plan](https://mintlify.com/pricing) and above.
-</Tip>
+BASE_URL = "https://voiceharbor.api.com"
+admin_token = "your_admin_token_here"
 
-If the deployment is successful, you should see the following:
+# Create a developer token for usage with Voice Harbor
+usage_token = VoiceHarborClient.create_developer_token(BASE_URL, admin_token)
 
-<Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
-</Frame>
+# Received developer token stored below:
+print(f"Developer token stored: ./credentials/VoiceHarbor_Developer.credential.<date>.yaml")
 
-## Code Formatting
+</CodeGroup>
 
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
+## Step 3: Set Up the Client and Create a Job
+
+Once you have the necessary setup, you can create a job on the server and interact with the API. Here's how to do it:
+
+<CodeGroup>
+
+BASE_URL = "https://voiceharbor.api.com"
+usage_token = "your_usage_token_here"
+
+# Create a new job on the server via the class method.
+# Create a new job immediately.
+job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+print(f"Job created with ID: {job_id}")
+
+</CodeGroup>
+
+## Step 4: Initialize the Client and Submit Job Files
+
+Next, initialize the client and define the parameters for your job, including the files you want to submit for transcription.
+
+<CodeGroup>
+
+# Initialize the client with the new job_id and input directory.
+client = VoiceHarborClient(
+    base_url=BASE_URL,
+    job_id=job_id,
+    token=AUTH_TOKEN,
+    inputs_dir="./inputs"
+)
+
+# Build job parameters (e.g., list of agents and any other details).
+job_params = {
+    "agents": ["health-generic"],  # Define agents for transcription or analysis
+    "files": []  # The submit_files method will append uploaded file names.
+}
+
+# Upload input files.
+job_params = client.submit_files(job_params)
+
+</CodeGroup>
+
+## Step 5: Submit Job and Download Results
+
+Now, submit the job and wait for the transcription results. Here's how to complete the process:
+
+<CodeGroup>
+
+# Immediately submit the job file (YAML)
+job_file = client.submit_job(job_params)
+print(f"Job file submitted: {job_file}")
+
+# Wait for and download the processed results.
+downloaded_results = client.download_results(output_dir="./results")
+print("Downloaded results:", downloaded_results)
+
+</CodeGroup>
 
 ## Troubleshooting
 
-<AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
+If you encounter any issues while transcribing the audio, check the following:
 
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of mintlify: `npm remove -g mintlify`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall mintlify: `npm install -g mintlify`
-  </Accordion>
+- Ensure that the audio file path is correct and the file is accessible.
+- Check the format of the audio file. Voice Harbor currently supports formats like WAV, MP3, and FLAC.
 
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the \~/.mintlify folder. Afterwards, run `mintlify dev` again.
-  </Accordion>
-</AccordionGroup>
+## Additional Resources
 
-Curious about what changed in the CLI version? [Check out the CLI changelog.](https://www.npmjs.com/package/mintlify?activeTab=versions)
+For more information, you can refer to the following:
+
+- [API Reference](https://docs.voiceharbor.com/api-reference/introduction)
+- [Voice Harbor SDK Documentation](https://docs.voiceharbor.com/sdk/python)
+
+## Next Steps
+
+> If you're interested in additional use cases or need help with more advanced features, don't hesitate to explore our comprehensive [Voice Harbor Documentation](https://docs.voiceharbor.com/).
