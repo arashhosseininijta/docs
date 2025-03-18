@@ -36,12 +36,14 @@
             "group": "Speech to Text",
             "pages": [
               "essentials/markdown",
+              "essentials/code"
             ]
           },
           {
             "group": "Speech Understanding",
             "pages": [
               "essentials/markdown",
+              "essentials/code"
             ]
           }
         ]
