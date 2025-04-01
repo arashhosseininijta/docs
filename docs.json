@@ -25,7 +25,7 @@
             "pages": [
               "BuildwithVoiceHarbor/JobParameters",
               "BuildwithVoiceHarbor/Model",
-              "essentials/navigation",
+              "BuildwithVoiceHarbor/Admin",
               "essentials/reusable-snippets"
             ]
           },
