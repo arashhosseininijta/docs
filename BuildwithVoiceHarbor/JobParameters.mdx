@@ -10,7 +10,12 @@ icon: 'gear'
 <ResponseField name="files" type="list" required>
 List of local input audio file path(s).  
 
-Example: `['/path/to/file1.mp3', '/path/to/file1.mp3', ...]`
+Example: 
+```yaml
+files:
+- filename1.mp3
+- filename2.mp3
+```
 </ResponseField>
 
 <ResponseField name="model" type="string" default="mini">
@@ -28,7 +33,7 @@ Example: `job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ..
 <ResponseField name="agents" type="list" default="health-generic">
   Agents with specififc domain dependency and purpose. Available agents: health-generic, clinical, hipaa.
 
-Example: `job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ...], "model":"advanced", "agents": ["health-generic"]}`
+Example: `["health-generic", "clinical"}`
 </ResponseField>
 
 ## Submit your Job using Voice Habor's SDK 
