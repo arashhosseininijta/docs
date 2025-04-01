@@ -12,3 +12,24 @@ Our ASR component support's for up to 99 languages and robust code-switching cap
 
 Looking ahead, we’re also pushing the envelope by refining our model with an extensive trove of medical data to eliminate hallucinations and boost reliability in even the most demanding environments. The Q2 realease will not only improve the recognition of complex medical terminology but also significantly mitigate transcirption errors, ensuring that results are both accurate and reliable. Whether you need rapid transcription for global communications or precise documentation in critical healthcare settings, our ASR component is designed to deliver excellence.
 
+ ### Transcribe without PHI reduction 
+
+---python
+BASE_URL = "https://voiceharbor.ai"
+usage_token = "USAGE_TOKEN"
+# Create a new job on the server via the class method.
+job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+
+client = VoiceHarborClient(
+    base_url=BASE_URL,
+    job_id=job_id,
+    token=usage_token,
+    inputs_dir="./inputs/tests"
+)
+
+# Submit input files and the job file.and 
+job_params = {"files": [], "task":"transcribe"} # default: "protect"  
+job_params = client.submit_files(job_params)
+job_file = client.submit_job(job_params)
+logger.info(f"Job file created: {job_file}")
+---
