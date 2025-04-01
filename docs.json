@@ -17,16 +17,16 @@
             "group": "PHI and Biometric reduction",
             "pages": [
               "doc",
-              "PHI",
-              "Biometric"
+              "BuildwithVoiceHarbor/JobParameters",
+              "BuildwithVoiceHarbor/Model",
+              "BuildwithVoiceHarbor/Admin"
             ]
           },
           {
             "group": "Build with Voice Harbor",
             "pages": [
-              "BuildwithVoiceHarbor/JobParameters",
-              "BuildwithVoiceHarbor/Model",
-              "BuildwithVoiceHarbor/Admin"
+              "PHI",
+              "Biometric"
             ]
           },
           {
