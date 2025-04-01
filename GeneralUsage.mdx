@@ -23,6 +23,14 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
 
     Minimal file upload example: 
     ```python
+    def get_signed_url(job_id, file_name, mime_type):
+        """Retrieves a signed URL for uploading a file."""
+        url = f"{BASE_URL}/api/jobs/{job_id}/files/upload-url"
+        payload = {"fileName": file_name, "fileType": mime_type}
+        resp = requests.post(url, json=payload, headers={"Authorization": TOKEN})
+        resp.raise_for_status()
+        return resp.json()["signedUrl"]
+
     def upload_file(job_id, file_path):
         """Uploads a file to the server using its signed URL."""
         file_path = Path(file_path)
