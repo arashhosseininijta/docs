@@ -1,1 +1,4 @@
-
+---
+title: 'Reduct Biometric identity in audio'
+description: "Learn how to replace a pre-existing identity in audio file using the Voice Harbor's Python SDK, while removing Emotion and Phonetic information."
+---
