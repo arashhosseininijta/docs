@@ -23,7 +23,7 @@
           {
             "group": "Build with Voice Harbor",
             "pages": [
-              "essentials/settings",
+              "BuildwithVoiceHarbor/JobParameters",
               "essentials/markdown",
               "essentials/navigation",
               "essentials/reusable-snippets"
