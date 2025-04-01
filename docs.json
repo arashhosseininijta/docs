@@ -3,11 +3,11 @@
   "theme": "mint",
   "name": "Voice Harbor API Docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#0021CC",
+    "light": "#F1F1F1",
+    "dark": "#0C0C0C"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/nijta-favicon.svg",
   "navigation": {
     "tabs": [
       {
@@ -110,8 +110,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/Nijta-logo-light.svg",
+    "dark": "/logo/Nijta-logo-dark.svg"
   },
   "navbar": {
     "links": [
