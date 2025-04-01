@@ -14,7 +14,7 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "PHI and Biometric reduction",
+            "group": "Build with Voice Harbor",
             "pages": [
               "doc",
               "BuildwithVoiceHarbor/JobParameters",
@@ -23,7 +23,7 @@
             ]
           },
           {
-            "group": "Build with Voice Harbor",
+            "group": "PHI and Biometric reduction",
             "pages": [
               "PHI",
               "Biometric"
