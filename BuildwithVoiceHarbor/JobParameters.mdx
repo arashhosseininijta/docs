@@ -30,3 +30,31 @@ Example: `job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ..
 
 Example: `job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ...], "model":"advanced", "agents": ["health-generic"]}`
 </ResponseField>
+
+## Submit your Job
+
+<Tip>
+
+Speech to text is by **default** applied for the task **protect**. To have the transcription without any reduction use **transcribe** as task.  
+
+</Tip>
+
+
+```python
+BASE_URL = "https://voiceharbor.ai"
+usage_token = "USAGE_TOKEN"
+# Create a new job on the server via the class method.
+job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+
+client = VoiceHarborClient(
+    base_url=BASE_URL,
+    job_id=job_id,
+    token=usage_token,
+    inputs_dir="./inputs/tests"
+)
+
+# Submit input files and the job file. 
+job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ...], "model":"mini"}  
+job_file = client.submit_job(job_params)
+logger.info(f"Job file created: {job_file}")
+```
