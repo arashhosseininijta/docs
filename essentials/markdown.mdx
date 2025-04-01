@@ -1,23 +1,86 @@
 ---
-title: 'Markdown Syntax'
+title: 'Choose the right model'
 description: 'Text, title, and styling in standard markdown'
 icon: 'text-size'
 ---
 
-## Titles
+## Advanced vs. Mini
 
-Best used for section headers.
+Our Mini and Advanced systems are designed to meet different customer needs when it comes to PHI redaction.
+
+The Mini system harnesses a fine-tuned transformer model to quickly and accurately reduce PHI. With benchmark results showing it processes a 6-minute mono file in about 83.58 seconds, Mini is ideal for high-volume or time-sensitive scenarios. Its streamlined architecture ensures that redaction is performed rapidly without compromising on quality, making it an excellent choice for environments where speed is crucial.
+
+In contrast, the Advanced system leverages a private large language model (LLM) equipped with sophisticated reasoning capabilities. Although it takes around 185.39 seconds to process the same 6-minute file, the Advanced system excels in handling complex redaction tasks. Its integrated reasoning allows for a deeper contextual analysis, ensuring that even subtle or ambiguous PHI elements are accurately identified and redacted. This level of precision is particularly beneficial for applications where data security and comprehensive compliance are paramount.
+
+### Using Mini model
 
 ```md
-## Titles
+  BASE_URL = "https://voiceharbor.ai"
+  usage_token = "USAGE_TOKEN"
+  # Create a new job on the server via the class method.
+  job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+  
+  client = VoiceHarborClient(
+      base_url=BASE_URL,
+      job_id=job_id,
+      token=usage_token,
+      inputs_dir="./inputs/tests"
+  )
+  
+  # Submit input files and the job file.and 
+  job_params = {"files": [], "model":"mini"} 
+  job_params = client.submit_files(job_params)
+  job_file = client.submit_job(job_params)
+  logger.info(f"Job file created: {job_file}")
 ```
 
-### Subtitles
+### Labels
 
-Best use to subsection headers.
+Available labels
 
 ```md
-### Subtitles
+"medical_record_number": "A unique identifier assigned to a patient's medical records.",
+"date_of_birth": "The birth date of an individual.",
+"ssn": "Social Security Number, a unique number assigned to U.S. citizens and some residents.",
+"date": "A generic date field representing an event or record date.",
+"first_name": "The given name of a person.",
+"email": "An electronic mail address used for communication.",
+"last_name": "The family or surname of a person.",
+"customer_id": "A unique identifier for a customer account.",
+"employee_id": "A unique identifier for an employee within an organization.",
+"name": "A general name field which could represent a full name or title.",
+"street_address": "The physical street address for a residence or business.",
+"phone_number": "A contact telephone number.",
+"ipv4": "An IPv4 address used in computer networking.",
+"credit_card_number": "A number associated with a credit card account.",
+"license_plate": "A vehicle's registration identifier.",
+"address": "A general address field for various uses.",
+"user_name": "A chosen username for account login or identification.",
+"device_identifier": "A unique identifier assigned to a device.",
+"bank_routing_number": "A number used to identify a financial institution in transactions.",
+"date_time": "Combined date and time information.",
+"company_name": "The name of a company or business entity.",
+"unique_identifier": "A general purpose unique identifier.",
+"biometric_identifier": "A unique biometric feature, such as a fingerprint or facial recognition data.",
+"account_number": "A number associated with a financial or user account.",
+"city": "The name of a city in an address.",
+"certificate_license_number": "An identifier for a professional or business license.",
+"time": "A specific time, separate from the date.",
+"postcode": "A postal or ZIP code used for mail delivery.",
+"vehicle_identifier": "An identifier unique to a vehicle.",
+"coordinate": "Geographical coordinate data (latitude/longitude).",
+"country": "The name of a country.",
+"api_key": "A key used to authenticate and authorize API requests.",
+"ipv6": "An IPv6 address used in modern computer networks.",
+"password": "A secret word or phrase used for authentication.",
+"health_plan_beneficiary_number": "An identifier for a health plan beneficiary.",
+"national_id": "A national identification number.",
+"tax_id": "A number used for tax identification purposes.",
+"url": "A web address.",
+"state": "A state or region within a country.",
+"swift_bic": "A code used for international bank transfers (SWIFT/BIC).",
+"cvv": "The Card Verification Value found on credit cards.",
+"pin": "A Personal Identification Number used for security."
 ```
 
 <Tip>
@@ -26,63 +89,8 @@ Each **title** and **subtitle** creates an anchor and also shows up on the table
 
 </Tip>
 
-## Text Formatting
-
-We support most markdown formatting. Simply add `**`, `_`, or `~` around text to format it.
-
-| Style         | How to write it   | Result          |
-| ------------- | ----------------- | --------------- |
-| Bold          | `**bold**`        | **bold**        |
-| Italic        | `_italic_`        | _italic_        |
-| Strikethrough | `~strikethrough~` | ~strikethrough~ |
-
-You can combine these. For example, write `**_bold and italic_**` to get **_bold and italic_** text.
-
-You need to use HTML to write superscript and subscript text. That is, add `<sup>` or `<sub>` around your text.
-
-| Text Size   | How to write it          | Result                 |
-| ----------- | ------------------------ | ---------------------- |
-| Superscript | `<sup>superscript</sup>` | <sup>superscript</sup> |
-| Subscript   | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
-
-## Linking to Pages
-
-You can add a link by wrapping text in `[]()`. You would write `[link to google](https://google.com)` to [link to google](https://google.com).
-
-Links to pages in your docs need to be root-relative. Basically, you should include the entire folder path. For example, `[link to text](/writing-content/text)` links to the page "Text" in our components section.
-
-Relative links like `[link to text](../text)` will open slower because we cannot optimize them as easily.
-
-## Blockquotes
-
-### Singleline
-
-To create a blockquote, add a `>` in front of a paragraph.
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
+## Output
 
 ```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
-```
-
-### Multiline
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-```
-
-### LaTeX
-
-Mintlify supports [LaTeX](https://www.latex-project.org) through the Latex component.
-
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
-
-```md
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+Output Json
 ```
