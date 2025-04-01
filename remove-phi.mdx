@@ -5,14 +5,16 @@ description: "Learn how to transcribe a pre-recorded audio file using the Voice 
 ## Using Voice Harbor API
 
 <Steps>
-  <Step title="Job Managment.">
-    Create a job, select parameters and add your files.
+  <Step title="Token Managment.">
+    [Use your ADMIN_TOKEN to create USAGE_TOKEN(s)](https://docs.nijta.com/api-reference/admin/developer-token).
   </Step>
-  <Step title="Submit File and Job.">
-    Submit your job and files.
+  <Step title="Submision Managment.">
+    [Use the USAGE_TOKEN to create a job.](https://docs.nijta.com/api-reference/jobs/create)
+    [Select parameters.](https://docs.nijta.com/BuildwithVoiceHarbor/JobParameters#parameters) and 
+    [Submit your file(s).](https://docs.nijta.com/api-reference/files/upload-url)
   </Step>
-  <Step title="Download final results.">
-    Download results for submitted files.
+  <Step title="Download protected audio and trascription.">
+    Use your USAGE_TOKEN and JOB_ID to download the results.
   </Step>
 </Steps>
 
