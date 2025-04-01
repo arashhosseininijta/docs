@@ -1,0 +1,137 @@
+---
+title: 'Reduct PHI in audio and transcription'
+description: "Learn how to transcribe a pre-recorded audio file using the Voice Harbor's Python SDK, while removing PHI."
+---
+## General usage of Voice Harbor API
+
+<Steps>
+  <Step title="Token Managment.">
+    1.1 [Use your admin token to create usage token's.](https://docs.nijta.com/api-reference/admin/developer-token).
+  </Step>
+  <Step title="Submision Managment.">
+    2.1 [Use the usage token to create a job.](https://docs.nijta.com/api-reference/jobs/create)
+
+    2.2 [Select](https://docs.nijta.com/BuildwithVoiceHarbor/Model) and [Define parameters.](https://docs.nijta.com/BuildwithVoiceHarbor/JobParameters#parameters) 
+
+    2.3 [Submit your file(s).](https://docs.nijta.com/api-reference/files/upload-url)
+  </Step>
+  <Step title="Download protected audio and trascription.">
+    3.1 [Use your usage token and job id to download the results.](https://docs.nijta.com/api-reference/files/download-url)
+  </Step>
+</Steps>
+
+## Protecting a pre-recorded audio file using the Voice Harbor's Python SDK
+
+<Info>
+  **Prerequisite**: Ensure that you have Python 3.6+ installed and an active Voice Harbor account with API access.
+</Info>
+
+### Step 1: Install Required Libraries
+
+Before you start, you'll need to install the required libraries for interacting with the Voice Harbor API.
+
+<CardGroup cols={1}>
+  <Card
+    title="Python SDK"
+    icon="python"
+    href="https://voiceharbor.com/docs/sdk/python"
+  >
+    Start using our Python SDK to connect with Voice Harbor and implement voice solutions
+  </Card>
+</CardGroup>
+
+#### From Source
+
+1. Clone the Voice Harbor SDK [repository](https://github.com/Nijta-API/voice-harbor-client/blob/main/python/README.md) from Github.
+2. Change into the project directory.
+3. Install the package in editable mode using pip:
+
+```bash
+  pip install -e .
+```
+
+### Step 2: Set Up Your API Key
+
+To authenticate with the Voice Harbor API, you'll need to set your API key. Obtain your API key from your Voice Harbor dashboard.
+
+To set up the developer token for authentication, use the following code:
+
+```python
+BASE_URL = "https://voiceharbor.ai"
+admin_token = "your_admin_token_here"
+
+# Create a developer token for usage with Voice Harbor
+usage_token = VoiceHarborClient.create_developer_token(BASE_URL, admin_token)
+
+# Received developer token stored below:
+print(f"Developer token stored: ./credentials/VoiceHarbor_Developer.credential.<date>.yaml")
+```
+
+### Step 3: Set Up the Client and Create a Job
+
+Once you have the necessary setup, you can create a job on the server and interact with the API. Here's how to do it:
+
+```python
+BASE_URL = "https://voiceharbor.ai"
+usage_token = "your_usage_token_here"
+
+# Create a new job on the server via the class method.
+# Create a new job immediately.
+job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+print(f"Job created with ID: {job_id}")
+```
+
+### Step 4: Initialize the Client and Submit Job Files
+
+Next, initialize the client and define the parameters for your job, including the files you want to submit for transcription.
+
+```python
+# Initialize the client with the new job_id and input directory.
+client = VoiceHarborClient(
+    base_url=BASE_URL,
+    job_id=job_id,
+    token=usage_token,  # Ensure correct token is used here
+    inputs_dir="./inputs"
+)
+
+# Build job parameters (e.g., list of agents and any other details).
+job_params = {
+    "agents": ["health-generic"],  # Define agents for transcription or analysis
+    "files": []  # The submit_files method will append uploaded file names.
+}
+
+# Upload input files.
+job_params = client.submit_files(job_params)
+```
+
+### Step 5: Submit Job and Download Results
+
+Now, submit the job and wait for the transcription results. Here's how to complete the process:
+
+```python
+# Immediately submit the job file (YAML)
+job_file = client.submit_job(job_params)
+print(f"Job file submitted: {job_file}")
+
+# Wait for and download the processed results.
+downloaded_results = client.download_results(output_dir="./results")
+print("Downloaded results:", downloaded_results)
+```
+
+## Troubleshooting
+
+If you encounter any issues while transcribing the audio, check the following:
+
+- Ensure that the audio file path is correct and the file is accessible.
+- Check the format of the audio file. Voice Harbor currently supports formats like WAV, MP3, and FLAC.
+
+## Additional Resources
+
+For more information, you can refer to the following:
+
+- [API Reference](https://docs.nijta.com/api-reference/introduction)
+- [Voice Harbor SDK Documentation](https://docs.voiceharbor.com/sdk/python)
+
+## Next Steps
+
+> If you're interested in additional use cases or need help with more advanced features, don't hesitate to explore our comprehensive [Voice Harbor Documentation](https://docs.voiceharbor.com/).
