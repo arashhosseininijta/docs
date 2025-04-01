@@ -105,49 +105,22 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
   </Step>
 </Steps>
 
-## Minimal curl usage of Voice Harbor API
-
-Minimal curl example:
-```bash
-#!/bin/bash
-set -e
-
-[ $# -lt 1 ] && { echo "Usage: $0 <input_file>" >&2; exit 1; }
-INPUT_FILE="$1"
-BASE_URL="https://voiceharbor.ai"
-TOKEN="USAGE_TOKEN"
-command -v jq >/dev/null 2>&1 || { echo "jq is required" >&2; exit 1; }
-
-# Step 1: Create the job and capture the job_id.
-job_response=$(curl -s -X POST -H "Authorization: $TOKEN" "$BASE_URL/api/jobs")
-job_id=$(echo "$job_response" | jq -r '.job_id')
-
-# Step 2: Upload the input file.
-MIME=$(file --mime-type -b "$INPUT_FILE")
-FILENAME=$(basename "$INPUT_FILE")
-upload_response=$(curl -s -X POST \
-  -H "Authorization: $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{\"fileName\":\"$FILENAME\", \"fileType\":\"$MIME\"}" \
-  "$BASE_URL/api/jobs/$job_id/files/upload-url")
-signed_url=$(echo "$upload_response" | jq -r '.signedUrl')
-curl -s -X PUT -H "Content-Type: $MIME" --data-binary @"$INPUT_FILE" "$signed_url"
-
-# Step 3: Create and upload the YAML job file.
-JOB_YAML="${job_id}.yaml"
-cat > "$JOB_YAML" <<EOF
-agents:
-  - health-generic
-files:
-  - $FILENAME
-model: mini
-task: transcribe
-EOF
-yaml_response=$(curl -s -X POST \
-  -H "Authorization: $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{\"fileName\":\"$JOB_YAML\", \"fileType\":\"text/yaml\"}" \
-  "$BASE_URL/api/jobs/$job_id/files/upload-url")
-yaml_signed_url=$(echo "$yaml_response" | jq -r '.signedUrl')
-curl -s -X PUT -H "Content-Type: text/yaml" --data-binary @"$JOB_YAML" "$yaml_signed_url"
+Minimal usage example:
+```python
+# -----------------------------------------------------------------------------
+# Example usage:
+#
+# job_id = create_job()
+#
+# # Upload the main input file.
+# upload_file(job_id, "input.wav")
+#
+# # Create and upload the job YAML file.
+# yaml_file = create_job_yaml(job_id, "input.wav")
+# upload_file(job_id, yaml_file)
+#
+# # Download the processed files (the original and its JSON result).
+# download_file(job_id, "input.wav", "./results")
+# download_file(job_id, "input.json", "./results")
+# -----------------------------------------------------------------------------
 ```
