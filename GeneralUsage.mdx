@@ -64,7 +64,6 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
             resp = requests.put(signed_url, data=f, headers={"Content-Type": mime_type})
             resp.raise_for_status()
     ```
-
   </Step>
   <Step title="Download protected audio and trascription.">
     3.1 [Use your usage token and job id to download the results.](https://docs.nijta.com/api-reference/files/download-url)
@@ -93,6 +92,51 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
         with dest.open("wb") as f:
             f.write(resp.content)
     ```
+  </Step>
+  <Step title="Using Curl">
+    Minimal curl example:
+    ```bash
+    #!/bin/bash
+    set -e
 
+    [ $# -lt 1 ] && { echo "Usage: $0 <input_file>" >&2; exit 1; }
+    INPUT_FILE="$1"
+    BASE_URL="https://voiceharbor.ai"
+    TOKEN="USAGE_TOKEN"
+    command -v jq >/dev/null 2>&1 || { echo "jq is required" >&2; exit 1; }
+
+    # Step 1: Create the job and capture the job_id.
+    job_response=$(curl -s -X POST -H "Authorization: $TOKEN" "$BASE_URL/api/jobs")
+    job_id=$(echo "$job_response" | jq -r '.job_id')
+
+    # Step 2: Upload the input file.
+    MIME=$(file --mime-type -b "$INPUT_FILE")
+    FILENAME=$(basename "$INPUT_FILE")
+    upload_response=$(curl -s -X POST \
+      -H "Authorization: $TOKEN" \
+      -H "Content-Type: application/json" \
+      -d "{\"fileName\":\"$FILENAME\", \"fileType\":\"$MIME\"}" \
+      "$BASE_URL/api/jobs/$job_id/files/upload-url")
+    signed_url=$(echo "$upload_response" | jq -r '.signedUrl')
+    curl -s -X PUT -H "Content-Type: $MIME" --data-binary @"$INPUT_FILE" "$signed_url"
+
+    # Step 3: Create and upload the YAML job file.
+    JOB_YAML="${job_id}.yaml"
+    cat > "$JOB_YAML" <<EOF
+    agents:
+      - health-generic
+    files:
+      - $FILENAME
+    model: mini
+    task: transcribe
+    EOF
+    yaml_response=$(curl -s -X POST \
+      -H "Authorization: $TOKEN" \
+      -H "Content-Type: application/json" \
+      -d "{\"fileName\":\"$JOB_YAML\", \"fileType\":\"text/yaml\"}" \
+      "$BASE_URL/api/jobs/$job_id/files/upload-url")
+    yaml_signed_url=$(echo "$yaml_response" | jq -r '.signedUrl')
+    curl -s -X PUT -H "Content-Type: text/yaml" --data-binary @"$JOB_YAML" "$yaml_signed_url"
+    ```
   </Step>
 </Steps>
