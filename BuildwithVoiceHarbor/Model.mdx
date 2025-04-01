@@ -12,31 +12,20 @@ The Mini system harnesses a fine-tuned transformer model to quickly and accurate
 
 In contrast, the Advanced system leverages a private large language model (LLM) equipped with sophisticated reasoning capabilities. Although it takes around 185.39 seconds to process the same 6-minute file, the Advanced system excels in handling complex redaction tasks. Its integrated reasoning allows for a deeper contextual analysis, ensuring that even subtle or ambiguous PHI elements are accurately identified and redacted. This level of precision is particularly beneficial for applications where data security and comprehensive compliance are paramount.
 
-### Using Mini model
+<ResponseField name="model" type="string" default="mini">
+Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM. Available model's: advanced, mini.
 
-```python
-  BASE_URL = "https://voiceharbor.ai"
-  usage_token = "USAGE_TOKEN"
-  # Create a new job on the server via the class method.
-  job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
-  
-  client = VoiceHarborClient(
-      base_url=BASE_URL,
-      job_id=job_id,
-      token=usage_token,
-      inputs_dir="./inputs/tests"
-  )
-  
-  # Submit input files and the job file.and 
-  job_params = {"files": [], "model":"mini"} 
-  job_params = client.submit_files(job_params)
-  job_file = client.submit_job(job_params)
-  logger.info(f"Job file created: {job_file}")
+Example: 
+```yaml
+files:
+- filename1.mp3
+- filename2.wav
+model:
+- advanced
 ```
+</ResponseField>
 
-### Labels
-
-Available labels
+### Mini model labels
 
 ```bash
 "medical_record_number": "A unique identifier assigned to a patient's medical records.",
@@ -90,28 +79,7 @@ Each **title** and **subtitle** creates an anchor and also shows up on the table
 </Tip>
 
 
-### Using Advanced model
-
-```python
-  BASE_URL = "https://voiceharbor.ai"
-  usage_token = "USAGE_TOKEN"
-  # Create a new job on the server via the class method.
-  job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
-  
-  client = VoiceHarborClient(
-      base_url=BASE_URL,
-      job_id=job_id,
-      token=usage_token,
-      inputs_dir="./inputs/tests"
-  )
-  
-  # Submit input files and the job file.and 
-  job_params = {"files": [], "model":"advanced", "agents": ["health-generic"]} 
-  job_params = client.submit_files(job_params)
-  job_file = client.submit_job(job_params)
-  logger.info(f"Job file created: {job_file}")
-```
-### Labels
+### Advanced model labels
 
 ```bash
 "health-generic": {
