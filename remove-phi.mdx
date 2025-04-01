@@ -20,12 +20,13 @@ description: "Learn how to transcribe a pre-recorded audio file using the Voice 
   </Step>
 </Steps>
 
+## Protecting a pre-recorded audio file using the Voice Harbor's Python SDK
 
 <Info>
   **Prerequisite**: Ensure that you have Python 3.6+ installed and an active Voice Harbor account with API access.
 </Info>
 
-## Step 1: Install Required Libraries
+### Step 1: Install Required Libraries
 
 Before you start, you'll need to install the required libraries for interacting with the Voice Harbor API.
 
@@ -39,7 +40,7 @@ Before you start, you'll need to install the required libraries for interacting 
   </Card>
 </CardGroup>
 
-### From Source
+#### From Source
 
 1. Clone the Voice Harbor SDK [repository](https://github.com/Nijta-API/voice-harbor-client/blob/main/python/README.md) from Github.
 2. Change into the project directory.
@@ -49,7 +50,7 @@ Before you start, you'll need to install the required libraries for interacting 
   pip install -e .
 ```
 
-## Step 2: Set Up Your API Key
+### Step 2: Set Up Your API Key
 
 To authenticate with the Voice Harbor API, you'll need to set your API key. Obtain your API key from your Voice Harbor dashboard.
 
@@ -66,7 +67,7 @@ usage_token = VoiceHarborClient.create_developer_token(BASE_URL, admin_token)
 print(f"Developer token stored: ./credentials/VoiceHarbor_Developer.credential.<date>.yaml")
 ```
 
-## Step 3: Set Up the Client and Create a Job
+### Step 3: Set Up the Client and Create a Job
 
 Once you have the necessary setup, you can create a job on the server and interact with the API. Here's how to do it:
 
@@ -80,7 +81,7 @@ job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
 print(f"Job created with ID: {job_id}")
 ```
 
-## Step 4: Initialize the Client and Submit Job Files
+### Step 4: Initialize the Client and Submit Job Files
 
 Next, initialize the client and define the parameters for your job, including the files you want to submit for transcription.
 
@@ -103,7 +104,7 @@ job_params = {
 job_params = client.submit_files(job_params)
 ```
 
-## Step 5: Submit Job and Download Results
+### Step 5: Submit Job and Download Results
 
 Now, submit the job and wait for the transcription results. Here's how to complete the process:
 
@@ -128,7 +129,7 @@ If you encounter any issues while transcribing the audio, check the following:
 
 For more information, you can refer to the following:
 
-- [API Reference](https://docs.voiceharbor.com/api-reference/introduction)
+- [API Reference](https://docs.nijta.com/api-reference/introduction)
 - [Voice Harbor SDK Documentation](https://docs.voiceharbor.com/sdk/python)
 
 ## Next Steps
