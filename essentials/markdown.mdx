@@ -89,8 +89,89 @@ Each **title** and **subtitle** creates an anchor and also shows up on the table
 
 </Tip>
 
-## Output
 
-```md
-Output Json
+### Using Advanced model
+
+```python
+  BASE_URL = "https://voiceharbor.ai"
+  usage_token = "USAGE_TOKEN"
+  # Create a new job on the server via the class method.
+  job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+  
+  client = VoiceHarborClient(
+      base_url=BASE_URL,
+      job_id=job_id,
+      token=usage_token,
+      inputs_dir="./inputs/tests"
+  )
+  
+  # Submit input files and the job file.and 
+  job_params = {"files": [], "model":"advanced", "agents": ["health-generic"]} 
+  job_params = client.submit_files(job_params)
+  job_file = client.submit_job(job_params)
+  logger.info(f"Job file created: {job_file}")
+```
+### Labels
+
+```bash
+"health-generic": {
+    "NAME": "Any personal name (first, middle, last, suffix).",
+    "LOCATION": "Indicates the geographical location relevant to the health record, such as city or country.",
+    "ORGANIZATION": "Names of organizations like hospitals, clinics, or labs.",
+    "PHONE": "Represents a contact telephone number associated with the record.",
+    "AGE": "Age or age group of an individual.",
+    "DATE": "A significant date related to the health event, such as admission or diagnosis date.",
+    "DISEASE": "Diseases that can affect an individual (e.g., cancer, diabetes).",
+    "DISORDER": "Mental or physical disorders (e.g., anxiety, arthritis).",
+    "DRUG": "Medications or drugs prescribed or used.",
+    "RESULT": "Clinical or lab results indicating test outcomes.",
+    "SYMPTOM": "Reported symptoms indicating potential conditions.",
+    "SYNDROME": "Recognized medical syndromes.",
+    "TEST": "Medical tests or procedures (e.g., blood test).",
+    "TREATMENT": "Medical treatments or therapeutic procedures.",
+    "ORGANIZATION_ID": "Unique identification codes for organizations."
+},
+"clinical": {
+    "GENE": "Denotes a specific gene relevant to the clinical or genetic data.",
+    "PROTEIN": "Represents a protein that is studied or measured in clinical settings.",
+    "CHEMICAL": "Specifies a chemical substance involved in biomedical studies or treatments.",
+    "DISEASE_Syndrome_Disorder": "A combined label representing various clinical conditions such as diseases, syndromes, or disorders.",
+    "DRUG_Ingredient": "Refers to the active component or ingredient of a drug formulation.",
+    "DRUG_BrandName": "Represents the commercial brand name under which the drug is marketed.",
+    "MUTATION": "Indicates a genetic mutation relevant to diagnosis or research.",
+    "PATHWAY": "Represents a biological pathway involved in physiological or pathological processes.",
+    "CELL_TYPE": "Specifies the type of cell that is relevant in the clinical context.",
+    "BIOPROCESS": "Describes a biological process that is significant in clinical research or treatment."
+},
+"hipaa": {
+    "NAME": "Any personal name (first, middle, last, suffix).",
+    "GEOGRAPHIC": "Any geographic data (street, city, county, ZIP, etc.).",
+    "DATES": "Dates (except year) directly related to an individual (birth, admission, discharge, death).",
+    "TELEPHONE": "Telephone numbers (landline or mobile).",
+    "FAX": "Fax numbers.",
+    "EMAIL": "Email addresses.",
+    "SSN": "Social Security numbers or equivalent identifiers.",
+    "MEDICAL_RECORD": "Unique medical record numbers.",
+    "HEALTH_PLAN": "Health plan beneficiary or insurance policy numbers.",
+    "ACCOUNT": "Account numbers related to healthcare billing.",
+    "LICENSE": "Certificate or license numbers issued by authorities.",
+    "VEHICLE": "Vehicle identifiers or license plate numbers.",
+    "DEVICE": "Device identifiers and serial numbers for medical equipment.",
+    "WEB": "Web URLs or website addresses.",
+    "IP": "IP address numbers.",
+    "BIOMETRIC": "Biometric identifiers (fingerprints, retinal scans, voice prints).",
+    "PHOTOGRAPHIC": "Full face photographic images or comparable images.",
+    "OTHER_UNIQUE": "Any other unique identifying number, characteristic, or code.",
+    "ORGANIZATION": "Names of organizations like hospitals, clinics, or labs.",
+    "AGE": "Age or age group of an individual.",
+    "DISEASE": "Diseases that can affect an individual (e.g., cancer, diabetes).",
+    "DISORDER": "Mental or physical disorders (e.g., anxiety, arthritis).",
+    "DRUG": "Medications or drugs prescribed or used.",
+    "RESULT": "Clinical or lab results indicating test outcomes.",
+    "SYMPTOM": "Reported symptoms indicating potential conditions.",
+    "SYNDROME": "Recognized medical syndromes.",
+    "TEST": "Medical tests or procedures (e.g., blood test).",
+    "TREATMENT": "Medical treatments or therapeutic procedures.",
+    "ORGANIZATION_ID": "Unique identification codes for organizations."
+}
 ```
