@@ -4,12 +4,23 @@ description: 'Customise your usage based on your needs'
 icon: 'gear'
 ---
 
-Every Mintlify site needs a `docs.json` file with the core configuration settings. Learn more about the [properties](#properties) below.
 
 ## Parameters
 
-<ResponseField name="Files" type="list" required>
+<ResponseField name="files" type="list" required>
 List of local input audio file path(s).  
 
 Example: `['/path/to/file1.mp3', '/path/to/file1.mp3', ...]`
+</ResponseField>
+
+<ResponseField name="model" type="string" default="mini">
+  Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM.
+</ResponseField>
+
+<ResponseField name="task" type="string" default="mini">
+  Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM. See details here.
+</ResponseField>
+
+<ResponseField name="agents" type="list" default="health-generic">
+  Agents with specififc domain dependency and purpose. See details here.
 </ResponseField>
