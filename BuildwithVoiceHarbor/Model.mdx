@@ -6,11 +6,18 @@ icon: 'text-size'
 
 ## Advanced vs. Mini
 
+
+<Tip>
+
+Mini is **60%** faster than our Advanced model. Choose **Mini** when speed is paramount and **Advanced** when data security and comprehensive compliance are required
+
+</Tip>
+
 Our Mini and Advanced systems are designed to meet different customer needs when it comes to PHI redaction.
 
-The Mini system harnesses a fine-tuned transformer model to quickly and accurately reduce PHI. With benchmark results showing it processes a 6-minute mono file in about 83.58 seconds, Mini is ideal for high-volume or time-sensitive scenarios. Its streamlined architecture ensures that redaction is performed rapidly without compromising on quality, making it an excellent choice for environments where speed is crucial.
+The Mini system harnesses a fine-tuned transformer model to quickly and accurately reduce PHI. Mini is ideal for high-volume or time-sensitive scenarios. Its streamlined architecture ensures that redaction is performed rapidly without compromising on quality, making it an excellent choice for environments where speed is crucial.
 
-In contrast, the Advanced system leverages a private large language model (LLM) equipped with sophisticated reasoning capabilities. Although it takes around 185.39 seconds to process the same 6-minute file, the Advanced system excels in handling complex redaction tasks. Its integrated reasoning allows for a deeper contextual analysis, ensuring that even subtle or ambiguous PHI elements are accurately identified and redacted. This level of precision is particularly beneficial for applications where data security and comprehensive compliance are paramount.
+In contrast, the Advanced system leverages a private large language model (LLM) equipped with sophisticated reasoning capabilities. Its integrated reasoning allows for a deeper contextual analysis, ensuring that even subtle or ambiguous PHI elements are accurately identified and redacted. This level of precision is particularly beneficial for applications where data security and comprehensive compliance are paramount.
 
 <ResponseField name="model" type="string" default="mini">
 Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM. Available model's: advanced, mini.
@@ -71,13 +78,6 @@ model:
 "cvv": "The Card Verification Value found on credit cards.",
 "pin": "A Personal Identification Number used for security."
 ```
-
-<Tip>
-
-Each **title** and **subtitle** creates an anchor and also shows up on the table of contents on the right.
-
-</Tip>
-
 
 ### Advanced model labels
 
