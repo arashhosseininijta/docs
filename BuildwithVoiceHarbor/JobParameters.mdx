@@ -31,7 +31,7 @@ Example: `job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ..
 Example: `job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ...], "model":"advanced", "agents": ["health-generic"]}`
 </ResponseField>
 
-## Submit your Job
+## Submit your Job using Voice Habor's SDK 
 
 <Tip>
 
@@ -55,6 +55,21 @@ client = VoiceHarborClient(
 
 # Submit input files and the job file. 
 job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ...], "model":"mini"}  
+job_params = client.submit_files(job_params)
 job_file = client.submit_job(job_params)
 logger.info(f"Job file created: {job_file}")
 ```
+
+### Get Started with SDK
+
+Start coding today using Python and integrate the Voice Harbor API into your workflows.
+
+<CardGroup cols={1}>
+  <Card
+    title="Python SDK"
+    icon="python"
+    href="https://voiceharbor.com/docs/sdk/python"
+  >
+    Start using our Python SDK to connect with Voice Harbor and implement voice solutions
+  </Card>
+</CardGroup>
