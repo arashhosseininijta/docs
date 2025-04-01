@@ -23,7 +23,7 @@ icon: 'key'
     }
     ```
   </Step>
-  <Step title="Usage token monitoring">
+  <Step title="Usage token monitoring.">
     [Use your admin token to obtain a list of all generated usage token's.](https://docs.nijta.com/api-reference/admin/developer-tokens)
 
     Minimal example:
@@ -47,8 +47,9 @@ icon: 'key'
     }
     ```
   </Step>
-  <Step title="Job and usage monitoring">
+  <Step title="Job and usage monitoring.">
     [Use the usage token to obtain all created job's.](https://docs.nijta.com/api-reference/jobs/list)
+    
     Minimal example:
     ```java
     HttpResponse<String> response = Unirest.get("http://voiceharbor.ai/api/jobs")
@@ -68,6 +69,7 @@ icon: 'key'
     }
     ```
     [Use the usage token and job id to obtain all finalised file names.](https://docs.nijta.com/api-reference/job-content/list)
+    
     Minimal example:
     ```java
     HttpResponse<String> response = Unirest.get("http://voiceharbor.ai/api/jobs/{jobId}/content")
