@@ -1,15 +1,29 @@
 ---
-title: 'Create Usage Token'
-description: 'Create as many developer token as you need'
+title: 'Token and usage monitoring'
+description: 'Manage tokens, oversee configurations, and monitor system usage'
 icon: 'key'
 ---
+
+## Stage-based admin possibilities
 
 <Steps>
   <Step title="Create a usage token.">
     [Use your admin token to create as multiple usage token, designed to be shared with your developer team.](https://docs.nijta.com/api-reference/admin/developer-token)
+
+    Minimal example:
+    ```java
+    HttpResponse<String> response = Unirest.post("http://voiceharbor.ai/api/admin/developer-token")
+      .header("Authorization", "Bearer <token>")
+      .asString();
+    ```
+    ```java
+    {
+    "developerToken": "<string>"
+    }
+    ```
   </Step>
   <Step title="Usage token monitoring">
-    [Obtain a list of all generated usage token's.](https://docs.nijta.com/api-reference/admin/developer-tokens)
+    [Use your admin token to obtain a list of all generated usage token's.](https://docs.nijta.com/api-reference/admin/developer-tokens)
   </Step>
   <Step title="Job and usage monitoring">
     [Use the usage token to obtain all created job's.](https://docs.nijta.com/api-reference/jobs/list)
