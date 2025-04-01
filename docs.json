@@ -14,19 +14,19 @@
         "tab": "Guides",
         "groups": [
           {
+            "group": "PHI and Biometric reduction",
+            "pages": [
+              "PHI",
+              "Biometric"
+            ]
+          },
+          {
             "group": "Build with Voice Harbor",
             "pages": [
               "doc",
               "BuildwithVoiceHarbor/JobParameters",
               "BuildwithVoiceHarbor/Model",
               "BuildwithVoiceHarbor/Admin"
-            ]
-          },
-          {
-            "group": "PHI and Biometric reduction",
-            "pages": [
-              "PHI",
-              "Biometric"
             ]
           },
           {
