@@ -7,7 +7,7 @@ icon: 'key'
 ## Stage-based admin functionalities
 
 <Steps>
-  <Step title="Create a usage token.">
+  <Step title="Usage token generation.">
     [Use your admin token to create as multiple usage token, designed to be shared with your developer team.](https://docs.nijta.com/api-reference/admin/developer-token)
 
     Minimal example:
@@ -49,8 +49,45 @@ icon: 'key'
   </Step>
   <Step title="Job and usage monitoring">
     [Use the usage token to obtain all created job's.](https://docs.nijta.com/api-reference/jobs/list)
-
+    Minimal example:
+    ```java
+    HttpResponse<String> response = Unirest.get("http://voiceharbor.ai/api/jobs")
+      .header("Authorization", "Bearer <token>")
+      .asString();
+    ```
+    Return:
+    ```java
+    {
+      "jobs": [
+        {
+          "job_id": "<string>",
+          "token": "<string>",
+          "created_at": "2023-11-07T05:31:56Z"
+        }
+      ]
+    }
+    ```
     [Use the usage token and job id to obtain all finalised file names.](https://docs.nijta.com/api-reference/job-content/list)
+    Minimal example:
+    ```java
+    HttpResponse<String> response = Unirest.get("http://voiceharbor.ai/api/jobs/{jobId}/content")
+      .header("Authorization", "Bearer <token>")
+      .asString();
+    ```
+    Return:
+    ```java
+    {
+      "jobContent": [
+        {
+          "id": 123,
+          "job_id": "<string>",
+          "file_name": "<string>",
+          "audio_duration": 123,
+          "created_at": "2023-11-07T05:31:56Z"
+        }
+      ]
+    }
+    ```
   </Step>
 </Steps>
 
