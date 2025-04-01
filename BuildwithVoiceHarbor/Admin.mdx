@@ -5,23 +5,16 @@ icon: 'key'
 ---
 
 <Steps>
-  <Step title="Define your parameter based on data sensitivity.">
-    [Choose the right model](https://docs.nijta.com/BuildwithVoiceHarbor/Model#advanced-vs-mini)
+  <Step title="Create a usage token.">
+    [Use your admin token to create as multiple usage token, designed to be shared with your developer team.](https://docs.nijta.com/api-reference/admin/developer-token)
   </Step>
-  <Step title="Build Job File">
-    Build your job as yaml file containing the parameters in your target programming language.
+  <Step title="Usage token monitoring">
+    [Obtain a list of all generated usage token's.](https://docs.nijta.com/api-reference/admin/developer-tokens)
+  </Step>
+  <Step title="Job and usage monitoring">
+    [Use the usage token to obtain all created job's.](https://docs.nijta.com/api-reference/jobs/list)
 
-    Minimal job example: 
-    ```yaml
-    files:
-    - filename1.mp3
-    - filename2.wav
-    model:
-    - mini
-    ```
-  </Step>
-  <Step title="Submit Job File">
-    [Submit your job to trigger the task processing.](https://docs.nijta.com/api-reference/files/upload-url)
+    [Use the usage token and job id to obtain all finalised file names.](https://docs.nijta.com/api-reference/job-content/list)
   </Step>
 </Steps>
 
