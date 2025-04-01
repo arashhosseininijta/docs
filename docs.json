@@ -36,9 +36,9 @@
             ]
           },
           {
-            "group": "Speech Understanding",
+            "group": "Speaker Diarization",
             "pages": [
-              "essentials/images"
+              "BuildwithVoiceHarbor/Diarization"
             ]
           }
         ]
