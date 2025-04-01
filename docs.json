@@ -23,7 +23,7 @@
           {
             "group": "Build with Voice Harbor",
             "pages": [
-              "essentials/settings",
+              "Build with Voice Harbor/Choose the right model",
               "essentials/markdown",
               "essentials/navigation",
               "essentials/reusable-snippets"
