@@ -9,7 +9,16 @@ icon: 'gear'
     [Choose the right model](https://docs.nijta.com/BuildwithVoiceHarbor/Model#advanced-vs-mini)
   </Step>
   <Step title="Build Job File">
-    Build your job as yaml file containing the parameters.
+    Build your job as yaml file containing the parameters in your target programming language.
+
+    Minimal job example: 
+    ```yaml
+    files:
+    - filename1.mp3
+    - filename2.wav
+    model:
+    - mini
+    ```
   </Step>
   <Step title="Submit Job File">
     [Submit your job to trigger the task processing.](https://docs.nijta.com/api-reference/files/upload-url)
