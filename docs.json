@@ -26,7 +26,6 @@
               "BuildwithVoiceHarbor/JobParameters",
               "BuildwithVoiceHarbor/Model",
               "BuildwithVoiceHarbor/Admin",
-              "essentials/reusable-snippets"
             ]
           },
           {
