@@ -10,13 +10,90 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
     1.1 [Use your admin token to create usage token's.](https://docs.nijta.com/api-reference/admin/developer-token).
   </Step>
   <Step title="Submision Managment.">
-    2.1 [Use the usage token to create a job.](https://docs.nijta.com/api-reference/jobs/create)
+    2.1 [Use the usage token to create a job and submit files.](https://docs.nijta.com/api-reference/jobs/create)
+    
+    Minimal job creation example: 
+    ```python
+    def create_job():
+        """Creates a new job and returns its job_id."""
+        resp = requests.post(f"{BASE_URL}/api/jobs", headers={"Authorization": TOKEN})
+        resp.raise_for_status()
+        return resp.json()["job_id"]
+    ```
 
-    2.2 [Select](https://docs.nijta.com/BuildwithVoiceHarbor/Model) and [Define parameters.](https://docs.nijta.com/BuildwithVoiceHarbor/JobParameters#parameters) 
+    Minimal file upload example: 
+    ```python
+    def upload_file(job_id, file_path):
+        """Uploads a file to the server using its signed URL."""
+        file_path = Path(file_path)
+        mime_type, _ = mimetypes.guess_type(str(file_path))
+        mime_type = mime_type or "application/octet-stream"
+        signed_url = get_signed_url(job_id, file_path.name, mime_type)
+        with file_path.open("rb") as f:
+            resp = requests.put(signed_url, data=f, headers={"Content-Type": mime_type})
+            resp.raise_for_status()
+    ```
 
-    2.3 [Submit your file(s).](https://docs.nijta.com/api-reference/files/upload-url)
+    2.2 [Select](https://docs.nijta.com/BuildwithVoiceHarbor/Model) and [Define the job parameters.](https://docs.nijta.com/BuildwithVoiceHarbor/JobParameters#parameters) 
+
+    Minimal parameter creation example: 
+    ```python
+    def create_job_yaml(job_id, input_file):
+        """Creates a YAML job file with the required parameters."""
+        params = {
+            "agents": ["health-generic"],
+            "files": [Path(input_file).name],
+            "model": "mini",
+            "task": "transcribe"
+        }
+        yaml_file = Path(f"{job_id}.yaml")
+        with yaml_file.open("w") as f:
+            yaml.safe_dump(params, f, default_flow_style=False)
+        return yaml_file
+    ```
+
+    Minimal file upload example: 
+    ```python
+    def upload_file(job_id, file_path):
+        """Uploads a file to the server using its signed URL."""
+        file_path = Path(file_path)
+        mime_type, _ = mimetypes.guess_type(str(file_path))
+        mime_type = mime_type or "application/octet-stream"
+        signed_url = get_signed_url(job_id, file_path.name, mime_type)
+        with file_path.open("rb") as f:
+            resp = requests.put(signed_url, data=f, headers={"Content-Type": mime_type})
+            resp.raise_for_status()
+    ```
+
+    2.3 [Download the processed files](https://docs.nijta.com/api-reference/files/upload-url)
   </Step>
   <Step title="Download protected audio and trascription.">
     3.1 [Use your usage token and job id to download the results.](https://docs.nijta.com/api-reference/files/download-url)
+    ```python
+    def wait_for_file(job_id, file_name, timeout=600, interval=10):
+        """Polls until the specified file is available on the server."""
+        url = f"{BASE_URL}/api/jobs/{job_id}/files/finalized"
+        payload = {"fileName": file_name}
+        t0 = time.time()
+        while time.time() - t0 < timeout:
+            resp = requests.post(url, json=payload, headers={"Authorization": TOKEN})
+            resp.raise_for_status()
+            if resp.json().get("exists"):
+                return
+            time.sleep(interval)
+        raise Exception(f"Timeout waiting for {file_name}")
+
+    def download_file(job_id, file_name, dest_dir):
+        """Downloads the specified file once it is available."""
+        wait_for_file(job_id, file_name)
+        download_url = get_signed_url_download(job_id, file_name)
+        resp = requests.get(download_url)
+        resp.raise_for_status()
+        dest = Path(dest_dir) / file_name
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        with dest.open("wb") as f:
+            f.write(resp.content)
+    ```
+
   </Step>
 </Steps>
