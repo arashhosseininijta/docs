@@ -40,6 +40,12 @@
             "pages": [
               "BuildwithVoiceHarbor/Diarization"
             ]
+          },
+          {
+            "group": "Speech Intelligence",
+            "pages": [
+              "BuildwithVoiceHarbor/Diarization"
+            ]
           }
         ]
       },
