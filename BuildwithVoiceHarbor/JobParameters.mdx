@@ -43,13 +43,29 @@ model:
 <ResponseField name="task" type="string" default="protect">
   Task to apply to attached files. Available task's: protect, transcribe.
 
-Example: `job_params = {"files": ['/path/to/file1.mp3', '/path/to/file1.mp3', ...], "task":"transcribe"}`
+Example: 
+```yaml
+files:
+- filename1.mp3
+- filename2.wav
+task:
+- transcribe
+```
 </ResponseField>
 
 <ResponseField name="agents" type="list" default="health-generic">
-  Agents with specififc domain dependency and purpose. Available agents: health-generic, clinical, hipaa.
+  Agents with specififc domain dependency and purpose. Available [Agents](https://docs.nijta.com/BuildwithVoiceHarbor/Model#labels-2).
 
-Example: `["health-generic", "clinical"}`
+Example: 
+```yaml
+files:
+- filename1.mp3
+- filename2.wav
+model:
+- advanced
+agents:
+- hipaa
+```
 </ResponseField>
 
 ## Submit your Job using Voice Habor's SDK 
