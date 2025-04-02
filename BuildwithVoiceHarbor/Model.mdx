@@ -19,6 +19,23 @@ Not sure which model best fits your data? In May 2025, we'll launch our auditing
 
 </Tip>
 
+
+### Simple model selection example
+
+```python
+def create_job_yaml(job_id, input_file):
+    """Creates a YAML job file with the required parameters."""
+    params = {
+        "files": [Path(input_file).name],
+        "model": "advanced"
+        "agents": ["health-generic"]
+    }
+    yaml_file = Path(f"{job_id}.yaml")
+    with yaml_file.open("w") as f:
+        yaml.safe_dump(params, f, default_flow_style=False)
+    return yaml_file
+```
+
 ### Mini model labels
 
 ```bash
