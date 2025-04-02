@@ -1,6 +1,6 @@
 ---
 title: 'Choose the right PHI redaction model'
-description: 'Context-aware PHI redaction, fast and efficient.'
+description: 'Context-aware PHI redaction. Multilingual, fast and efficient.'
 icon: 'brain'
 ---
 
@@ -11,7 +11,7 @@ Our Mini and Advanced systems are designed to meet different customer needs when
 
 The Mini system harnesses a fine-tuned transformer model to quickly and accurately reduce PHI. Mini is ideal for high-volume or time-sensitive scenarios. Its streamlined architecture ensures that redaction is performed rapidly without compromising on quality, making it an excellent choice for environments where speed is crucial. In fact, Mini is 60% faster than our Advanced solution.
 
-In contrast, the Advanced system leverages a private large language model (LLM) equipped with sophisticated reasoning capabilities. Its integrated reasoning allows for a deeper contextual analysis, ensuring that even subtle or ambiguous PHI elements are accurately identified and redacted. This level of precision is particularly beneficial for applications where data security and comprehensive compliance are paramount.
+In contrast, the Advanced system leverages a private large language model (LLM) equipped with sophisticated reasoning capabilities. Its integrated reasoning allows for a deeper contextual analysis, ensuring that even subtle or ambiguous PHI elements are accurately identified and redacted. This level of precision is particularly beneficial for applications where data security and comprehensive compliance are paramount. 
 
 <Tip>
 
@@ -59,23 +59,17 @@ It's recommended to use the a scheduled download approach if submitting larger a
 "name": "A general name field which could represent a full name or title.",
 "street_address": "The physical street address for a residence or business.",
 "phone_number": "A contact telephone number.",
-"ipv4": "An IPv4 address used in computer networking.",
 "credit_card_number": "A number associated with a credit card account.",
-"license_plate": "A vehicle's registration identifier.",
 "address": "A general address field for various uses.",
 "user_name": "A chosen username for account login or identification.",
 "device_identifier": "A unique identifier assigned to a device.",
-"bank_routing_number": "A number used to identify a financial institution in transactions.",
 "date_time": "Combined date and time information.",
 "company_name": "The name of a company or business entity.",
 "unique_identifier": "A general purpose unique identifier.",
-"biometric_identifier": "A unique biometric feature, such as a fingerprint or facial recognition data.",
 "account_number": "A number associated with a financial or user account.",
 "city": "The name of a city in an address.",
-"certificate_license_number": "An identifier for a professional or business license.",
 "time": "A specific time, separate from the date.",
 "postcode": "A postal or ZIP code used for mail delivery.",
-"vehicle_identifier": "An identifier unique to a vehicle.",
 "coordinate": "Geographical coordinate data (latitude/longitude).",
 "country": "The name of a country.",
 "api_key": "A key used to authenticate and authorize API requests.",
@@ -87,8 +81,7 @@ It's recommended to use the a scheduled download approach if submitting larger a
 "url": "A web address.",
 "state": "A state or region within a country.",
 "swift_bic": "A code used for international bank transfers (SWIFT/BIC).",
-"cvv": "The Card Verification Value found on credit cards.",
-"pin": "A Personal Identification Number used for security."
+"cvv": "The Card Verification Value found on credit cards."
 ```
 
 ### Advanced model labels
