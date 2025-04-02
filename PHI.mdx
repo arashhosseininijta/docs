@@ -97,6 +97,12 @@ job_params = client.submit_files(job_params)
 
 Now, submit the job and wait for the transcription results. Here's how to complete the process:
 
+<Tip>
+
+It's recommended to use the a scheduled download approach if submitting larger amount of volume  with **advanced** models. Read [Documentation](https://docs.nijta.com/api-reference/introduction#scheduled-download-use-case).  
+
+</Tip>
+
 ```python
 # Immediately submit the job file (YAML)
 job_file = client.submit_job(job_params)
