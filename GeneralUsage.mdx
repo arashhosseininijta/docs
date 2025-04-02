@@ -19,9 +19,7 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
     response = requests.post(endpoint, headers=headers)
     response.raise_for_status()
     data = response.json()
-    logger.info(f"Received developer token: {data}")
-    developer_token = data.get("developerToken", "")
-    print("Usage tokens:", developer_token)
+    print("Usage tokens:", data)
     ```
     Result: 
     ```bash
