@@ -113,6 +113,135 @@ print(f"Job file submitted: {job_file}")
 downloaded_results = client.download_results(output_dir="./results")
 print("Downloaded results:", downloaded_results)
 ```
+### Results example
+
+```python
+{
+  "speaker 1": {
+    "language": "en",
+    "transcription": {
+      "mini": {
+        "<FIRST_NAME> <LAST_NAME> disapproved of films and <FIRST_NAME> also had reservations about the medium.": {
+          "start": 0.3,
+          "end": 5.68,
+          "sentence": "<FIRST_NAME> <LAST_NAME> disapproved of films and <FIRST_NAME> also had reservations about the medium.",
+          "words": [
+            {
+              "word": " Joe",
+              "start": 0.3,
+              "end": 0.96,
+              "label": "first_name"
+            },
+            {
+              "word": " Keaton",
+              "start": 0.96,
+              "end": 1.4,
+              "label": "last_name"
+            },
+            {
+              "word": " disapproved",
+              "start": 1.4,
+              "end": 2.12
+            },
+            {
+              "word": " of",
+              "start": 2.12,
+              "end": 2.3
+            },
+            {
+              "word": " films",
+              "start": 2.3,
+              "end": 2.66
+            },
+            {
+              "word": " and",
+              "start": 2.66,
+              "end": 2.94
+            },
+            {
+              "word": " Buster",
+              "start": 2.94,
+              "end": 3.3,
+              "label": "first_name"
+            },
+            {
+              "word": " also",
+              "start": 3.3,
+              "end": 3.58
+            },
+            {
+              "word": " had",
+              "start": 3.58,
+              "end": 3.88
+            },
+            {
+              "word": " reservations",
+              "start": 3.88,
+              "end": 4.46
+            },
+            {
+              "word": " about",
+              "start": 4.46,
+              "end": 4.88
+            },
+            {
+              "word": " the",
+              "start": 4.88,
+              "end": 5.06
+            },
+            {
+              "word": " medium",
+              "start": 5.06,
+              "end": 5.32
+            },
+            {
+              "word": ".",
+              "start": 5.32,
+              "end": 5.68
+            }
+          ],
+          "masked": [
+            " Joe",
+            " Keaton",
+            " Buster"
+          ],
+          "labels": {
+            "first_name": [
+              "Joe",
+              "Buster"
+            ],
+            "last_name": [
+              "Keaton"
+            ]
+          }
+        }
+      }
+    },
+    "masks": [
+      [
+        [
+          300,
+          960,
+          " Joe"
+        ],
+        [
+          960,
+          1400,
+          " Keaton"
+        ],
+        [
+          2940,
+          3300,
+          " Buster"
+        ]
+      ]
+    ],
+    "failed": {
+      "mini": []
+    }
+  }
+}
+```
 
 ## Troubleshooting
 
