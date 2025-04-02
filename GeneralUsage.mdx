@@ -71,10 +71,8 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
     def create_job_yaml(job_id, input_file):
         """Creates a YAML job file with the required parameters."""
         params = {
-            "agents": ["health-generic"],
             "files": [Path(input_file).name],
-            "model": "mini",
-            "task": "transcribe"
+            "model": "mini"
         }
         yaml_file = Path(f"{job_id}.yaml")
         with yaml_file.open("w") as f:
