@@ -14,19 +14,14 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
     # Configuration
     BASE_URL = "https://voiceharbor.ai"
     ADMIN_TOKEN = "your_admin_token_here"
-    def get_developer_tokens(base_url, admin_token):
-        """
-        Retrieves developer tokens from the Voice Harbor service.
-        """
-        endpoint = f"{BASE_URL}/api/admin/developer-token"
-        headers = {"Authorization": f"Bearer {admin_token}"}
-        response = requests.post(endpoint, headers=headers)
-        response.raise_for_status()
-        data = response.json()
-        logger.info(f"Received developer token: {data}")
-        developer_token = data.get("developerToken", "")
-    usage_tokens = get_developer_tokens(BASE_URL, ADMIN_TOKEN)
-    print("Usage tokens:", usage_tokens)
+    endpoint = f"{BASE_URL}/api/admin/developer-token"
+    headers = {"Authorization": f"Bearer {ADMIN_TOKEN}"}
+    response = requests.post(endpoint, headers=headers)
+    response.raise_for_status()
+    data = response.json()
+    logger.info(f"Received developer token: {data}")
+    developer_token = data.get("developerToken", "")
+    print("Usage tokens:", developer_token)
     ```
     Result: 
     ```bash
