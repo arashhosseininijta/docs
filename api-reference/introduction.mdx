@@ -14,7 +14,7 @@ This service provides a comprehensive solution for managing jobs and handling fi
 - **User-Friendly Interface:** Benefit from a modern web interface that simplifies job and file management.
 - **Robust Access Control:** Enjoy secure interactions with verified tokens for both users and administrators.
 
-# Voice Harbor Client
+# Voice Harbor Python SDK
 
 A Python client for interacting with the [Voice Harbor API](#). This client handles job creation, file uploads, and result downloads through secure signed URLs. It supports audio file formats.
 The client is designed to provide an end-to-end solution for managing voice processing jobs with the Voice Harbor API, offering both ease of use as a CLI tool and flexibility for integration into larger Python projects.
@@ -78,7 +78,6 @@ After installation, the CLI is available as `voice-harbor-client`. The tool acce
 - **--output-dir:** Directory where the downloaded results will be stored (default: `./results`).
 - **--timeout:** Timeout in seconds for waiting on file availability (default: 600).
 - **--interval:** Polling interval in seconds to check file status (default: 10).
-- **--model:** List of model tier to use for processing (default: `mini`).
 - **--agents:** List of agents to use for processing (default: `health-generic`).
 - **--prefix:** An optional prefix to include files containing prefix in their name.
 
