@@ -96,22 +96,16 @@ description: "Learn how to transcribe a pre-recorded audio file while removing P
   <Step title="Download protected audio and trascription.">
     3.1 [Use your usage token and job id to download the results.](https://docs.nijta.com/api-reference/files/download-url)
     ```python
-    def wait_for_file(job_id, file_name, timeout=600, interval=10):
-        """Polls until the specified file is available on the server."""
-        url = f"{BASE_URL}/api/jobs/{job_id}/files/finalized"
+    def get_signed_url_download(job_id, file_name, usage_token):
+        """Gets a signed URL to download the specified file."""
+        url = f"{BASE_URL}/api/jobs/{job_id}/files/download-url"
         payload = {"fileName": file_name}
-        t0 = time.time()
-        while time.time() - t0 < timeout:
-            resp = requests.post(url, json=payload, headers={"Authorization": TOKEN})
-            resp.raise_for_status()
-            if resp.json().get("exists"):
-                return
-            time.sleep(interval)
-        raise Exception(f"Timeout waiting for {file_name}")
+        resp = requests.post(url, json=payload, headers={"Authorization": usage_token})
+        resp.raise_for_status()
+        return resp.json()["signedUrl"]
 
     def download_file(job_id, file_name, dest_dir):
         """Downloads the specified file once it is available."""
-        wait_for_file(job_id, file_name)
         download_url = get_signed_url_download(job_id, file_name)
         resp = requests.get(download_url)
         resp.raise_for_status()
