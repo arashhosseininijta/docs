@@ -71,6 +71,97 @@ job_params = client.submit_files(job_params)
 job_file = client.submit_job(job_params)
 logger.info(f"Job file created: {job_file}")
 ```
+
+### Output example
+
+```python
+{
+  "speaker 1": {
+    "transcription": [
+      {
+        "start": 0.05,
+        "end": 5.27,
+        "text": "The sandwich comes with ham, cheese, tomatoes, mayonnaise, pickles.",
+        "words": [
+          {
+            "word": " The",
+            "start": 0.05,
+            "end": 0.55
+          },
+          {
+            "word": " sandwich",
+            "start": 0.55,
+            "end": 0.93
+          },
+          {
+            "word": " comes",
+            "start": 0.93,
+            "end": 1.33
+          },
+          {
+            "word": " with",
+            "start": 1.33,
+            "end": 1.57
+          },
+          {
+            "word": " ham",
+            "start": 1.57,
+            "end": 1.95
+          },
+          {
+            "word": ",",
+            "start": 1.95,
+            "end": 2.13
+          },
+          {
+            "word": " cheese",
+            "start": 2.13,
+            "end": 2.57
+          },
+          {
+            "word": ",",
+            "start": 2.57,
+            "end": 2.73
+          },
+          {
+            "word": " tomatoes",
+            "start": 2.73,
+            "end": 3.25
+          },
+          {
+            "word": ",",
+            "start": 3.25,
+            "end": 3.55
+          },
+          {
+            "word": " mayonnaise",
+            "start": 3.55,
+            "end": 3.93
+          },
+          {
+            "word": ",",
+            "start": 3.93,
+            "end": 4.21
+          },
+          {
+            "word": " pickles",
+            "start": 4.21,
+            "end": 4.51
+          },
+          {
+            "word": ".",
+            "start": 4.51,
+            "end": 5.27
+          }
+        ]
+      }
+    ],
+    "language": "en"
+  }
+}
+```
+
+
 <CardGroup cols={1}>
   <Card
     title="Python SDK"
