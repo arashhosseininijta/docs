@@ -101,6 +101,11 @@
           "anchor": "Community",
           "href": "https://mintlify.com/community",
           "icon": "slack"
+        },
+        {
+          "anchor": "News",
+          "href": "News",
+          "icon": "news-letter"
         }
       ]
     }
