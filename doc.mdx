@@ -9,19 +9,22 @@ icon: house
   Your browser does not support the video tag.
 </video>
 
-<!-- Optional: JavaScript to explicitly play the video -->
 <script>
-  // Wait until the document is fully loaded
   document.addEventListener('DOMContentLoaded', function() {
     var video = document.getElementById('homeVideo');
-    // Call play() explicitly in case autoplay is blocked
-    if (video) {
-      video.play().catch(function(error) {
-        console.error("Error attempting to play the video:", error);
-      });
-    }
+
+    // Set the video to start at second 1 after metadata loads.
+    video.addEventListener('loadedmetadata', function() {
+      video.currentTime = 1;
+    });
+
+    // Explicitly try to play the video.
+    video.play().catch(function(error) {
+      console.error("Error attempting to play the video:", error);
+    });
   });
 </script>
+
 
 ## Cookbooks
 
