@@ -79,7 +79,8 @@ client = VoiceHarborClient(
 
 # Build job parameters (e.g., list of agents and any other details).
 job_params = {
-    "agents": ["health-generic"],  # Define agents for transcription or analysis
+    "agents": ["health-generic"],  # Define agents for PHI redaction
+    "model": "advanced",
     "files": []  # The submit_files method will append uploaded file names.
 }
 
