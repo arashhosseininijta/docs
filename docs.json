@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "Willow",
+  "theme": "willow",
   "name": "Voice Harbor API Docs",
   "colors": {
     "primary": "#0021CC",
