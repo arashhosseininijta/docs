@@ -248,7 +248,7 @@ job_params = client.submit_files(job_params)
 
 # Submit the job file (this writes a YAML file named as {job_id}.yaml).
 job_file = client.submit_job(job_params)
-logger.info(f"Job file submitted and saved locally as: {job_file}")  # <--- JOB_ID
+logger.info(f"Job file submitted and saved locally as: {job_file}")  # <--- JOB_FILE_PATH
 ```
 ***Step 2:*** Scheduled Download (Tomorrow)
 
@@ -269,8 +269,8 @@ client = VoiceHarborClient(
     inputs_dir=""  # No need for input files when only downloading results.
 )
 
-# Download the processed results.
-downloaded_results = client.download_results(output_dir="./results")
+# Download the processed results, pass the yaml file created during last step.
+downloaded_results = client.download_results(output_dir="./results", yaml=job_file)
 logger.info(f"Downloaded results for job {JOB_ID}: {downloaded_results}")
 ```
 
