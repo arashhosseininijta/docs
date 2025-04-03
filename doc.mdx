@@ -9,23 +9,6 @@ icon: house
   Your browser does not support the video tag.
 </video>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var video = document.getElementById('homeVideo');
-
-    // Set the video to start at second 1 after metadata loads.
-    video.addEventListener('loadedmetadata', function() {
-      video.currentTime = 1;
-    });
-
-    // Explicitly try to play the video.
-    video.play().catch(function(error) {
-      console.error("Error attempting to play the video:", error);
-    });
-  });
-</script>
-
-
 ## Cookbooks
 
 The first step to integrating top-tier voice technologies is to set up your environment.
