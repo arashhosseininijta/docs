@@ -58,12 +58,166 @@ If you expect code-switching in your data, set **code-switch** to **True**.
 
 ```python
 # Submit input files and the job file.and 
-job_params = {"files": [], "task": "transcribe", "code-switch":True}
+job_params = {"files": [], "task": "transcribe", "diar":True, "code-switch":True}
 job_params = client.submit_files(job_params)
 job_file = client.submit_job(job_params)
 logger.info(f"Job file created: {job_file}")
 ```
+### Output example
 
+```python
+{
+  "speaker 1": {
+    "transcription": [
+      {
+        "start": 0.02,
+        "end": 4.54,
+        "text": "Nunca hay, pues, violencia gratuita en sus tilmes.",
+        "words": [
+          {
+            "word": " Nunca",
+            "start": 0.02,
+            "end": 1.04
+          },
+          {
+            "word": " hay",
+            "start": 1.04,
+            "end": 1.36
+          },
+          {
+            "word": ",",
+            "start": 1.36,
+            "end": 1.38
+          },
+          {
+            "word": " pues",
+            "start": 1.38,
+            "end": 1.72
+          },
+          {
+            "word": ",",
+            "start": 1.72,
+            "end": 2.44
+          },
+          {
+            "word": " violencia",
+            "start": 2.44,
+            "end": 2.86
+          },
+          {
+            "word": " gratuita",
+            "start": 2.86,
+            "end": 3.54
+          },
+          {
+            "word": " en",
+            "start": 3.54,
+            "end": 3.64
+          },
+          {
+            "word": " sus",
+            "start": 3.64,
+            "end": 3.94
+          },
+          {
+            "word": " tilmes",
+            "start": 3.94,
+            "end": 4.5
+          },
+          {
+            "word": ".",
+            "start": 4.5,
+            "end": 4.54
+          }
+        ]
+      }
+    ],
+    "language": "es"
+  },
+  "speaker 2": {
+    "transcription": [
+      {
+        "start": 4.14,
+        "end": 9.16,
+        "text": "He is considered a strategist in the process of transition towards Spanish democracy.",
+        "words": [
+          {
+            "word": " He",
+            "start": 4.14,
+            "end": 4.64
+          },
+          {
+            "word": " is",
+            "start": 4.64,
+            "end": 4.8
+          },
+          {
+            "word": " considered",
+            "start": 4.8,
+            "end": 5.16
+          },
+          {
+            "word": " a",
+            "start": 5.16,
+            "end": 5.4
+          },
+          {
+            "word": " strategist",
+            "start": 5.4,
+            "end": 6.0
+          },
+          {
+            "word": " in",
+            "start": 6.0,
+            "end": 6.14
+          },
+          {
+            "word": " the",
+            "start": 6.14,
+            "end": 6.24
+          },
+          {
+            "word": " process",
+            "start": 6.24,
+            "end": 6.62
+          },
+          {
+            "word": " of",
+            "start": 6.62,
+            "end": 6.78
+          },
+          {
+            "word": " transition",
+            "start": 6.78,
+            "end": 7.24
+          },
+          {
+            "word": " towards",
+            "start": 7.24,
+            "end": 7.66
+          },
+          {
+            "word": " Spanish",
+            "start": 7.66,
+            "end": 8.06
+          },
+          {
+            "word": " democracy",
+            "start": 8.06,
+            "end": 8.7
+          },
+          {
+            "word": ".",
+            "start": 8.7,
+            "end": 9.16
+          }
+        ]
+      }
+    ],
+    "language": "en"
+  }
+}
+```
 ### Set target transcription language
 
 ```python
@@ -90,96 +244,6 @@ job_params = client.submit_files(job_params)
 job_file = client.submit_job(job_params)
 logger.info(f"Job file created: {job_file}")
 ```
-
-### Output example
-
-```python
-{
-  "speaker 1": {
-    "transcription": [
-      {
-        "start": 0.05,
-        "end": 5.27,
-        "text": "The sandwich comes with ham, cheese, tomatoes, mayonnaise, pickles.",
-        "words": [
-          {
-            "word": " The",
-            "start": 0.05,
-            "end": 0.55
-          },
-          {
-            "word": " sandwich",
-            "start": 0.55,
-            "end": 0.93
-          },
-          {
-            "word": " comes",
-            "start": 0.93,
-            "end": 1.33
-          },
-          {
-            "word": " with",
-            "start": 1.33,
-            "end": 1.57
-          },
-          {
-            "word": " ham",
-            "start": 1.57,
-            "end": 1.95
-          },
-          {
-            "word": ",",
-            "start": 1.95,
-            "end": 2.13
-          },
-          {
-            "word": " cheese",
-            "start": 2.13,
-            "end": 2.57
-          },
-          {
-            "word": ",",
-            "start": 2.57,
-            "end": 2.73
-          },
-          {
-            "word": " tomatoes",
-            "start": 2.73,
-            "end": 3.25
-          },
-          {
-            "word": ",",
-            "start": 3.25,
-            "end": 3.55
-          },
-          {
-            "word": " mayonnaise",
-            "start": 3.55,
-            "end": 3.93
-          },
-          {
-            "word": ",",
-            "start": 3.93,
-            "end": 4.21
-          },
-          {
-            "word": " pickles",
-            "start": 4.21,
-            "end": 4.51
-          },
-          {
-            "word": ".",
-            "start": 4.51,
-            "end": 5.27
-          }
-        ]
-      }
-    ],
-    "language": "en"
-  }
-}
-```
-
 
 <CardGroup cols={1}>
   <Card
