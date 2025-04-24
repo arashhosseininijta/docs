@@ -4,6 +4,31 @@ description: 'Efficent separation for noisy medical condition.'
 icon: 'people-group'
 ---
 
+<Update label="Mai 2025 Release" description="Seaker Diarization - Voice Harbor V3.0">
+  ## Changelog
+  We are excited to unveil Monster, our new speaker diarization system, Nijta's latest innovation in audio segmentation that redefines both accuracy and efficiency. This first release marks a major step forward in speaker diarization, offering precise segmentation, multilingual support, and robust performance on your noisy data. From medical conversations to customer service calls and teleconference, our advanced model adapts to various acoustic conditions, ensuring high accuracy where other diarization systems fall short.
+
+  ### Diarization Benchmark – CALLHOME Eval Set
+    
+    | **Model / Dataset**       | **de** | **en** | **sp*** | **jp** | **zh** |
+    |---------------------------|:------:|:------:|:-------:|:------:|:------:|
+    | **Pyanote 3.1**           | 23     | 31     | 34      | 42     | 26     |
+    | **Voice Harbor V3.0**           | 26     | 31     | 35      | 43     | 26     |
+    | **revAI**                 | 27     | 35     | 38      | 44     | 33     |
+    | **Pyanote AI**            | 19     | **16** | **18**  | **21** | **17** |
+    | **Voice Harbor V3.0-Large**    | **18** | 22     | 26      | 31     | 22     |
+    
+    \* `sp` = Spanish  
+    **Bolded** values indicate best performance for the language.
+
+  #### Features
+
+  * Precise speaker diarization
+  * Seamless handling of overlapping speech
+  * Robust performance across varied acoustic environments
+  * Unlimited number of speakers
+</Update>
+
 ## Diarize and Redact PHI in audio and transcription using Python SDK
 
 Set Up the Client and Create a Job
@@ -50,20 +75,3 @@ print(f"Job file submitted: {job_file}")
 downloaded_results = client.download_results(output_dir="./results")
 print("Downloaded results:", downloaded_results)
 ```
-
-
-<Update label="Mai 2025 Upcoming Release" description="Voice Harbor V3.0">
-  <Frame>
-    <img className="block" src="/images/vh3da.png" />
-  </Frame>
-
-  ## Changelog
-  We are excited to unveil Monster, our new speaker diarization system, Nijta's latest innovation in audio segmentation that redefines both accuracy and efficiency. This first release marks a major step forward in speaker diarization, offering precise segmentation, multilingual support, and robust performance on your noisy data. From medical conversations to customer service calls and teleconference, our advanced model adapts to various acoustic conditions, ensuring high accuracy where other diarization systems fall short.
-
-  #### Features
-
-  * Precise speaker diarization
-  * Seamless handling of overlapping speech
-  * Robust performance across varied acoustic environments
-  * Unlimited number of speakers
-</Update>
