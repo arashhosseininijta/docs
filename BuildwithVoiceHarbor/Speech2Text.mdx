@@ -10,6 +10,23 @@ Our advanced ASR technology is built on the robust foundation of OpenAI's Whispe
 
 Our ASR component support's for up to 4 languages and robust code-switching capabilities, it effortlessly transcribes audio that blends multiple languages. Its built-in automatic language detection ensures that users do not have to manually specify the language, streamlining the workflow, while precise time-stamps allow for easy navigation and review of audio content.
 
+### Benchmarks for top 4 supported languages for VoxPopuli
+
+| Language | Whisper-Large-V3 (WER) | Our's (WER) | Δ (WER↓) |
+|:---------|-----------------------:|------------------------:|---------:|
+| English  | 8.93                  | 7.60                   | 1.33     |
+| French   | 11.15                 | 11.07                  | 0.08     |
+| Spanish  | 11.06                 | 8.52                   | 2.54     |
+| German   | 17.75                 | 12.41                  | 5.34     |
+
+
+### Evaluation benchmarks for the transcription of code-switched speech data.
+
+| Language | Whisper-Large-V2 (WER) | Our's (WER) | Δ (WER↓) |
+|:---------|-----------------------:|------------------------:|---------:|
+| English  | 8.93                  | 7.60                   | 1.33     |
+| Spanish  | 11.06                 | 8.52                   | 2.54     |
+
  ## Audio transcription without PHI reduction 
 
 <Tip>
@@ -166,15 +183,6 @@ logger.info(f"Job file created: {job_file}")
     Start using our Python SDK to connect with Voice Harbor and implement voice solutions
   </Card>
 </CardGroup>
-
-### Benchmarks for top 50 supported languages 
-
-| Language | Whisper-Large-V3 (WER) | Distil-Multi4-v0.2 (WER) | Δ (WER↓) |
-|:---------|-----------------------:|------------------------:|---------:|
-| English  | 8.93                  | 7.60                   | 1.33     |
-| French   | 11.15                 | 11.07                  | 0.08     |
-| Spanish  | 11.06                 | 8.52                   | 2.54     |
-| German   | 17.75                 | 12.41                  | 5.34     |
 
 
 ## Good news to share with you!
