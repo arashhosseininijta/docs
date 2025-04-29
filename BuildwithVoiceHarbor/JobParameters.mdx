@@ -89,7 +89,7 @@ language: en
 ```
 </ResponseField>
 
-<ResponseField name="diar" type="string" default="false">
+<ResponseField name="diar" type="boolean" default="false">
   If speaker diarization should be applied to your files. 
 Example: 
 ```yaml
@@ -97,11 +97,40 @@ diar: true
 ```
 </ResponseField>
 
-<ResponseField name="code-switch" type="string" default="false">
+<ResponseField name="code-switch" type="boolean" default="false">
   If speaker diarization should be applied to your files. 
 Example: 
 ```yaml
 code-switch: true
+```
+</ResponseField>
+
+</ResponseField>
+
+<ResponseField name="biometric" type="boolean" default="false">
+  If biometric voice print redaction should be applied to your files. 
+Example: 
+```yaml
+biometric: true
+```
+</ResponseField>
+
+
+</ResponseField>
+
+<ResponseField name="biometric_gender" type="string" default="random">
+  The gender which should be applied to the anonymised version. 
+Example: 
+```yaml
+biometric_gender: random
+```
+</ResponseField>
+
+<ResponseField name="biometric_age" type="string" default="middle-aged-adult">
+  The age group which should be applied to the anonymised version.
+Example: 
+```yaml
+biometric_age: middle-aged-adult
 ```
 </ResponseField>
 
