@@ -146,3 +146,51 @@ It's recommended to use the a scheduled download approach if submitting larger a
     "ORGANIZATION_ID": "Unique identification codes for organizations."
 }
 ```
+# Configuration Setup
+
+<details>
+  <summary>Configure Your Task</summary>
+
+  ## Select Your Configuration
+
+  ### 1. Select Task
+  <select id="task">
+    <option value="translate">Translate</option>
+    <option value="protect">Protect</option>
+  </select>
+
+  ### 2. Select Language
+  <select id="language">
+    <option value="en">English</option>
+    <option value="es">Spanish</option>
+    <option value="fr">French</option>
+  </select>
+
+  ### 3. Diarization
+  <input type="checkbox" id="diarization" /> Enable Diarization
+
+  ### 4. Select Model
+  <select id="model">
+    <option value="mini">Mini</option>
+    <option value="advanced">Advanced</option>
+  </select>
+
+  <button onclick="generateParameters()">Generate Parameters</button>
+
+  ### Generated Configuration:
+  <pre id="generatedParameters"></pre>
+
+  <script>
+    function generateParameters() {
+      var task = document.getElementById('task').value;
+      var language = document.getElementById('language').value;
+      var diarization = document.getElementById('diarization').checked ? "Enabled" : "Disabled";
+      var model = document.getElementById('model').value;
+      
+      var parameters = `Task: ${task}\nLanguage: ${language}\nDiarization: ${diarization}\nModel: ${model}`;
+      
+      document.getElementById('generatedParameters').textContent = parameters;
+    }
+  </script>
+
+</details>
