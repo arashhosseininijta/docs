@@ -114,7 +114,11 @@ biometric: true
 </ResponseField>
 
 <ResponseField name="biometric_gender" type="string" default="random">
-  The gender which should be applied to the anonymised version. 
+  The gender which should be applied to the anonymised version.
+  Available values:
+  - random
+  - same
+  - opposite
 Example: 
 ```yaml
 biometric_gender: random
@@ -123,6 +127,10 @@ biometric_gender: random
 
 <ResponseField name="biometric_age" type="string" default="middle-aged-adult">
   The age group which should be applied to the anonymised version.
+  Available values:
+  - young-adult (18-39)
+  - middle-aged-adult (40-69)
+  - senior-adult (70-100)
 Example: 
 ```yaml
 biometric_age: middle-aged-adult
