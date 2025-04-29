@@ -51,14 +51,15 @@ task: transcribe
 </CardGroup>
 
 <ResponseField name="model" type="string" default="mini">
-Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM. Available model's: advanced, mini.
-
+Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM.
+Available values:
+- mini
+- advanced
 Example: 
 ```yaml
 model: mini
 ```
 
-Example: 
 ```yaml
 model: advanced
 ```
@@ -66,6 +67,10 @@ model: advanced
 
 <ResponseField name="agents" type="list" default="health-generic">
   Agents with specififc domain dependency and purpose.
+  Available values:
+  - hipaa
+  - health-generic
+  - clinical
 ```yaml
 model: advanced
 agents:
