@@ -4,9 +4,187 @@ description: 'Transcribe fast, in multiple languages.'
 icon: 'code'
 ---
 
-## Speech to Text
+## Multilingual Speech to Text
 
-Our advanced ASR technology is built on the robust foundation of OpenAI's Whisper, known for its exceptional performance in multilingual speech recognition. However, we've significantly enhanced its capabilities with in-house innovations, including the implementation of phonetic time-stamps. These detailed markers provide an extra layer of precision by capturing the timing of specific phonetic elements within the audio, enabling more granular analysis and synchronization.
+Our advanced ASR technology is built on the robust foundation of OpenAI's Whisper, known for its exceptional performance in multilingual speech recognition. However, we've significantly enhanced its capabilities with in-house innovations, including the implementation of phonetic time-stamps for 49 languages.
+
+### Benchmarks for top 20 supported languages 
+
+| Rank | Code | Language              | WER (%) on FLEURS |
+|-----:|:----:|-----------------------|-------------------:|
+|  1   | es   | Spanish               | 3.0               |
+|  2   | it   | Italian               | 4.0               |
+|  3   | en   | English               | 4.2               |
+|  4   | pt   | Portuguese            | 4.3               |
+|  5   | de   | German                | 4.5               |
+|  6   | ja   | Japanese              | 5.0               |
+|  7   | pl   | Polish                | 5.6               |
+|  8   | ru   | Russian               | 5.6               |
+|  9   | nl   | Dutch                 | 6.1               |
+| 10   | id   | Indonesian            | 6.4               |
+| 11   | fr   | French                | 7.1               |
+| 12   | tr   | Turkish               | 7.3               |
+| 13   | sv   | Swedish               | 8.1               |
+| 14   | uk   | Ukrainian             | 8.3               |
+| 15   | ms   | Malay                 | 8.7               |
+| 16   | no   | Norwegian             | 9.1               |
+| 17   | fi   | Finnish               | 9.2               |
+| 18   | vi   | Vietnamese            | 10.9              |
+| 19   | th   | Thai                  | 11.5              |
+| 20   | el   | Greek                 | 13.0              |
+
+ ## Audio transcription without PHI reduction 
+
+<Tip>
+
+Transcirption is by **default** applied for the task **protect**. To have the transcription without any reduction use the **task** parameter and set it to **transcribe**.  
+
+</Tip>
+
+### Transcribe multilingual audio data
+
+```python
+BASE_URL = "https://voiceharbor.ai"
+usage_token = "USAGE_TOKEN"
+# Create a new job on the server via the class method.
+job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+
+client = VoiceHarborClient(
+    base_url=BASE_URL,
+    job_id=job_id,
+    token=usage_token,
+    inputs_dir="./inputs/tests"
+)
+
+# Submit input files and the job file.and 
+job_params = {"files": [], "task": "transcribe"}
+job_params = client.submit_files(job_params)
+job_file = client.submit_job(job_params)
+logger.info(f"Job file created: {job_file}")
+```
+
+### Set target transcription language
+
+```python
+
+supported_codes = [
+    "af", "ar", "az", "be", "bg", "bn", "bs", "br", "ca", "cs", "cy", "da", "de",
+    "el", "en", "es", "et", "eu", "fa", "fi", "fr", "gl", "he", "hi", "hr", "hu",
+    "hy", "id", "is", "it", "ja", "ka", "km", "kn", "ko", "kk", "la", "lt", "lv",
+    "mi", "ml", "mn", "mr", "ms", "ne", "nl", "no", "oc", "pa", "pl", "pt", "ro",
+    "ru", "si", "sk", "sl", "sq", "sr", "sn", "so", "sw", "ta", "te", "th", "tg",
+    "tr", "uk", "ur", "vi", "yo", "zh"
+]
+
+BASE_URL = "https://voiceharbor.ai"
+usage_token = "USAGE_TOKEN"
+# Create a new job on the server via the class method.
+job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+
+client = VoiceHarborClient(
+    base_url=BASE_URL,
+    job_id=job_id,
+    token=usage_token,
+    inputs_dir="./inputs/tests"
+)
+
+# Submit input files and the job file.and 
+job_params = {"files": [], "task": "transcribe", "language":"en"}  
+job_params = client.submit_files(job_params)
+job_file = client.submit_job(job_params)
+logger.info(f"Job file created: {job_file}")
+```
+
+<Expandable title="Output example">
+```python
+{
+  "speaker 1": {
+    "transcription": [
+      {
+        "start": 0.05,
+        "end": 5.27,
+        "text": "The sandwich comes with ham, cheese, tomatoes, mayonnaise, pickles.",
+        "words": [
+          {
+            "word": " The",
+            "start": 0.05,
+            "end": 0.55
+          },
+          {
+            "word": " sandwich",
+            "start": 0.55,
+            "end": 0.93
+          },
+          {
+            "word": " comes",
+            "start": 0.93,
+            "end": 1.33
+          },
+          {
+            "word": " with",
+            "start": 1.33,
+            "end": 1.57
+          },
+          {
+            "word": " ham",
+            "start": 1.57,
+            "end": 1.95
+          },
+          {
+            "word": ",",
+            "start": 1.95,
+            "end": 2.13
+          },
+          {
+            "word": " cheese",
+            "start": 2.13,
+            "end": 2.57
+          },
+          {
+            "word": ",",
+            "start": 2.57,
+            "end": 2.73
+          },
+          {
+            "word": " tomatoes",
+            "start": 2.73,
+            "end": 3.25
+          },
+          {
+            "word": ",",
+            "start": 3.25,
+            "end": 3.55
+          },
+          {
+            "word": " mayonnaise",
+            "start": 3.55,
+            "end": 3.93
+          },
+          {
+            "word": ",",
+            "start": 3.93,
+            "end": 4.21
+          },
+          {
+            "word": " pickles",
+            "start": 4.21,
+            "end": 4.51
+          },
+          {
+            "word": ".",
+            "start": 4.51,
+            "end": 5.27
+          }
+        ]
+      }
+    ],
+    "language": "en"
+  }
+}
+```
+</Expandable>
+
+## Code-switching support
 
 Our ASR component support's for up to 4 languages and robust code-switching capabilities, it effortlessly transcribes audio that blends multiple languages. Its built-in automatic language detection ensures that users do not have to manually specify the language, streamlining the workflow, while precise time-stamps allow for easy navigation and review of audio content.
 
@@ -63,8 +241,8 @@ job_params = client.submit_files(job_params)
 job_file = client.submit_job(job_params)
 logger.info(f"Job file created: {job_file}")
 ```
-### Output example
 
+<Expandable title="Output example">
 ```python
 {
   "speaker 1": {
@@ -218,6 +396,8 @@ logger.info(f"Job file created: {job_file}")
   }
 }
 ```
+</Expandable>
+
 ### Set target transcription language
 
 ```python
