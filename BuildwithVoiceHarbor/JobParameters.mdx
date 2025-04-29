@@ -63,16 +63,14 @@ model: advanced
 
 <ResponseField name="task" type="string" default="protect">
   Task to apply to attached files. Available task's: protect, transcribe.
-
-Example: 
 ```yaml
 task: transcribe
 ```
+
 </ResponseField>
 
 <ResponseField name="agents" type="list" default="health-generic">
   Agents with specififc domain dependency and purpose.
-Example: 
 ```yaml
 model: advanced
 agents:
@@ -88,26 +86,26 @@ agents:
   - en
   - fr
   - sp
-Example: 
 ```yaml
 language: en
 ```
+
 </ResponseField>
 
 <ResponseField name="diar" type="boolean" default="false">
   If speaker diarization should be applied to your files. 
-Example: 
 ```yaml
 diar: true
 ```
+
 </ResponseField>
 
 <ResponseField name="code-switch" type="boolean" default="false">
   If speaker diarization should be applied to your files. 
-Example: 
 ```yaml
 code-switch: true
 ```
+
 </ResponseField>
 
 <ResponseField name="biometric" type="string" default="en">
@@ -115,10 +113,10 @@ code-switch: true
   Available values:
   - en
   - fr
-Example: 
 ```yaml
-biometric: true
+biometric: en
 ```
+
 </ResponseField>
 
 <ResponseField name="biometric_gender" type="string" default="random">
@@ -127,10 +125,10 @@ biometric: true
   - random
   - same
   - opposite
-Example: 
 ```yaml
 biometric_gender: random
 ```
+
 </ResponseField>
 
 <ResponseField name="biometric_age" type="string" default="middle-aged-adult">
@@ -139,10 +137,10 @@ biometric_gender: random
   - young-adult (18-39)
   - middle-aged-adult (40-69)
   - senior-adult (70-100)
-Example: 
 ```yaml
 biometric_age: middle-aged-adult
 ```
+
 </ResponseField>
 
 <CardGroup cols={1}>
