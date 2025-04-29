@@ -40,9 +40,6 @@ task: transcribe
 ```
 </ResponseField>
 
-<ResponseField name="model" type="string" default="mini">
-Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM. Available model's: advanced, mini.
-
 <CardGroup cols={1}>
   <Card
     title="Advanced vs. Mini"
@@ -53,6 +50,9 @@ Model tier to use for phi reduction. Pass `advanced` if you want to use advanced
   </Card>
 </CardGroup>
 
+<ResponseField name="model" type="string" default="mini">
+Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM. Available model's: advanced, mini.
+
 Example: 
 ```yaml
 model: mini
@@ -62,6 +62,7 @@ Example:
 ```yaml
 model: advanced
 ```
+</ResponseField>
 
 <ResponseField name="agents" type="list" default="health-generic">
   Agents with specififc domain dependency and purpose.
