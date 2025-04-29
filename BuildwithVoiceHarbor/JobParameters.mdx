@@ -82,7 +82,12 @@ agents:
 </ResponseField>
 
 <ResponseField name="language" type="string" default="en">
-  Set the target language for transcription. 
+  Set the target language for transcription.
+  Available values for code-switching transcription:
+  - de
+  - en
+  - fr
+  - sp
 Example: 
 ```yaml
 language: en
@@ -105,8 +110,11 @@ code-switch: true
 ```
 </ResponseField>
 
-<ResponseField name="biometric" type="boolean" default="false">
-  If biometric voice print redaction should be applied to your files. 
+<ResponseField name="biometric" type="string" default="en">
+  If biometric voice print redaction should be applied to your files, and if so, which language.
+  Available values:
+  - en
+  - fr
 Example: 
 ```yaml
 biometric: true
