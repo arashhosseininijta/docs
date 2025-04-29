@@ -16,8 +16,7 @@ icon: 'gear'
     files:
     - filename1.mp3
     - filename2.wav
-    model:
-    - mini
+    model: mini
     ```
   </Step>
   <Step title="Submit Job File">
@@ -53,14 +52,12 @@ Model tier to use for phi reduction. Pass `advanced` if you want to use advanced
 
 Example: 
 ```yaml
-model:
-- mini
+model: mini
 ```
 
 Example: 
 ```yaml
-model:
-- advanced
+model: advanced
 ```
 </ResponseField>
 
@@ -69,8 +66,7 @@ model:
 
 Example: 
 ```yaml
-task:
-- transcribe
+task: transcribe
 ```
 </ResponseField>
 
@@ -78,8 +74,7 @@ task:
   Agents with specififc domain dependency and purpose.
 Example: 
 ```yaml
-model:
-- advanced
+model: advanced
 agents:
 - hipaa
 ```
@@ -89,11 +84,25 @@ agents:
   Set the target language for transcription. 
 Example: 
 ```yaml
-language:
-- en
+language: en
 ```
 </ResponseField>
 
+<ResponseField name="diar" type="string" default="false">
+  If speaker diarization should be applied to your files. 
+Example: 
+```yaml
+diar: true
+```
+</ResponseField>
+
+<ResponseField name="code-switch" type="string" default="false">
+  If speaker diarization should be applied to your files. 
+Example: 
+```yaml
+code-switch: true
+```
+</ResponseField>
 
 <CardGroup cols={1}>
   <Card
