@@ -4,26 +4,6 @@ description: 'Customise your usage based on your needs'
 icon: 'gear'
 ---
 
-<Steps>
-  <Step title="Define your parameter based on data sensitivity.">
-    [Choose the right model](https://docs.nijta.com/BuildwithVoiceHarbor/Model#advanced-vs-mini)
-  </Step>
-  <Step title="Build Job File">
-    Build your job as yaml file containing the parameters in your target programming language.
-
-    Minimal job example: 
-    ```yaml
-    files:
-    - filename1.mp3
-    - filename2.wav
-    model: mini
-    ```
-  </Step>
-  <Step title="Submit Job File">
-    [Submit your job to trigger the task processing.](https://docs.nijta.com/api-reference/files/upload-url)
-  </Step>
-</Steps>
-
 ## Files parameters
 
 <ResponseField name="files" type="list" required>
@@ -37,7 +17,7 @@ files:
 ```
 </ResponseField>
 
-### Agents and task and model parameters
+## Agents and task and model parameters
 
 <ResponseField name="model" type="string" default="mini">
 Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM. Available model's: advanced, mini.
@@ -81,7 +61,7 @@ agents:
 
 </ResponseField>
 
-### Diarization and transcription parameters 
+## Diarization and transcription parameters 
 
 <ResponseField name="language" type="string" default="en">
   Set the target language for transcription.
@@ -110,9 +90,9 @@ diar: true
 code-switch: true
 ```
 
-### Biometric parameters
-
 </ResponseField>
+
+## Biometric parameters
 
 <ResponseField name="biometric" type="string" default="en">
   If biometric voice print redaction should be applied to your files, and if so, which language.
@@ -166,6 +146,27 @@ biometric_age: middle-aged-adult
 Speech to text is by **default** applied for the task **protect**. To have the transcription without any reduction use **transcribe** as task.  
 
 </Tip>
+
+
+<Steps>
+  <Step title="Define your parameter based on data sensitivity.">
+    [Choose the right model](https://docs.nijta.com/BuildwithVoiceHarbor/Model#advanced-vs-mini)
+  </Step>
+  <Step title="Build Job File">
+    Build your job as yaml file containing the parameters in your target programming language.
+
+    Minimal job example: 
+    ```yaml
+    files:
+    - filename1.mp3
+    - filename2.wav
+    model: mini
+    ```
+  </Step>
+  <Step title="Submit Job File">
+    [Submit your job to trigger the task processing.](https://docs.nijta.com/api-reference/files/upload-url)
+  </Step>
+</Steps>
 
 
 ```python
