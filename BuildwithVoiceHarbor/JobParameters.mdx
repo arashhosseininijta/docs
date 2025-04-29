@@ -86,14 +86,22 @@ agents:
 ### Diarization and transcription parameters 
 
 <ResponseField name="language" type="string" default="en">
-  Set the target language for transcription.
-  Available values for code-switching transcription:
+  Set the target language for transcription. Leave this parameter to detect automatically amoung supported [languages](https://docs.nijta.com/BuildwithVoiceHarbor/Speech2Text#set-target-transcription-language) else force target language.
+```yaml
+language: en
+```
+
+</ResponseField>
+
+<ResponseField name="code-switch" type="boolean" default="false">
+  If automatic code-switching should be applied to your files.
+  Available [languages](https://docs.nijta.com/BuildwithVoiceHarbor/Speech2Text#code-switching-support) supported for code-switching transcription:
   - de
   - en
   - fr
   - sp
 ```yaml
-language: en
+code-switch: true
 ```
 
 </ResponseField>
@@ -106,13 +114,6 @@ diar: true
 
 </ResponseField>
 
-<ResponseField name="code-switch" type="boolean" default="false">
-  If speaker diarization should be applied to your files. 
-```yaml
-code-switch: true
-```
-
-</ResponseField>
 
 ### Biometric parameters
 
