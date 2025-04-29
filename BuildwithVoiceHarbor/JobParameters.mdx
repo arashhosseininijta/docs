@@ -29,6 +29,20 @@ prefix: XYZ
 
 ### Task, model and agent parameters
 
+</ResponseField>
+
+<ResponseField name="task" type="string" default="protect">
+  Task to apply to attached files.
+Available task's:
+  - protect (PHI or/and Biomteric redaction*)
+  - transcribe (Transcription and Biomteric redaction*)
+* If **biometric** parameter is activated. See **Biometric parameters** for more information.
+```yaml
+task: transcribe
+```
+
+</ResponseField>
+
 <ResponseField name="model" type="string" default="mini">
 Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM. Available model's: advanced, mini.
 
@@ -51,15 +65,6 @@ Example:
 ```yaml
 model: advanced
 ```
-</ResponseField>
-
-<ResponseField name="task" type="string" default="protect">
-  Task to apply to attached files. Available task's: protect, transcribe.
-```yaml
-task: transcribe
-```
-
-</ResponseField>
 
 <ResponseField name="agents" type="list" default="health-generic">
   Agents with specififc domain dependency and purpose.
