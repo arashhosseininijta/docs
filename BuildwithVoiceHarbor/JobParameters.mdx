@@ -15,8 +15,17 @@ List of local input audio file name(s).
 Example: 
 ```yaml
 files:
-- filename1.mp3
-- filename2.wav
+- filename_XYZ.mp3
+- filename_XYZ.wav
+```
+</ResponseField>
+
+<ResponseField name="prefix" type="string" default="">
+Apply the task to the files with mentioned prefix in their file name.
+
+Example: 
+```yaml
+prefix: XYZ
 ```
 </ResponseField>
 
