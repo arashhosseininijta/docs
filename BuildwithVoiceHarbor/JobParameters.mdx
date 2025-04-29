@@ -216,187 +216,213 @@ Start coding today using Python and integrate the Voice Harbor API into your wor
   </Card>
 </CardGroup>
 
+### Transcription, Translation, and Protection Use-Case examples
 
+<details>
+  <summary>1. Transcribe in 49 languages</summary>
+  
+  Use this configuration to transcribe audio files in 49 languages.
 
-## Transcription, Translation, and Protection Use-Case examples
-
-### 1. Transcribe in 49 languages
-Use this configuration to transcribe audio files in 49 languages.
-
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-task: translate
-```
-
----
-
-### 2. Transcribe in a Target Language
-Use this configuration to transcribe audio files in a target language (e.g., English).
-
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-task: translate
-language: en
-```
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  task: translate
+  ```
+</details>
 
 ---
 
-### 3. Separate Speaker and Translate in Target Language
-Use this configuration to separate speakers and translate to a target language.
+<details>
+  <summary>2. Transcribe in a Target Language</summary>
+  
+  Use this configuration to transcribe audio files in a target language (e.g., English).
 
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-task: translate
-language: en
-diar: true
-```
-
----
-
-### 4. Separate Speaker, Translate in 49 Languages
-Use this configuration to separate speakers and translate in 49 languages.
-
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-task: translate
-diar: true
-```
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  task: translate
+  language: en
+  ```
+</details>
 
 ---
 
-### 5. Separate Speaker, Translate for Code-Switch Data in 4 Languages
-Use this configuration to separate speakers and translate for code-switch data in 4 languages.
+<details>
+  <summary>3. Separate Speaker and Translate in Target Language</summary>
+  
+  Use this configuration to separate speakers and translate to a target language.
 
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-task: translate
-diar: true
-code-switch: true
-```
-
----
-
-### 6. Separate Speaker, Translate for Code-Switch Data in 4 Languages and Redact PHI with Mini Model
-Use this configuration to separate speakers, translate for code-switch data in 4 languages, and redact PHI using the mini model.
-
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-task: protect
-diar: true
-code-switch: true
-model: mini
-```
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  task: translate
+  language: en
+  diar: true
+  ```
+</details>
 
 ---
 
-### 7. Separate Speaker, Translate in 49 Languages and Redact PHI with Mini Model
-Use this configuration to separate speakers, translate in 49 languages, and redact PHI using the mini model.
+<details>
+  <summary>4. Separate Speaker, Translate in 49 Languages</summary>
+  
+  Use this configuration to separate speakers and translate in 49 languages.
 
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-task: protect
-diar: true
-model: mini
-```
-
----
-
-### 8. Separate Speaker, Translate for Code-Switch Data in 4 Languages and Redact PHI with Advanced Model
-Use this configuration to separate speakers, translate for code-switch data in 4 languages, and redact PHI using the advanced model. Includes HIPAA protection.
-
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-diar: true
-code-switch: true
-task: protect
-model: advanced
-agents:
-  - hippa
-  - health-generic
-```
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  task: translate
+  diar: true
+  ```
+</details>
 
 ---
 
-## 9. Separate Speaker, Translate in Target Language and Redact Biometric Voice Print
-Use this configuration to separate speakers, translate in a target language, and redact biometric voice prints.
+<details>
+  <summary>5. Separate Speaker, Translate for Code-Switch Data in 4 Languages</summary>
+  
+  Use this configuration to separate speakers and translate for code-switch data in 4 languages.
 
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-task: translate
-language: en
-diar: true
-biometric: en
-biometric_gender: random
-biometric_age: middle-aged-adult
-```
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  task: translate
+  diar: true
+  code-switch: true
+  ```
+</details>
+
+---
+
+<details>
+  <summary>6. Separate Speaker, Translate for Code-Switch Data in 4 Languages and Redact PHI with Mini Model</summary>
+  
+  Use this configuration to separate speakers, translate for code-switch data in 4 languages, and redact PHI using the mini model.
+
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  task: protect
+  diar: true
+  code-switch: true
+  model: mini
+  ```
+</details>
 
 ---
 
-### 10. Separate Speaker, Translate in Target Language, Redact PHI, and Biometric Voice Print
-Use this configuration to separate speakers, translate in a target language, redact PHI, and redact biometric voice prints using the advanced model.
+<details>
+  <summary>7. Separate Speaker, Translate in 49 Languages and Redact PHI with Mini Model</summary>
+  
+  Use this configuration to separate speakers, translate in 49 languages, and redact PHI using the mini model.
 
-```yaml
-files:
-  - filename_XYZ.mp3
-  - filename_XYZ.wav
-  - filename_XYZ.mp3
-  - filename_ZYX.mp3
-prefix: XYZ
-biometric: en
-biometric_gender: random
-biometric_age: middle-aged-adult
-task: protect
-model: advanced
-agents:
-  - hippa
-  - health-generic
-diar: true
-code-switch: true
-```
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  task: protect
+  diar: true
+  model: mini
+  ```
+</details>
 
 ---
+
+<details>
+  <summary>8. Separate Speaker, Translate for Code-Switch Data in 4 Languages and Redact PHI with Advanced Model</summary>
+  
+  Use this configuration to separate speakers, translate for code-switch data in 4 languages, and redact PHI using the advanced model. Includes HIPAA protection.
+
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  diar: true
+  code-switch: true
+  task: protect
+  model: advanced
+  agents:
+    - hippa
+    - health-generic
+  ```
+</details>
+
+---
+
+<details>
+  <summary>9. Separate Speaker, Translate in Target Language and Redact Biometric Voice Print</summary>
+  
+  Use this configuration to separate speakers, translate in a target language, and redact biometric voice prints.
+
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  task: translate
+  language: en
+  diar: true
+  biometric: en
+  biometric_gender: random
+  biometric_age: middle-aged-adult
+  ```
+</details>
+
+---
+
+<details>
+  <summary>10. Separate Speaker, Translate in Target Language, Redact PHI, and Biometric Voice Print</summary>
+  
+  Use this configuration to separate speakers, translate in a target language, redact PHI, and redact biometric voice prints using the advanced model.
+
+  ```yaml
+  files:
+    - filename_XYZ.mp3
+    - filename_XYZ.wav
+    - filename_XYZ.mp3
+    - filename_ZYX.mp3
+  prefix: XYZ
+  biometric: en
+  biometric_gender: random
+  biometric_age: middle-aged-adult
+  task: protect
+  model: advanced
+  agents:
+    - hippa
+    - health-generic
+  diar: true
+  code-switch: true
+  ```
+</details>
