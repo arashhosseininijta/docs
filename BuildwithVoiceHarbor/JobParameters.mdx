@@ -35,7 +35,7 @@ Below is a table summarizing the output files for each task mode.
 | --- | --- | --- |
 | **transcribe** | `.json` | Contains the full text transcript |
 | **phi** | `.json` and `.wav` | Transcript plus PHI spans and Original audio with all PHI segments muted  |
-| **biometric** | `.wav` | Audio with a new synthetic identity, gender, and age |
+| **biometric** | `.json` and `.wav` | Transcript plus Audio with a new synthetic identity, gender, and age |
 | **phi-biometric** |`.json` and `.wav` | Transcript plus PHI spans and Audio with both PHI removed and a new synthetic identity, gender, and age |
 
 <ResponseField name="task" type="string" default="protect">
@@ -427,7 +427,7 @@ Start coding today using Python and integrate the Voice Harbor API into your wor
   biometric: en
   biometric_gender: random
   biometric_age: middle-aged-adult
-  task: protect
+  task: phi-biometric
   model: advanced
   agents:
     - hippa
