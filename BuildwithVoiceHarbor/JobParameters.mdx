@@ -29,6 +29,13 @@ prefix: XYZ
 
 ### Task, model and agent parameters
 
+| Task | Output | Explanation |
+| --- | --- | --- |
+| **transcribe** | `.json` | Contains the full text transcript |
+| **phi** | `.json` and `.wav` | Transcript plus PHI spans and Original audio with all PHI segments muted  |
+| **biometric** | `.wav` | Speaker-converted audio with a new synthetic identity, gender, and age |
+| **phi-biometric** |`.json` and `.wav` | Transcript plus PHI spans and Audio with both PHI removed and voice print anonymized |
+
 <ResponseField name="task" type="string" default="protect">
   Task to apply to attached files.
   Available task's:
