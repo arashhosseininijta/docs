@@ -32,8 +32,10 @@ prefix: XYZ
 <ResponseField name="task" type="string" default="protect">
   Task to apply to attached files.
   Available task's:
-  - protect (PHI or/and Biomteric redaction)
-  - transcribe (Transcription and Biomteric redaction)
+  - transcribe (Transcription)
+  - phi (transcribe + PHI redaction)
+  - biometric (Speech to speech voice print redaction)
+  - phi-biometric (transcribe + phi + biometric)
 
 ```yaml
 task: transcribe
