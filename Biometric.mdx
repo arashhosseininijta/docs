@@ -11,7 +11,7 @@ icon: user-shield
 
 We are excited to share the release of our revolutionary voice anonymization system for the 2025-05-01, a breakthrough in privacy-preserving speech technology that sets a new standard in both privacy and performance.
 
-<Update label="2025-05-01 Upcoming Release" description="Voice Harbor V3.0">
+<Update label="Mai 2025 Release" description="Voice Harbor V3.0">
   <Frame>
     <img className="block" src="/images/vh3b.png" />
   </Frame>
@@ -27,6 +27,50 @@ We are excited to share the release of our revolutionary voice anonymization sys
   * **High-quality Voices:** Generate clear, natural-sounding audio.
   * **Generative Content Anonymization:** Edit words and phrases for a tailored message.
 </Update>
+
+## Redact Biometric voice print in audio, followed by transcription using Python SDK
+
+Set Up the Client and Create a Job
+Once you have the necessary setup, you can create a job on the server and interact with the API. Here's how to do it:
+
+```python
+BASE_URL = "https://voiceharbor.ai"
+usage_token = "your_usage_token_here"
+
+# Create a new job on the server via the class method.
+# Create a new job immediately.
+job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
+print(f"Job created with ID: {job_id}")
+```
+Next, initialize the client and define the parameters for your job, including the files you want to submit for transcription.
+
+```python
+# Initialize the client with the new job_id and input directory.
+client = VoiceHarborClient(
+    base_url=BASE_URL,
+    job_id=job_id,
+    token=usage_token,  # Ensure correct token is used here
+    inputs_dir="./inputs"
+)
+
+# Build job parameters (e.g., list of agents and any other details).
+  job_params = {"files": [],
+                "task":"biometric",
+                "biometric": "en",
+                "biometric_gender":"opposite",
+                "biometric_age": "middle-aged-adult"}
+
+# Upload input files.
+job_params = client.submit_files(job_params)
+```
+Now, submit the job and wait for the transcription results. Here's how to complete the process:
+
+```python
+# Immediately submit the job file (YAML)
+job_file = client.submit_job(job_params)
+print(f"Job file submitted: {job_file}")
+
+# Wait for and download the processed results.
 
 <Update label="2024-04-01" description="Voice Harbor V2.0">
   <Frame>
