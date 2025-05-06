@@ -49,7 +49,12 @@ Now, submit the job and wait for the transcription results. Here's how to comple
 job_file = client.submit_job(job_params)
 print(f"Job file submitted: {job_file}")
 
+
+
 # Wait for and download the processed results.
+downloaded_results = client.download_results(output_dir="./results")
+print("Downloaded results:", downloaded_results)
+```
 
 ## Changelog
 
