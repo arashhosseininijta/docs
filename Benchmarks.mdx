@@ -1,20 +1,44 @@
 ---
-title: 'Computing time benchmarks'
+title: 'Computing time benchmarks using Voice Harbor Python SDK'
 icon: clock
 ---
 
-<Update label="2025-04-04 Benchmarks" description="Voice Harbor V3.0">
+<Update label="2025-05-07 Benchmarks" description="Voice Harbor V3.0">
 
-  **Single sample**  
-  **Format:** mp3  
-  **Format:** mono  
-  **Duration:** 5 min 49 sec  
+  **Simple sample**  
+  **Format:** wav  
+  **Channel:** 1 
+  **Speaker:** 1
+  **Language:** English
+  **Duration:** 0:51 sec 
+  **Diarization:** No
+  **Code-switch:** No
   
-  | Config                  | Start Time         | End Time           | Duration                   |
-  |-------------------------|--------------------|--------------------|----------------------------|
-  | PHI redaction "advanced" | 2025-04-04 06:36:08 | 2025-04-04 06:39:17 | ~3 min 9 sec (189 sec)     |
-  | PHI redaction "mini"     | 2025-04-04 06:40:56 | 2025-04-04 06:42:22 | ~1 min 26 sec (86 sec)     |
-  | Transcription            | 2025-04-04 06:46:50 | 2025-04-04 06:47:35 | ~45 sec                    |
+  | task                  | Duration                   | Jon parameters | 
+  |-------------------------|----------------------------|----------------------------|
+  | transcribe | 14.12 sec     | ```python job_params = {"files": [],"task":"transcribe"}``` |
+  | phi     | 24.10 sec     |```python job_params = {"files": [],"task":"phi", "model":"mini"}``` |
+  | biometric            | 75.12 sec                    |```python job_params = {"files": [],"task":"biometric"}``` |
+  | phi-biometric            | 75.09 sec                    |```python job_params = {"files": [],"task":"phi-transcribe"}``` |
+
+</Update>
+
+<Update label="2025-05-07 Benchmarks" description="Voice Harbor V3.0">
+
+  **Complex sample**  
+  **Format:** mp3  
+  **Channel:** 1 
+  **Speaker:** 2 
+  **Language:** English & Spanish
+  **Duration:** 5 min 49 sec  
+
+
+  | task                  | Duration                   |Jon parameters | 
+  |-------------------------|----------------------------|----------------------------|
+  | transcribe | 55.71 sec     | ```python job_params = {"files": [],"task":"transcribe", "diar":True, "code-switch":True}``` |
+  | phi     | 85.73 sec     |```python job_params = {"files": [],"task":"transcribe", "diar":True, "code-switch":True}``` |
+  | biometric            | X                   |```python job_params = {"files": [],"task":"biometric", "diar":True, "code-switch":True}``` |
+  | phi-biometric            | X                    |```python job_params = {"files": [],"task":"phi-transcribe", "diar":True, "code-switch":True}``` |
 
 </Update>
 
