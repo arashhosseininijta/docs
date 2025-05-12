@@ -2,6 +2,49 @@
 title: 'Computing time benchmarks using Voice Harbor Python SDK'
 icon: clock
 ---
+<Update label="2025-05-12 Benchmarks" description="Voice Harbor V3.0-12052025-1640 - 27.8 % cut in runtime for biometric redaction.">
+
+  **Complex sample**  
+  **Format:** mp3  
+  **Channel:** 1 
+  **Speaker:** 2 
+  **Language:** English & Spanish
+  **Duration:** 5 min 49 sec (x2 effective)  
+
+
+  | task                  | Duration                   |Jon parameters | 
+  |-------------------------|----------------------------|----------------------------|
+  | transcribe | Same as 2025-05-07      | ```"task":"transcribe", "diar":True, "code-switch":True``` |
+  | phi     | Same as 2025-05-07     |```"task":"phi", "diar":True, "code-switch":True``` |
+  | biometric            | 8.35 min                   |```"task":"biometric", "diar":True, "code-switch":True``` |
+  | phi-biometric            | 8.51 min                    |```"task":"phi-biometric", "diar":True, "code-switch":True``` |
+
+</Update>
+
+
+
+<Update label="2025-05-07 Benchmarks" description="Voice Harbor V3.0">
+
+  **Complex sample**  
+  **Format:** mp3  
+  **Channel:** 1 
+  **Speaker:** 2 
+  **Language:** English & Spanish
+  **Duration:** 5 min 49 sec (x2 effective)  
+
+
+  | task                  | Duration                   |Jon parameters | 
+  |-------------------------|----------------------------|----------------------------|
+  | transcribe | 55.71 sec     | ```"task":"transcribe", "diar":True, "code-switch":True``` |
+  | phi     | 85.73 sec     |```"task":"phi", "diar":True, "code-switch":True``` |
+  | biometric            | 11.96 min                   |```"task":"biometric", "diar":True, "code-switch":True``` |
+  | phi-biometric            | 11.79 min                    |```"task":"phi-biometric", "diar":True, "code-switch":True``` |
+
+</Update>
+
+<Tip>
+  We have released our biometric redaction service, read more about all redaction parameters here [Job Parameters](https://docs.nijta.com/BuildwithVoiceHarbor/JobParameters). Just ask, and we'll gladly provide more information on why biometric redaction is the recommended approach to comply 100% with HIPAA and GDPR.
+</Tip>
 
 <Update label="2025-05-07 Benchmarks" description="Voice Harbor V3.0">
 
@@ -18,29 +61,6 @@ icon: clock
   | phi     | 24.10 sec     |```"task":"phi", "model":"mini"``` |
   | biometric            | 75.12 sec                    |```"task":"biometric"``` |
   | phi-biometric            | 75.09 sec                    |```"task":"phi-biometric"``` |
-
-</Update>
-
-<Tip>
-  We have released our biometric redaction service, read more about all redaction parameters here [Job Parameters](https://docs.nijta.com/BuildwithVoiceHarbor/JobParameters). Just ask, and we'll gladly provide more information on why biometric redaction is the recommended approach to comply 100% with HIPAA and GDPR.
-</Tip>
-
-<Update label="2025-05-07 Benchmarks" description="Voice Harbor V3.0">
-
-  **Complex sample**  
-  **Format:** mp3  
-  **Channel:** 1 
-  **Speaker:** 2 
-  **Language:** English & Spanish
-  **Duration:** 5 min 49 sec  
-
-
-  | task                  | Duration                   |Jon parameters | 
-  |-------------------------|----------------------------|----------------------------|
-  | transcribe | 55.71 sec     | ```"task":"transcribe", "diar":True, "code-switch":True``` |
-  | phi     | 85.73 sec     |```"task":"phi", "diar":True, "code-switch":True``` |
-  | biometric            | 11.96 min                   |```"task":"biometric", "diar":True, "code-switch":True``` |
-  | phi-biometric            | 11.79 min                    |```"task":"phi-biometric", "diar":True, "code-switch":True``` |
 
 </Update>
 
