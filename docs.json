@@ -42,6 +42,12 @@
             "pages": [
               "Diarization"
             ]
+          },
+          {
+            "group": "Playground",
+            "pages": [
+              "Diarization"
+            ]
           }
         ]
       },
