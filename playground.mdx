@@ -1,38 +1,33 @@
 ---
 title: 'Try out Voiceharbor'
-description: 'Efficent phi and biomteric redaction for medical condition.'
+description: 'Efficient PHI and biometric redaction for medical content.'
 icon: 'user-shield'
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Demo</title>
-  <style>
-    /* optional: make the iframe responsive */
-    .gradio‐container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 60%; /* adjust aspect ratio */
-      height: 0;
-    }
-    .gradio‐iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="gradio‐container">
-    <iframe
-      class="gradio‐iframe"
-      src="https://fbda02328e46b24a98.gradio.live"
-      allow="clipboard-write; clipboard-read; microphone; camera"
-      sandbox="allow‐forms allow‐scripts allow‐same‐origin"
-    ></iframe>
-  </div>
-</body>
-</html>
+
+<!--
+  We can’t include a full HTML document in MDX. Instead, just embed the <iframe> directly
+  using JSX. The wrapper <div> makes it responsive (60% aspect ratio as an example).
+-->
+
+<div
+  style={{
+    position: "relative",
+    width: "100%",
+    paddingBottom: "60%", /* Adjust this % to change aspect ratio */
+    height: 0,
+  }}
+>
+  <iframe
+    src="https://fbda02328e46b24a98.gradio.live"
+    allow="clipboard-write; clipboard-read; microphone; camera"
+    sandbox="allow-forms allow-scripts allow-same-origin"
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      border: "none",
+    }}
+  />
+</div>
