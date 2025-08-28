@@ -24,6 +24,15 @@ icon: 'key'
   </Step>
 </Steps>
 
+### Minimal Biometric Redaction (uses defaults)
+
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer developerToken" \
+  -H "Content-Type: multipart/form-data" \
+  -F "source_audio=@./martin.wav" \
+  --output result.wav
+```
 ---
 ## Token and job monitoring
 
