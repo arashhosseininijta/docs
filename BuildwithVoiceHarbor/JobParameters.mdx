@@ -4,25 +4,6 @@ description: 'Customize your job based on your needs'
 icon: 'gear'
 ---
 
-## ⚠️ Possible API Errors
-
-These are the error responses you may encounter while using the API:
-
-| HTTP Code | Error Condition | Message |
-| --------- | --------------- | ------- |
-| 400       | Invalid field value or combination | Descriptive error string |
-| 401       | Missing or malformed Authorization header | `"Missing Authorization header"` |
-| 403       | Invalid developer token | `"Invalid token"` |
-| 400       | `avatar/emotion` with non-English language | `"avatar/emotion only supported when language=english"` |
-| 400       | Mixed biometric and avatar params | `"avatar and emotion cannot be used together with biometric-age or gender"` |
-| 400       | Missing audio | `"Missing audio file"` |
-| 400       | Invalid model_id | `"Invalid model_id. Allowed: mini, advanced"` |
-| 400       | Invalid biometric-age | `"Invalid biometric-age. Allowed: young-adult, middle-aged-adult, senior-adult, same, random"` |
-| 400       | Invalid gender | `"Invalid gender. Allowed: same, random, opposite"` |
-| 400       | Invalid avatar or emotion | `"Invalid avatar/emotion. Allowed: ..."` |
-| 500       | Backend failure | `"Proxying failed"` |
-| 503       | Model not loaded | `"Model not loaded"` |
-
 ---
 
 ## Parameters
@@ -135,6 +116,24 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -F "language=english" \
   --output avatar_emma_happy.wav
 ```
+## ⚠️ Possible API Errors
+
+These are the error responses you may encounter while using the API:
+
+| HTTP Code | Error Condition | Message |
+| --------- | --------------- | ------- |
+| 400       | Invalid field value or combination | Descriptive error string |
+| 401       | Missing or malformed Authorization header | `"Missing Authorization header"` |
+| 403       | Invalid developer token | `"Invalid token"` |
+| 400       | `avatar/emotion` with non-English language | `"avatar/emotion only supported when language=english"` |
+| 400       | Mixed biometric and avatar params | `"avatar and emotion cannot be used together with biometric-age or gender"` |
+| 400       | Missing audio | `"Missing audio file"` |
+| 400       | Invalid model_id | `"Invalid model_id. Allowed: mini, advanced"` |
+| 400       | Invalid biometric-age | `"Invalid biometric-age. Allowed: young-adult, middle-aged-adult, senior-adult, same, random"` |
+| 400       | Invalid gender | `"Invalid gender. Allowed: same, random, opposite"` |
+| 400       | Invalid avatar or emotion | `"Invalid avatar/emotion. Allowed: ..."` |
+| 500       | Backend failure | `"Proxying failed"` |
+| 503       | Model not loaded | `"Model not loaded"` |
 
 ### ⚠️ Validation Rules
 
