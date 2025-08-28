@@ -1,441 +1,143 @@
 ---
 title: 'Job Parameters and examples'
-description: 'Customise your job based on your needs'
+description: 'Customize your job based on your needs'
 icon: 'gear'
+---
+
+## ⚠️ Possible API Errors
+
+These are the error responses you may encounter while using the API:
+
+| HTTP Code | Error Condition | Message |
+| --------- | --------------- | ------- |
+| 400       | Invalid field value or combination | Descriptive error string |
+| 401       | Missing or malformed Authorization header | `"Missing Authorization header"` |
+| 403       | Invalid developer token | `"Invalid token"` |
+| 400       | `avatar/emotion` with non-English language | `"avatar/emotion only supported when language=english"` |
+| 400       | Mixed biometric and avatar params | `"avatar and emotion cannot be used together with biometric-age or gender"` |
+| 400       | Missing audio | `"Missing audio file"` |
+| 400       | Invalid model_id | `"Invalid model_id. Allowed: mini, advanced"` |
+| 400       | Invalid biometric-age | `"Invalid biometric-age. Allowed: young-adult, middle-aged-adult, senior-adult, same, random"` |
+| 400       | Invalid gender | `"Invalid gender. Allowed: same, random, opposite"` |
+| 400       | Invalid avatar or emotion | `"Invalid avatar/emotion. Allowed: ..."` |
+| 500       | Backend failure | `"Proxying failed"` |
+| 503       | Model not loaded | `"Model not loaded"` |
+
 ---
 
 ## Parameters
 
-### File parameters
+### Audio Upload and Token Authentication
 
+When submitting your job via API, ensure the following:
+- The `source_audio` is provided via `multipart/form-data`
+- The `developer_token` must be included in the `Authorization` header as a Bearer token
 
-<ResponseField name="files" type="list" required>
-List of local input audio file name(s).  
-
-```yaml
-files:
-- filename_XYZ.mp3
-- filename_XYZ.wav
+```bash
+-H "Authorization: Bearer YOUR_USAGE_TOKEN"
 ```
+
+### Biometric Redaction Parameters (V4)
+
+<ResponseField name="biometric-age" type="string" default="young-adult">
+Biometric age group to apply to the anonymized voice identity. Only used when `avatar` is not provided.
+Allowed values:
+- young-adult (18–39)
+- middle-aged-adult (40–69)
+- senior-adult (70+)
+- same
+- random
 </ResponseField>
 
-<ResponseField name="prefix" type="string" default="">
-Apply the task to the files with mentioned prefix in their file name.
-
-```yaml
-prefix: XYZ
-```
+<ResponseField name="gender" type="string" default="random">
+Target gender of the anonymized voice identity.
+Allowed values:
+- same
+- opposite
+- random
 </ResponseField>
 
-### Task, model and agent parameters
-
-Below is a table summarizing the output files for each task mode.
-
-| Task | Output | Explanation |
-| --- | --- | --- |
-| **transcribe** | `.json` and `.wav` | Contains the full text transcript and Original audio |
-| **phi** | `.json` and `.wav` | Transcript plus PHI spans and Original audio with all PHI segments muted  |
-| **biometric** | `.json` and `.wav` | Transcript plus Audio with a new synthetic identity, gender, and age |
-| **phi-biometric** |`.json` and `.wav` | Transcript plus PHI spans and Audio with both PHI removed and a new synthetic identity, gender, and age |
-
-<ResponseField name="task" type="string" default="protect">
-  Task to apply to attached files.
-  Available task's:
-  - transcribe (Transcription)
-  - phi (transcribe + PHI redaction)
-  - biometric (Speech to speech voice print redaction)
-  - phi-biometric (transcribe + phi + biometric)
-
-```yaml
-task: transcribe
-```
+<ResponseField name="language" type="string" default="english">
+Language for speaker pool matching or avatar voice.
+Allowed values:
+- fr
+- es
+- de
+- english
 </ResponseField>
 
-<CardGroup cols={1}>
-  <Card
-    title="Advanced vs. Mini"
-    icon="palette"
-    href="https://docs.nijta.com/BuildwithVoiceHarbor/Model"
-  >
-    Choose the right model.
-  </Card>
-</CardGroup>
-
-<ResponseField name="model" type="string" default="mini">
-Model tier to use for phi reduction. Pass `advanced` if you want to use advanced reasoning via our private-LLM.
-Available values:
+<ResponseField name="model_id" type="string" default="mini">
+Model variant for voice conversion.
+Allowed values:
 - mini
 - advanced
-Example: 
-```yaml
-model: mini
-```
-
-```yaml
-model: advanced
-```
 </ResponseField>
 
-<ResponseField name="agents" type="list" default="health-generic">
-  Agents with specififc domain dependency and purpose.
-  Available values:
-  - hipaa
-  - health-generic
-  - clinical
-```yaml
-model: advanced
-agents:
-- hipaa
-```
+<ResponseField name="avatar" type="string" optional>
+Optional avatar identity to apply instead of biometric-age/gender.
+Allowed values:
+- mike (default)
+- joe
+- emma
+- amelia
+
+⚠️ If `avatar` is used, do not supply `biometric-age` or `gender`. Language must be `english`.
 </ResponseField>
 
-<CardGroup cols={1}>
-  <Card
-    title="Available Agents"
-    icon="brain"
-    href="https://docs.nijta.com/BuildwithVoiceHarbor/Model#advanced-model-labels"
-  >
-    Front-desk health calls or clinical reports, our agents take care of most sensitive Lables.
-  </Card>
-</CardGroup>
+<ResponseField name="emotion" type="string" optional>
+Optional emotion to apply to avatar identity.
+Allowed values:
+- sad
+- angry
+- enunciated
+- happy
+- laughing
+- default
 
-### Diarization and transcription parameters 
-
-<ResponseField name="language" type="string" default="en">
-  Set the target language for transcription. Leave this parameter to detect automatically amoung supported [languages](https://docs.nijta.com/BuildwithVoiceHarbor/Speech2Text#set-target-transcription-language) else force target language.
-```yaml
-language: en
-```
-
+⚠️ Only used with `avatar`, and only when language is `english`.
 </ResponseField>
 
-<ResponseField name="code-switch" type="boolean" default="false">
-  If automatic code-switching should be applied to your files.
-  Available [languages](https://docs.nijta.com/BuildwithVoiceHarbor/Speech2Text#code-switching-support) supported for code-switching transcription:
-  - de
-  - en
-  - fr
-  - sp
-```yaml
-code-switch: true
+### Example Curl Usage
+
+#### ✅ Minimal biometric redaction request (uses defaults)
+
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
+  -H "Content-Type: multipart/form-data" \
+  -F "source_audio=@./martin.wav" \
+  --output result.wav
 ```
 
-</ResponseField>
+#### 🎯 Custom biometric request
 
-<ResponseField name="diar" type="boolean" default="false">
-  If speaker diarization should be applied to your files. 
-```yaml
-diar: true
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
+  -H "Content-Type: multipart/form-data" \
+  -F "source_audio=@./martin.wav" \
+  -F "model_id=advanced" \
+  -F "biometric-age=same" \
+  -F "gender=opposite" \
+  -F "language=fr" \
+  --output redacted_fr.wav
 ```
 
-</ResponseField>
+#### 👤 Avatar redaction with emotion
 
-
-### Biometric parameters
-
-<ResponseField name="biometric" type="string" default="en">
-  If biometric voice print redaction should be applied to your files, and if so, which language.
-  Available values:
-  - en
-  - fr
-```yaml
-biometric: en
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
+  -H "Content-Type: multipart/form-data" \
+  -F "source_audio=@./martin.wav" \
+  -F "avatar=emma" \
+  -F "emotion=happy" \
+  -F "language=english" \
+  --output avatar_emma_happy.wav
 ```
 
-</ResponseField>
+### ⚠️ Validation Rules
 
-<ResponseField name="biometric_gender" type="string" default="random">
-  The gender which should be applied to the anonymised version.
-  Available values:
-  - random
-  - same
-  - opposite
-```yaml
-biometric_gender: random
-```
-
-</ResponseField>
-
-<ResponseField name="biometric_age" type="string" default="middle-aged-adult">
-  The age group which should be applied to the anonymised version.
-  Available values:
-  - young-adult (18-39)
-  - middle-aged-adult (40-69)
-  - same
-  - random
-```yaml
-biometric_age: middle-aged-adult
-```
-
-</ResponseField>
-
-
-## Submit your Job using Voice Habor's SDK 
-
-<Tip>
-
-Speech to text is by **default** applied for the task **protect**. To have the transcription without any reduction use **transcribe** as task.  
-
-</Tip>
-
-
-<Steps>
-  <Step title="Define your parameter based on data sensitivity.">
-    [Choose the right model](https://docs.nijta.com/BuildwithVoiceHarbor/Model#advanced-vs-mini)
-  </Step>
-  <Step title="Build Job File">
-    Build your job as yaml file containing the parameters in your target programming language.
-
-    Minimal job example: 
-    ```yaml
-    files:
-    - filename1.mp3
-    - filename2.wav
-    model: mini
-    ```
-  </Step>
-  <Step title="Submit Job File">
-    [Submit your job to trigger the task processing.](https://docs.nijta.com/api-reference/files/upload-url)
-  </Step>
-</Steps>
-
-
-```python
-BASE_URL = "https://voiceharbor.ai"
-usage_token = "USAGE_TOKEN"
-# Create a new job on the server via the class method.
-job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
-
-client = VoiceHarborClient(
-    base_url=BASE_URL,
-    job_id=job_id,
-    token=usage_token,
-    inputs_dir="./inputs/tests"
-)
-
-# Submit input files and the job file. 
-job_params = {"files": [], "model":"mini"}  
-job_params = client.submit_files(job_params)
-job_file = client.submit_job(job_params)
-logger.info(f"Job file created: {job_file}")
-```
-
-### Get Started with SDK
-
-Start coding today using Python and integrate the Voice Harbor API into your workflows.
-
-<CardGroup cols={1}>
-  <Card
-    title="Python SDK"
-    icon="python"
-    href="https://github.com/Nijta-API/VoiceHarborSDK"
-  >
-    Start using our Python SDK to connect with Voice Harbor and implement voice solutions
-  </Card>
-</CardGroup>
-
-
-## Transcription, Translation, and Protection Use-Case examples
-
-<Expandable title="1. Transcribe in 49 languages">
-  
-  Use this configuration to transcribe audio files in 49 languages.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  task: translate
-  ```
-
-</Expandable>
-
-
-<Expandable title="2. Transcribe in a Target Language">
-  
-  Use this configuration to transcribe audio files in a target language (e.g., English).
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  task: translate
-  language: en
-  ```
-
-</Expandable>
-
-
-<Expandable title="3. Separate Speaker and Translate in Target Language">
-  
-  Use this configuration to separate speakers and translate to a target language.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  task: translate
-  language: en
-  diar: true
-  ```
-
-</Expandable>
-
-
-<Expandable title="4. Separate Speaker, Translate in 49 Languages">
-  
-  Use this configuration to separate speakers and translate in 49 languages.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  task: translate
-  diar: true
-  ```
-
-</Expandable>
-
-
-<Expandable title="5. Separate Speaker, Translate for Code-Switch Data in 4 Languages">
-  
-  Use this configuration to separate speakers and translate for code-switch data in 4 languages.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  task: translate
-  diar: true
-  code-switch: true
-  ```
-
-</Expandable>
-
-
-<Expandable title="6. Separate Speaker, Translate for Code-Switch Data in 4 Languages and Redact PHI with Mini Model">
-  
-  Use this configuration to separate speakers, translate for code-switch data in 4 languages, and redact PHI using the mini model.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  task: phi
-  diar: true
-  code-switch: true
-  model: mini
-  ```
-
-</Expandable>
-
-
-<Expandable title="7. Separate Speaker, Translate in 49 Languages and Redact PHI with Mini Model">
-  
-  Use this configuration to separate speakers, translate in 49 languages, and redact PHI using the mini model.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  task: phi
-  diar: true
-  model: mini
-  ```
-
-</Expandable>
-
-
-<Expandable title="8. Separate Speaker, Translate for Code-Switch Data in 4 Languages and Redact PHI with Advanced Model">
-  
-  Use this configuration to separate speakers, translate for code-switch data in 4 languages, and redact PHI using the advanced model. Includes HIPAA protection.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  diar: true
-  code-switch: true
-  task: phi
-  model: advanced
-  agents:
-    - hippa
-    - health-generic
-  ```
-
-</Expandable>
-
-
-<Expandable title="9. Separate Speaker, Translate in Target Language and Redact Biometric Voice Print">
-  
-  Use this configuration to separate speakers, translate in a target language, and redact biometric voice prints.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  task: biometric
-  language: en
-  diar: true
-  biometric: en
-  biometric_gender: random
-  biometric_age: middle-aged-adult
-  ```
-
-</Expandable>
-
-
-
-<Expandable title="10. Separate Speaker, Translate in Target Language, Redact PHI, and Biometric Voice Print">
-  
-  Use this configuration to separate speakers, translate in a target language, redact PHI, and redact biometric voice prints using the advanced model.
-
-  ```yaml
-  files:
-    - filename_XYZ.mp3
-    - filename_XYZ.wav
-    - filename_XYZ.mp3
-    - filename_ZYX.mp3
-  prefix: XYZ
-  biometric: en
-  biometric_gender: random
-  biometric_age: middle-aged-adult
-  task: phi-biometric
-  model: advanced
-  agents:
-    - hippa
-    - health-generic
-  diar: true
-  code-switch: true
-  ```
-
-</Expandable>
-
-
+- `developer_token` must be valid and sent in `Authorization` header
+- You **must not mix** `avatar`/`emotion` with `biometric-age` or `gender`
+- `avatar`/`emotion` only work when `language=english`
