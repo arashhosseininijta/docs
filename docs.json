@@ -24,8 +24,6 @@
             "group": "Build with Voice Harbor",
             "pages": [
               "BuildwithVoiceHarbor/JobParameters",
-              "BuildwithVoiceHarbor/Model",
-              "Benchmarks",
               "BuildwithVoiceHarbor/Admin"
             ]
           },
