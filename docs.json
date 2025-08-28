@@ -14,11 +14,9 @@
         "tab": "Voice Harbor",
         "groups": [
           {
-            "group": "PHI and Biometric reduction",
+            "group": "Biometric voice print redaction",
             "pages": [
               "doc",
-              "GeneralUsage",
-              "PHI",
               "Biometric"
             ]
           },
