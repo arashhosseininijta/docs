@@ -73,43 +73,6 @@ Available emotions: sad, angry, enunciated, happy, laughing, default
 
 ---
 
-## 🚫 Error Handling
-
-### Missing Token
-
-```json
-HTTP 401 Unauthorized
-{ "error": "Missing Authorization header" }
-```
-
-### Invalid Token
-
-```json
-HTTP 403 Forbidden
-{ "error": "Invalid token" }
-```
-
-### Invalid biometric-age
-
-```json
-HTTP 400 Bad Request
-{ "error": "Invalid biometric-age. Allowed: young-adult, middle-aged-adult, senior-adult, same, random" }
-```
-
-### avatar/emotion used with non-English language
-
-```json
-HTTP 400 Bad Request
-{ "error": "avatar/emotion only supported when language=english" }
-```
-
-### Mixing avatar/emotion with biometric-age/gender
-
-```json
-HTTP 400 Bad Request
-{ "error": "avatar and emotion cannot be used together with biometric-age or gender" }
-```
-
 ---
 
 ## Changelog
