@@ -35,45 +35,7 @@
           }
         ]
       },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Job Management",
-            "pages": [
-              "api-reference/jobs/create",
-              "api-reference/jobs/list"
-            ]
-          },
-          {
-            "group": "File Management",
-            "pages": [
-              "api-reference/files/upload-url",
-              "api-reference/files/download-url",
-              "api-reference/files/finalized"
-            ]
-          },
-          {
-            "group": "Job Content",
-            "pages": [
-              "api-reference/job-content/list"
-            ]
-          },
-          {
-            "group": "Admin",
-            "pages": [
-              "api-reference/admin/developer-token",
-              "api-reference/admin/developer-tokens"
-            ]
-          }
-        ]
-      }
+      
     ],
     "global": {
       "anchors": [
