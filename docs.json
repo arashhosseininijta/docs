@@ -32,18 +32,6 @@
             ]
           },
           {
-            "group": "Speech to Text",
-            "pages": [
-              "BuildwithVoiceHarbor/Speech2Text"
-            ]
-          },
-          {
-            "group": "Speaker Diarization",
-            "pages": [
-              "Diarization"
-            ]
-          },
-          {
             "group": "Playground",
             "pages": [
               "playground"
