@@ -1,60 +1,116 @@
 ---
 title: 'Speech to Speech biometric identity redaction'
-description: "Learn how to replace a pre-existing identity in audio file using the Voice Harbor's Python SDK, while preserving Emotion and Phonetic information."
+description: "Learn how to replace a pre-existing identity in audio file using Voice Harbor's public API using only cURL, while preserving Emotion and Phonetic information."
 icon: user-shield
 ---
+
 <Tip>
   We have released our biometric redaction service, read more about all redaction parameters here [Job Parameters](https://docs.nijta.com/BuildwithVoiceHarbor/JobParameters). Just ask, and we'll gladly provide more information on why biometric redaction is the recommended approach to comply 100% with HIPAA and GDPR.
 </Tip>
 
-## Redact Biometric voice print in audio, followed by transcription using Python SDK
+## 🎯 Biometric Identity Redaction via cURL (Voice Harbor V4)
 
-Set Up the Client and Create a Job
-Once you have the necessary setup, you can create a job on the server and interact with the API. Here's how to do it:
+Voice Harbor V4 exposes a secure HTTP API endpoint for fast biometric redaction of voice recordings. Below are minimal and advanced `curl` examples showing how to use the service.
 
-```python
-BASE_URL = "https://voiceharbor.ai"
-usage_token = "your_usage_token_here"
+### ✅ Minimal Biometric Redaction (uses defaults)
 
-# Create a new job on the server via the class method.
-# Create a new job immediately.
-job_id = VoiceHarborClient.create_job(BASE_URL, usage_token)
-print(f"Job created with ID: {job_id}")
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
+  -H "Content-Type: multipart/form-data" \
+  -F "source_audio=@./martin.wav" \
+  --output result.wav
 ```
-Next, initialize the client and define the parameters for your job, including the files you want to submit for transcription.
 
-```python
-# Initialize the client with the new job_id and input directory.
-client = VoiceHarborClient(
-    base_url=BASE_URL,
-    job_id=job_id,
-    token=usage_token,  # Ensure correct token is used here
-    inputs_dir="./inputs"
-)
+Defaults:
+- biometric-age: `young-adult`
+- gender: `random`
+- language: `english`
+- model_id: `mini`
 
-# Build job parameters (e.g., list of agents and any other details).
-  job_params = {"files": [],
-                "task":"biometric",
-                "biometric": "en",
-                "biometric_gender":"opposite",
-                "biometric_age": "middle-aged-adult"}
+---
 
-# Upload input files.
-job_params = client.submit_files(job_params)
+### 🧬 Custom Biometric Identity Settings
+
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
+  -H "Content-Type: multipart/form-data" \
+  -F "source_audio=@./martin.wav" \
+  -F "model_id=advanced" \
+  -F "biometric-age=same" \
+  -F "gender=opposite" \
+  -F "language=fr" \
+  --output redacted_fr.wav
 ```
-Now, submit the job and wait for the transcription results. Here's how to complete the process:
 
-```python
-# Immediately submit the job file (YAML)
-job_file = client.submit_job(job_params)
-print(f"Job file submitted: {job_file}")
+Available values:
+- `biometric-age`: young-adult, middle-aged-adult, senior-adult, same, random
+- `gender`: same, opposite, random
+- `language`: fr, es, de, english
+- `model_id`: mini, advanced
 
+---
 
+### 🎭 Avatar-Based Redaction (English only)
 
-# Wait for and download the processed results.
-downloaded_results = client.download_results(output_dir="./results")
-print("Downloaded results:", downloaded_results)
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
+  -H "Content-Type: multipart/form-data" \
+  -F "source_audio=@./martin.wav" \
+  -F "avatar=emma" \
+  -F "emotion=happy" \
+  -F "language=english" \
+  -F "model_id=advanced" \
+  --output avatar_emma_happy.wav
 ```
+
+Available avatars: mike, joe, emma, amelia
+Available emotions: sad, angry, enunciated, happy, laughing, default
+
+**Note:** When using `avatar` and `emotion`, you must not use `biometric-age` or `gender`.
+
+---
+
+## 🚫 Error Handling
+
+### Missing Token
+
+```json
+HTTP 401 Unauthorized
+{ "error": "Missing Authorization header" }
+```
+
+### Invalid Token
+
+```json
+HTTP 403 Forbidden
+{ "error": "Invalid token" }
+```
+
+### Invalid biometric-age
+
+```json
+HTTP 400 Bad Request
+{ "error": "Invalid biometric-age. Allowed: young-adult, middle-aged-adult, senior-adult, same, random" }
+```
+
+### avatar/emotion used with non-English language
+
+```json
+HTTP 400 Bad Request
+{ "error": "avatar/emotion only supported when language=english" }
+```
+
+### Mixing avatar/emotion with biometric-age/gender
+
+```json
+HTTP 400 Bad Request
+{ "error": "avatar and emotion cannot be used together with biometric-age or gender" }
+```
+
+---
 
 ## Changelog
 
