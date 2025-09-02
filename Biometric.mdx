@@ -47,7 +47,7 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
 Available values:
 - `biometric-age`: young-adult, middle-aged-adult, senior-adult, same, random
 - `gender`: same, opposite, random
-- `language`: fr, es, de, english
+- `language`: fr, es, de, en
 - `model_id`: mini, advanced
 
 ---
@@ -61,11 +61,12 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -F "source_audio=@./martin.wav" \
   -F "avatar=emma" \
   -F "emotion=happy" \
-  -F "language=english" \
+  -F "language=en" \
   -F "model_id=advanced" \
   --output avatar_emma_happy.wav
 ```
 
+Available languages: fr, en, it
 Available avatars: mike, joe, emma, amelia
 Available emotions: sad, angry, enunciated, happy, laughing, default
 
