@@ -4,8 +4,6 @@ description: 'Customize your job based on your needs'
 icon: 'gear'
 ---
 
----
-
 ## Parameters
 
 ### Audio Upload and Token Authentication
@@ -38,17 +36,18 @@ Allowed values:
 - random
 </ResponseField>
 
-<ResponseField name="language" type="string" default="english">
+<ResponseField name="language" type="string" default="en">
 Language for speaker pool matching or avatar voice.
 Allowed values:
+- en
 - fr
+- it
 - es
 - de
-- english
 </ResponseField>
 
 <ResponseField name="model_id" type="string" default="mini">
-Model variant for biometric voice pritn redaction.
+Model variant for biometric voice print redaction.
 Allowed values:
 - mini
 - advanced
@@ -56,26 +55,64 @@ Allowed values:
 
 <ResponseField name="avatar" type="string" optional>
 Optional avatar identity to apply instead of biometric-age/gender.
-Allowed values:
-- mike (default)
-- joe
-- emma
-- amelia
-
-⚠️ If `avatar` is used, do not supply `biometric-age` or `gender`. Language must be `english`.
+⚠️ Do not supply `biometric-age` or `gender` when using `avatar`. Only works with language: en, fr, it.
 </ResponseField>
 
 <ResponseField name="emotion" type="string" optional>
 Optional emotion to apply to avatar identity.
-Allowed values:
-- sad
-- enunciated
-- happy
-- laughing
-- default
-
-⚠️ Only used with `avatar`, and only when language is `english`.
+⚠️ Only used with `avatar`. Must match one of the supported emotions for that avatar.
 </ResponseField>
+
+### Avatar Support Table
+
+### 🗣️ Language → Avatar → Emotions
+
+| Language | Avatar | Supported Emotions |
+|----------|--------|---------------------|
+| en | mike | default, happy, sad, enunciated, laughing |
+| en | emma | default, happy, sad, enunciated, laughing |
+| en | joe | default, happy, sad, enunciated, laughing |
+| en | amelia | default, happy, sad, enunciated, laughing |
+| fr | antoine | happy, default, sad |
+| fr | camille | default, happy, sad |
+| fr | lucas | sad, happy, default |
+| fr | chloe | sad, happy, default |
+| fr | nathan | sad, default, happy |
+| fr | lea | default |
+| fr | mathis | default |
+| fr | juliette | default |
+| fr | thomas | default |
+| fr | manon | default |
+| fr | gabriel | default |
+| fr | ines | default |
+| fr | quentin | default |
+| fr | sarah | default |
+| fr | paul | default |
+| fr | clara | default |
+| fr | adrien | default |
+| fr | elodie | default |
+| fr | hugo | default |
+| fr | maelle | default |
+| fr | romain | default |
+| fr | anais | default |
+| fr | valentin | default |
+| it | giulia | default |
+| it | luca | default |
+| it | sofia | default |
+| it | matteo | default |
+| it | chiara | default |
+| it | alessandro | default |
+| it | martina | default |
+| it | francesco | default |
+| it | aurora | default |
+| it | davide | default |
+| it | valentina | default |
+| it | simone | default |
+| it | alessia | default |
+| it | giorgio | default |
+| it | federica | default |
+| it | marco | default |
+
 
 ### Example Curl Usage
 
@@ -112,19 +149,18 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -F "source_audio=@./martin.wav" \
   -F "avatar=emma" \
   -F "emotion=happy" \
-  -F "language=english" \
+  -F "language=en" \
   --output avatar_emma_happy.wav
 ```
-## ⚠️ Possible API Errors
 
-These are the error responses you may encounter while using the API:
+## ⚠️ Possible API Errors
 
 | HTTP Code | Error Condition | Message |
 | --------- | --------------- | ------- |
 | 400       | Invalid field value or combination | Descriptive error string |
 | 401       | Missing or malformed Authorization header | `"Missing Authorization header"` |
 | 403       | Invalid developer token | `"Invalid token"` |
-| 400       | `avatar/emotion` with non-English language | `"avatar/emotion only supported when language=english"` |
+| 400       | `avatar/emotion` with unsupported language | `"avatar/emotion only supported when language=en, fr, it"` |
 | 400       | Mixed biometric and avatar params | `"avatar and emotion cannot be used together with biometric-age or gender"` |
 | 400       | Missing audio | `"Missing audio file"` |
 | 400       | Invalid model_id | `"Invalid model_id. Allowed: mini, advanced"` |
@@ -133,9 +169,3 @@ These are the error responses you may encounter while using the API:
 | 400       | Invalid avatar or emotion | `"Invalid avatar/emotion. Allowed: ..."` |
 | 500       | Backend failure | `"Proxying failed"` |
 | 503       | Model not loaded | `"Model not loaded"` |
-
-### ⚠️ Validation Rules
-
-- `developer_token` must be valid and sent in `Authorization` header
-- You **must not mix** `avatar`/`emotion` with `biometric-age` or `gender`
-- `avatar`/`emotion` only work when `language=english`
