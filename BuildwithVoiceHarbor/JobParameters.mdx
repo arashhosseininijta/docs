@@ -37,7 +37,7 @@ Allowed values:
 </ResponseField>
 
 <ResponseField name="language" type="string" default="en">
-Language for speaker pool matching or avatar voice.
+Target language of the audio file.
 Allowed values:
 - en
 - fr
@@ -49,69 +49,14 @@ Allowed values:
 <ResponseField name="model_id" type="string" default="mini">
 Model variant for biometric voice print redaction.
 Allowed values:
-- mini
-- advanced
-</ResponseField>
-
-<ResponseField name="avatar" type="string" optional>
-Optional avatar identity to apply instead of biometric-age/gender.
-⚠️ Do not supply `biometric-age` or `gender` when using `avatar`. Only works with language: en, fr, it.
+- mini 0.25 RTF
+- advanced 0.75 RTF
 </ResponseField>
 
 <ResponseField name="emotion" type="string" optional>
 Optional emotion to apply to avatar identity.
-⚠️ Only used with `avatar`. Must match one of the supported emotions for that avatar.
 </ResponseField>
 
-### Avatar Support Table
-
-### 🗣️ Language → Avatar → Emotions
-
-| Language | Avatar | Supported Emotions |
-|----------|--------|---------------------|
-| en | mike | default, happy, sad, enunciated, laughing |
-| en | emma | default, happy, sad, enunciated, laughing |
-| en | joe | default, happy, sad, enunciated, laughing |
-| en | amelia | default, happy, sad, enunciated, laughing |
-| fr | antoine | happy, default, sad |
-| fr | camille | default, happy, sad |
-| fr | lucas | sad, happy, default |
-| fr | chloe | sad, happy, default |
-| fr | nathan | sad, default, happy |
-| fr | lea | default |
-| fr | mathis | default |
-| fr | juliette | default |
-| fr | thomas | default |
-| fr | manon | default |
-| fr | gabriel | default |
-| fr | ines | default |
-| fr | quentin | default |
-| fr | sarah | default |
-| fr | paul | default |
-| fr | clara | default |
-| fr | adrien | default |
-| fr | elodie | default |
-| fr | hugo | default |
-| fr | maelle | default |
-| fr | romain | default |
-| fr | anais | default |
-| fr | valentin | default |
-| it | giulia | default |
-| it | luca | default |
-| it | sofia | default |
-| it | matteo | default |
-| it | chiara | default |
-| it | alessandro | default |
-| it | martina | default |
-| it | francesco | default |
-| it | aurora | default |
-| it | davide | default |
-| it | valentina | default |
-| it | simone | default |
-| it | alessia | default |
-| it | giorgio | default |
-| it | federica | default |
-| it | marco | default |
 
 
 ### Example Curl Usage
@@ -136,22 +81,11 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -F "model_id=advanced" \
   -F "biometric-age=same" \
   -F "gender=opposite" \
+  -F "emotion=sad" \
   -F "language=fr" \
   --output redacted_fr.wav
 ```
 
-#### 👤 Avatar redaction with emotion
-
-```bash
-curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
-  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -H "Content-Type: multipart/form-data" \
-  -F "source_audio=@./martin.wav" \
-  -F "avatar=emma" \
-  -F "emotion=happy" \
-  -F "language=en" \
-  --output avatar_emma_happy.wav
-```
 
 ## ⚠️ Possible API Errors
 
@@ -160,12 +94,10 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
 | 400       | Invalid field value or combination | Descriptive error string |
 | 401       | Missing or malformed Authorization header | `"Missing Authorization header"` |
 | 403       | Invalid developer token | `"Invalid token"` |
-| 400       | `avatar/emotion` with unsupported language | `"avatar/emotion only supported when language=en, fr, it"` |
-| 400       | Mixed biometric and avatar params | `"avatar and emotion cannot be used together with biometric-age or gender"` |
 | 400       | Missing audio | `"Missing audio file"` |
 | 400       | Invalid model_id | `"Invalid model_id. Allowed: mini, advanced"` |
 | 400       | Invalid biometric-age | `"Invalid biometric-age. Allowed: young-adult, middle-aged-adult, senior-adult, same, random"` |
 | 400       | Invalid gender | `"Invalid gender. Allowed: same, random, opposite"` |
-| 400       | Invalid avatar or emotion | `"Invalid avatar/emotion. Allowed: ..."` |
+| 400       | Invalid emotion | `"Invalid emotion. Allowed: ..."` |
 | 500       | Backend failure | `"Proxying failed"` |
 | 503       | Model not loaded | `"Model not loaded"` |
