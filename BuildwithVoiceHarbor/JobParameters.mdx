@@ -98,7 +98,7 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
 | 403 | Invalid admin token (or expired/unsigned legacy admin token) | `"Invalid admin token"` |
 | 403 | CORS rejection for disallowed browser Origin | `{ "error": "CORS" }` |
 | 413 | Uploaded file exceeds configured size | `"File too large"` |
-| 429 | Rate limit exceeded (keyed by IP + token) | `"Too many requests, please slow down"` |
-| 500 | DB query/insert/update failure | `"Database error"` |
-| 500 | Proxy/upstream/network/timeout error while contacting Cloud Run | `"Anonymisation failed"` |
+| 429 | Rate limit exceeded | `"Too many requests, please slow down"` |
+| 500 | DB failure | `"Database error"` |
+| 500 | Proxy/upstream/network/timeout error | `"Anonymisation failed"` |
 | 503 | Readiness DB check failed | `{ "ready": false }` |
