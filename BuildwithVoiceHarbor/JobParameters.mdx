@@ -68,8 +68,7 @@ Optional emotion to apply to avatar identity.
 ```bash
 curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -H "Content-Type: multipart/form-data" \
-  -F "source_audio=@./martin.wav" \
+  -F "source_audio=@./martin.wav;type=audio/wav" \
   --output result.wav
 ```
 
@@ -78,8 +77,7 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
 ```bash
 curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -H "Content-Type: multipart/form-data" \
-  -F "source_audio=@./martin.wav" \
+  -F "source_audio=@./martin.wav;type=audio/wav" \
   -F "model_id=advanced" \
   -F "biometric-age=same" \
   -F "gender=opposite" \
