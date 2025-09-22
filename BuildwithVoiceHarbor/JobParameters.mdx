@@ -6,16 +6,6 @@ icon: 'gear'
 
 ## Parameters
 
-### Audio Upload and Token Authentication
-
-When submitting your job via API, ensure the following:
-- The `source_audio` is provided via `multipart/form-data`
-- The `developer_token` must be included in the `Authorization` header as a Bearer token
-
-```bash
--H "Authorization: Bearer YOUR_USAGE_TOKEN"
-```
-
 ### Biometric Redaction Parameters
 
 <ResponseField name="biometric-age" type="string" default="young-adult">
