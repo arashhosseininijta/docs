@@ -92,7 +92,6 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
 | 400 | Invalid `biometric-age` | `"Invalid biometric-age. Allowed: young-adult, middle-aged-adult, senior-adult, same, random"` |
 | 400 | Invalid `gender` | `"Invalid gender. Allowed: same, random, opposite, f, m"` |
 | 400 | Invalid `emotion` | `"Invalid emotion. Allowed: sad, happy, default"` |
-| 400 | Missing `jobId` path param (getJobContent) | `"Missing jobId"` |
 | 401 | Missing or malformed Authorization header (general) | `"Missing Authorization"` |
 | 401 | Missing or malformed Authorization header (proxy endpoint) | `"Missing Authorization header"` |
 | 403 | Invalid developer/usage token | `"Invalid token"` |
@@ -101,7 +100,5 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
 | 413 | Uploaded file exceeds configured size | `"File too large"` |
 | 429 | Rate limit exceeded (keyed by IP + token) | `"Too many requests, please slow down"` |
 | 500 | DB query/insert/update failure | `"Database error"` |
-| 500 | Cloud Run backend not configured (proxy attempt) | `"Cloud Run backend URL not configured"` |
 | 500 | Proxy/upstream/network/timeout error while contacting Cloud Run | `"Anonymisation failed"` |
-| 5xx | Upstream non-2xx status from Cloud Run | *Upstream status & body are forwarded as-is (streamed)* |
 | 503 | Readiness DB check failed | `{ "ready": false }` |
