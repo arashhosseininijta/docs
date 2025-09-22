@@ -17,8 +17,7 @@ Below are minimal and advanced `curl` examples showing how to use the service.
 ```bash
 curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -H "Content-Type: multipart/form-data" \
-  -F "source_audio=@./martin.wav" \
+  -F "source_audio=@./martin.wav;type=audio/wav" \
   --output result.wav
 ```
 
@@ -35,8 +34,7 @@ Defaults:
 ```bash
 curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -H "Content-Type: multipart/form-data" \
-  -F "source_audio=@./martin.wav" \
+  -F "source_audio=@./martin.wav;type=audio/wav" \
   -F "model_id=advanced" \
   -F "biometric-age=same" \
   -F "gender=opposite" \
