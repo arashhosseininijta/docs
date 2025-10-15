@@ -26,23 +26,12 @@
               "BuildwithVoiceHarbor/JobParameters",
               "BuildwithVoiceHarbor/Admin"
             ]
-          },
-          {
-            "group": "Playground",
-            "pages": [
-              "playground"
-            ]
           }
         ]
       }
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://docs.nijta.com/api-reference/introduction",
-          "icon": "book-open-cover"
-        },
         {
           "anchor": "Community",
           "href": "https://join.slack.com/t/nijta-clients/shared_invite/zt-32zbd9yqs-Nm6MchdJeEXkkeTued6bJw",
