@@ -23,3 +23,51 @@ icon: 'key'
 | **Host**        | Pro Tools 2024.10 or later    |
 | **Operating System** | macOS Sequoia 15 or later |
 | **Architecture**| Apple Silicon and Intel       |
+
+
+## Plugins Biometric Redaction Parameters
+
+<ResponseField name="biometric-age" type="string" default="young-adult">
+Biometric age group to apply to the anonymized voice identity. Only used when `avatar` is not provided.
+Allowed values:
+- young-adult (18–39)
+- middle-aged-adult (40–59)
+- senior-adult (60+)
+- same
+- random
+</ResponseField>
+
+<ResponseField name="gender" type="string" default="random">
+Target gender of the anonymized voice identity.
+Allowed values:
+- same
+- opposite
+- random
+- f
+- m
+</ResponseField>
+
+<ResponseField name="language" type="string" default="en">
+Target language of the audio file.
+Allowed values:
+- en
+- fr
+- it
+- es
+- de
+</ResponseField>
+
+<ResponseField name="model_id" type="string" default="mini">
+Model variant for biometric voice print redaction.
+Allowed values:
+- mini 0.25 RTF
+- advanced 0.75 RTF
+</ResponseField>
+
+<ResponseField name="emotion" type="string" optional>
+Optional emotion to apply to anonymised identity.
+- happy
+- default
+- sad
+</ResponseField>
+
