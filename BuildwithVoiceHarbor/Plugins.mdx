@@ -24,8 +24,71 @@ icon: 'key'
 | **Operating System** | macOS Sequoia 15 or later |
 | **Architecture**| Apple Silicon and Intel       |
 
+---
 
-## Plugins Biometric Redaction Parameters
+## Installation Guide
+
+### Step 1 – Download the Plugin
+Go to [Voice Harbor Plugins](https://voiceharbor.ai) and download the **Voice Harbor AAX plugin**.  
+![IMG1](/images/IMG1.png)
+
+### Step 2 – Run the Installer
+Double-click the package `VoiceHarbor-ProTools-macOS.pkg` to start installation.  
+![IMG2](/images/IMG2.png)
+
+### Step 3 – Authorize Installation
+Enter your macOS password to complete the installation process and close the installer window.  
+![IMG3](/images/IMG3.png)
+
+---
+
+## Usage in Avid Pro Tools
+
+### Step 1 – Launch Pro Tools
+Open the **Avid Pro Tools** app.  
+![IMG4](/images/IMG4.png)
+
+### Step 2 – Load Audio
+Drag an audio file into the Pro Tools timeline.
+
+### Step 3 – Open the Plugin
+Navigate to **AudioSuite → Other → Voice Harbor**.  
+![IMG5](/images/IMG5.png)
+
+### Step 4 – Select an Audio Segment
+Highlight the region of audio you wish to anonymize.
+
+### Step 5 – Add Your Token
+Paste your **developer token** into the plugin window.  
+> 💡 *Hint:* If you don’t have a token, click the ⚙️ icon next to the input box to open [voiceharbor.ai](https://voiceharbor.ai) and generate one.  
+![IMG6](/images/IMG6.png)
+
+### Step 6 – Configure Redaction Parameters
+Use the dropdowns to choose:
+- **Language**
+- **Gender**
+- **Age**
+- **Emotion**
+- **Model**
+
+Then click **Render** to anonymize the selected segment.  
+![IMG7](/images/IMG7.png)
+
+> 💡 *Hint:* The number beside **Render** controls the “collar” (extra buffer) around your selection.  
+Set to `0` if you want only your selected segment to be anonymized.
+
+### Step 7 – Review the Output
+A new anonymized clip appears in the **Clips** sidebar.  
+![IMG9](/images/IMG9.png)
+
+You can drag it into the timeline and listen to the result.  
+![IMG10](/images/IMG10.png)
+
+> 💡 *Hint:* You can render again if you wish to retry with different parameters — each anonymization will create a new clip in your **Clips** list.
+
+---
+
+## Plugin Parameters
 
 <ResponseField name="biometric-age" type="string" default="young-adult">
 Biometric age group to apply to the anonymized voice identity. Only used when `avatar` is not provided.
@@ -70,4 +133,3 @@ Optional emotion to apply to anonymised identity.
 - default
 - sad
 </ResponseField>
-
