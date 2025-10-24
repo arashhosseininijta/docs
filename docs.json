@@ -23,7 +23,7 @@
           {
             "group": "Build with Voice Harbor",
             "pages": [
-              "BuildwithVoiceHarbor/JobParameters",
+              "BuildwithVoiceHarbor/Voice Harbor API",
               "BuildwithVoiceHarbor/Admin",
               "BuildwithVoiceHarbor/Plugins"
             ]
