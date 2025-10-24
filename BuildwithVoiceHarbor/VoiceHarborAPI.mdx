@@ -20,6 +20,32 @@ icon: 'gear'
 
 ---
 
+### Example Curl Usage
+
+#### ✅ Minimal biometric redaction request (uses defaults)
+
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
+  -F "source_audio=@./martin.wav;type=audio/wav" \
+  --output result.wav
+```
+
+#### 🎯 Custom biometric request
+
+```bash
+curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
+  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
+  -F "source_audio=@./martin.wav;type=audio/wav" \
+  -F "model_id=advanced" \
+  -F "biometric-age=same" \
+  -F "gender=opposite" \
+  -F "emotion=sad" \
+  -F "language=fr" \
+  --output redacted_fr.wav
+```
+
+
 <ResponseField name="biometric-age" type="string" default="young-adult">
 Biometric age group to apply to the anonymized voice identity. Only used when `avatar` is not provided.
 Allowed values:
@@ -63,31 +89,4 @@ Optional emotion to apply to anonymised identity.
 - default
 - sad
 </ResponseField>
-
-
-
-### Example Curl Usage
-
-#### ✅ Minimal biometric redaction request (uses defaults)
-
-```bash
-curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
-  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -F "source_audio=@./martin.wav;type=audio/wav" \
-  --output result.wav
-```
-
-#### 🎯 Custom biometric request
-
-```bash
-curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
-  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -F "source_audio=@./martin.wav;type=audio/wav" \
-  -F "model_id=advanced" \
-  -F "biometric-age=same" \
-  -F "gender=opposite" \
-  -F "emotion=sad" \
-  -F "language=fr" \
-  --output redacted_fr.wav
-```
 
