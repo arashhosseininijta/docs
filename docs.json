@@ -24,7 +24,6 @@
             "group": "Build with Voice Harbor",
             "pages": [
               "BuildwithVoiceHarbor/VoiceHarborAPI",
-              "BuildwithVoiceHarbor/Admin",
               "BuildwithVoiceHarbor/Plugins"
             ]
           }
