@@ -25,49 +25,6 @@ icon: user-shield
 
 </CardGroup>
 
-## Biometric voiceprints Redaction via cURL
-
-Below are minimal and advanced `curl` examples showing how to use the service.
-
-### Minimal Biometric Redaction (uses defaults)
-
-```bash
-curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
-  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -F "source_audio=@./martin.wav;type=audio/wav" \
-  --output result.wav
-```
-
-Defaults:
-- biometric-age: `young-adult`
-- gender: `random`
-- language: `english`
-- model_id: `mini`
-
----
-
-### Biometric voiceprints redaction Settings
-
-```bash
-curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
-  -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
-  -F "source_audio=@./martin.wav;type=audio/wav" \
-  -F "model_id=advanced" \
-  -F "biometric-age=same" \
-  -F "gender=opposite" \
-  -F "language=fr" \
-  --output redacted_fr.wav
-```
-
-Available values:
-- `biometric-age`: young-adult, middle-aged-adult, senior-adult, same, random
-- `gender`: same, opposite, random, f, m
-- `language`: fr, es, de, en, it
-- `emotion`: sad, happy, default
-- `model_id`: mini, advanced
-
----
-
 ## Changelog
 
 We are excited to share the release of our revolutionary voice anonymization system for the 2025-05-01, a breakthrough in privacy-preserving speech technology that sets a new standard in both privacy and performance.
