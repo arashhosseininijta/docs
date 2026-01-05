@@ -90,3 +90,33 @@ Optional emotion to apply to anonymised identity.
 - sad
 </ResponseField>
 
+## Audio Input Requirements
+
+To ensure reliable processing and accurate biometric redaction, uploaded audio files must meet the following requirements.
+
+### Supported File Formats
+
+Only the following audio formats are supported:
+
+- **WAV** (`.wav`)
+- **MP3** (`.mp3`)
+
+---
+
+### File Size Limits
+
+- **Maximum file size:** **10 MB per request**
+- Files exceeding this limit will be rejected with a `413 Payload Too Large` error.
+
+> If you need higher limits for enterprise use cases, please contact support.
+
+---
+
+### Audio Duration Limits
+
+- **Minimum duration:** > 0 seconds  
+- **Maximum duration:** **60 minutes (3600 seconds)**
+
+Files longer than 60 minutes are not accepted, even if they meet the file size limit.
+
+---
