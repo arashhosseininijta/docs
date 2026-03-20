@@ -62,7 +62,7 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   -H "Authorization: Bearer YOUR_USAGE_TOKEN" \
   -F "source_audio=@./martin.wav;type=audio/wav" \
   -F "model_id=advanced" \
-  -F "biometric-age=same" \
+  -F "age=same" \
   -F "gender=opposite" \
   -F "emotion=sad" \
   -F "language=fr" \
@@ -73,7 +73,7 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
 
 ## API Parameters
 
-<ResponseField name="biometric-age" type="string" default="young-adult">
+<ResponseField name="age" type="string" default="young-adult">
 Biometric age group to apply to the anonymized voice identity. Only used when `avatar` is not provided.
 
 Allowed values:
@@ -165,9 +165,3 @@ How you receive results depends on the size and duration of the file:
 
 ---
 
-## Job Visibility for API Users
-
-API jobs are created using a developer token and belong to the account that owns that token.
-
-- **Developer-token-specific views** show jobs submitted with that token
-- **Account-level job history** can include API jobs submitted under that account
