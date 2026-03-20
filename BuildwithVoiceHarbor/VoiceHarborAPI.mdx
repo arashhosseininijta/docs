@@ -1,28 +1,52 @@
 ---
 title: 'Voice Harbor API'
-description: 'Customize your job based on your needs'
+description: 'Integrate Voice Harbor into your application using a developer usage token.'
 icon: 'gear'
 ---
 
-## API Biometric Redaction Parameters
+## Voice Harbor API
 
-<CardGroup cols={1}>
+Use the Voice Harbor API to integrate biometric voice redaction into your own product or workflow.
 
-  <Card
-    title="Access Token"
-    icon="key"
-    href="https://voiceharbor.ai"
-  >
-    Automatically redact biometric identifiers from audio for privacy compliance.
-  </Card>
-
-</CardGroup>
+This page is for **API usage only**.  
+If you are using the Voice Harbor dashboard or playground, refer to the platform documentation instead.
 
 ---
 
-### Example Curl Usage
+## Authentication
 
-#### ✅ Minimal biometric redaction request (uses defaults)
+API requests require a valid developer usage token.
+
+Include it in the `Authorization` header:
+
+```bash
+-H "Authorization: Bearer YOUR_USAGE_TOKEN"
+```
+
+---
+
+## Processing Modes
+
+Voice Harbor supports both **synchronous** and **asynchronous** API processing.
+
+### Synchronous jobs
+Short audio files are typically processed synchronously and may return immediately in the response.
+
+### Asynchronous jobs
+Longer audio files are processed asynchronously.
+
+When a job is handled asynchronously:
+- the job is accepted first
+- processing continues after submission
+- the result becomes available in the **Jobs** area when processing is complete
+
+Async API jobs are associated with the account behind the developer token.
+
+---
+
+## Example API Usage
+
+### Minimal biometric redaction request
 
 ```bash
 curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
@@ -31,7 +55,7 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   --output result.wav
 ```
 
-#### 🎯 Custom biometric request
+### Custom biometric redaction request
 
 ```bash
 curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
@@ -45,9 +69,13 @@ curl -X POST https://voiceharbor.ai/api/speech-to-speech-biometric-redaction \
   --output redacted_fr.wav
 ```
 
+---
+
+## API Parameters
 
 <ResponseField name="biometric-age" type="string" default="young-adult">
 Biometric age group to apply to the anonymized voice identity. Only used when `avatar` is not provided.
+
 Allowed values:
 - young-adult (18–39)
 - middle-aged-adult (40–59)
@@ -58,6 +86,7 @@ Allowed values:
 
 <ResponseField name="gender" type="string" default="random">
 Target gender of the anonymized voice identity.
+
 Allowed values:
 - same
 - opposite
@@ -68,6 +97,7 @@ Allowed values:
 
 <ResponseField name="language" type="string" default="en">
 Target language of the audio file.
+
 Allowed values:
 - en
 - fr
@@ -78,17 +108,22 @@ Allowed values:
 
 <ResponseField name="model_id" type="string" default="mini">
 Model variant for biometric voice print redaction.
+
 Allowed values:
 - mini 0.25 RTF
 - advanced 0.75 RTF
 </ResponseField>
 
 <ResponseField name="emotion" type="string" optional>
-Optional emotion to apply to anonymised identity.
+Optional emotion to apply to the anonymised identity.
+
+Allowed values:
 - happy
 - default
 - sad
 </ResponseField>
+
+---
 
 ## Audio Input Requirements
 
@@ -96,7 +131,7 @@ To ensure reliable processing and accurate biometric redaction, uploaded audio f
 
 ### Supported File Formats
 
-Only the following audio formats are supported for I/O, Mono or Stereo:
+Only the following audio format is currently supported for input and output, in mono or stereo:
 
 - **WAV** (`.wav`)
 
@@ -105,7 +140,7 @@ Only the following audio formats are supported for I/O, Mono or Stereo:
 ### File Size Limits
 
 - **Maximum file size:** **10 MB per request**
-- Files exceeding this limit will be rejected with a `413 Payload Too Large` error.
+- Files exceeding this limit will be rejected with a `413 Payload Too Large` error
 
 > If you need higher limits for enterprise use cases, please contact support.
 
@@ -113,9 +148,26 @@ Only the following audio formats are supported for I/O, Mono or Stereo:
 
 ### Audio Duration Limits
 
-- **Minimum duration:** > 0 seconds  
+- **Minimum duration:** more than 0 seconds
 - **Maximum duration:** **60 minutes (3600 seconds)**
 
 Files longer than 60 minutes are not accepted, even if they meet the file size limit.
 
 ---
+
+## Result Delivery
+
+How you receive results depends on the size and duration of the file:
+
+- **Short files** may return immediately in the API response
+- **Longer files** are processed asynchronously
+- **Async results** are available from the **Jobs** area after processing completes
+
+---
+
+## Job Visibility for API Users
+
+API jobs are created using a developer token and belong to the account that owns that token.
+
+- **Developer-token-specific views** show jobs submitted with that token
+- **Account-level job history** can include API jobs submitted under that account
